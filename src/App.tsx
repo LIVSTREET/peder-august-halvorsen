@@ -24,6 +24,8 @@ import DashboardOverview from "./pages/dashboard/DashboardOverview";
 import DashboardProjects from "./pages/dashboard/DashboardProjects";
 import DashboardProjectEdit from "./pages/dashboard/DashboardProjectEdit";
 import DashboardPosts from "./pages/dashboard/DashboardPosts";
+import DashboardPostEdit from "./pages/dashboard/DashboardPostEdit";
+import DashboardPostNew from "./pages/dashboard/DashboardPostNew";
 import DashboardArchive from "./pages/dashboard/DashboardArchive";
 import DashboardLeads from "./pages/dashboard/DashboardLeads";
 
@@ -55,6 +57,8 @@ const App = () => (
             <Route path="projects" element={<DashboardProjects />} />
             <Route path="projects/:id" element={<DashboardProjectEdit />} />
             <Route path="posts" element={<DashboardPosts />} />
+            <Route path="posts/new" element={<DashboardPostNew />} />
+            <Route path="posts/:id" element={<DashboardPostEdit />} />
             <Route path="archive" element={<DashboardArchive />} />
             <Route path="leads" element={<DashboardLeads />} />
           </Route>

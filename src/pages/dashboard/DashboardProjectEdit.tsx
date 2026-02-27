@@ -13,8 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useProjectAssets } from "@/hooks/useAssets";
-import { getAssetUrl } from "@/lib/supabase-helpers";
+import { ProjectAssetsSection } from "@/components/dashboard/ProjectAssetsSection";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -51,7 +50,7 @@ export default function DashboardProjectEdit() {
     enabled: !!id,
   });
 
-  const { data: assets } = useProjectAssets(project?.id);
+  
 
   const updateMutation = useMutation({
     mutationFn: async (payload: typeof form) => {
@@ -218,30 +217,7 @@ export default function DashboardProjectEdit() {
         </Button>
       </form>
 
-      {assets && assets.length > 0 && (
-        <section>
-          <h2 className="font-display text-lg font-semibold text-foreground mb-3">
-            Assets
-          </h2>
-          <ul className="space-y-2">
-            {assets.map((a) => (
-              <li key={a.id} className="flex items-center gap-2 text-sm">
-                <span className="font-mono text-muted-foreground">{a.kind}</span>
-                {a.storage_path && (
-                  <a
-                    href={getAssetUrl(a.storage_bucket, a.storage_path)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    Åpne
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <ProjectAssetsSection projectId={project.id} />
     </div>
   );
 }
