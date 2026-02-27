@@ -4,6 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Tjenester from "./pages/Tjenester";
+import Prosjekter from "./pages/Prosjekter";
+import ProsjektDetalj from "./pages/ProsjektDetalj";
+import Arkiv from "./pages/Arkiv";
+import Skriver from "./pages/Skriver";
+import PostDetalj from "./pages/PostDetalj";
+import Musikk from "./pages/Musikk";
+import Prat from "./pages/Prat";
+import Brief from "./pages/Brief";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -16,7 +25,15 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/tjenester" element={<Tjenester />} />
+          <Route path="/prosjekter" element={<Prosjekter />} />
+          <Route path="/prosjekter/:slug" element={<ProsjektDetalj />} />
+          <Route path="/arkiv" element={<Arkiv />} />
+          <Route path="/skriver" element={<Skriver />} />
+          <Route path="/skriver/:slug" element={<PostDetalj />} />
+          <Route path="/musikk" element={<Musikk />} />
+          <Route path="/prat" element={<Prat />} />
+          <Route path="/brief" element={<Brief />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
