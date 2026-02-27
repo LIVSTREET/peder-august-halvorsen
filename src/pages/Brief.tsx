@@ -130,7 +130,7 @@ export default function Brief() {
   return (
     <Layout>
       <SeoHead title="Fortell meg hva du prøver å få til | Alt jeg skaper" description="Fortell meg hva du prøver å få til – jeg hjelper deg videre." pathname="/brief" noindex />
-      <section className="container pt-16 pb-24 max-w-xl mx-auto">
+      <section className="container pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] max-w-xl mx-auto">
         <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">
           Brief
         </h1>
@@ -138,7 +138,7 @@ export default function Brief() {
           Steg {step + 1} av {steps.length + 2}
         </p>
 
-        <div className="min-h-[320px]">
+        <div className="min-h-[430px] md:min-h-[460px]">
         {isStepPhase && (
           <StepSelect
             title={steps[step].title}
