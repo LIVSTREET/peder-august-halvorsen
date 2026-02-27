@@ -140,21 +140,15 @@ export default function Brief() {
 
         <div className="min-h-[320px]">
         {isStepPhase && (
-          <div>
-            <StepSelect
-              title={steps[step].title}
-              options={steps[step].options}
-              value={form[steps[step].key]}
-              onChange={(v) => set(steps[step].key, v)}
-            />
-            <button
-              onClick={() => setStep(step + 1)}
-              disabled={!form[steps[step].key]}
-              className="mt-6 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all disabled:opacity-50"
-            >
-              Neste
-            </button>
-          </div>
+          <StepSelect
+            title={steps[step].title}
+            options={steps[step].options}
+            value={form[steps[step].key]}
+            onChange={(v) => {
+              set(steps[step].key, v);
+              setStep(step + 1);
+            }}
+          />
         )}
 
         {isDetailsStep && (
