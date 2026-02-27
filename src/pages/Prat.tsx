@@ -1,9 +1,11 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import CTAButton from "@/components/CTAButton";
 
 export default function Prat() {
   return (
     <Layout>
+      <SeoHead title="Prat | Alt jeg skaper" description="Book en uforpliktende prat om prosjektet ditt." pathname="/prat" noindex />
       <section className="container pt-16 pb-24 max-w-2xl mx-auto">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
           Prat

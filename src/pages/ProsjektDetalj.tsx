@@ -1,10 +1,12 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import BrowserFrame from "@/components/BrowserFrame";
 import CTAButton from "@/components/CTAButton";
 import TagPill from "@/components/TagPill";
 import { useProject } from "@/hooks/useProjects";
 import { useProjectAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
+import { truncate, PERSON_NAME } from "@/lib/seo";
 import { useParams, Link } from "react-router-dom";
 
 export default function ProsjektDetalj() {
@@ -35,8 +37,34 @@ export default function ProsjektDetalj() {
 
   const techList = project.tech?.split(",").map((t: string) => t.trim()).filter(Boolean) || [];
 
+  const ogAsset = assets?.find((a) =>
+    ["og", "screenshot", "image"].includes(a.kind)
+  );
+  const ogImageUrl = ogAsset
+    ? getAssetUrl(ogAsset.storage_bucket, ogAsset.storage_path)
+    : null;
+
+  const description = project.description
+    ? truncate(project.description)
+    : `${project.title} – prosjekt av ${PERSON_NAME}.`;
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: project.title,
+    description: project.description || undefined,
+    about: { "@type": "Person", name: PERSON_NAME },
+  };
+
   return (
     <Layout>
+      <SeoHead
+        title={`${project.title} | Alt jeg skaper`}
+        description={description}
+        pathname={`/prosjekter/${project.slug}`}
+        ogImage={ogImageUrl}
+        jsonLd={webPageSchema}
+      />
       <article className="container pt-16 pb-24 max-w-3xl mx-auto">
         <Link to="/prosjekter" className="text-xs font-mono text-muted-foreground hover:text-primary mb-6 inline-block">
           ← Alle prosjekter
@@ -89,6 +117,8 @@ export default function ProsjektDetalj() {
                 <img
                   src={getAssetUrl(asset.storage_bucket, asset.storage_path)}
                   alt={asset.alt || project.title}
+                  width={asset.width ?? undefined}
+                  height={asset.height ?? undefined}
                   className="w-full"
                   loading="lazy"
                 />

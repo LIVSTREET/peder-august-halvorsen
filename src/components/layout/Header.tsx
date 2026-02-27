@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const links = [
@@ -17,7 +18,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border">
       <div className="container flex items-center justify-between h-14">
         <Link to="/" className="font-display font-bold text-lg text-foreground tracking-tight">
-          ajs<span className="text-primary">.</span>
+          PAH<span className="text-primary">.</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {links.map((l) => (
@@ -74,5 +75,3 @@ function MobileNav() {
     </div>
   );
 }
-
-import React from "react";
