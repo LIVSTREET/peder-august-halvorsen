@@ -3,6 +3,8 @@ import SeoHead from "@/components/SeoHead";
 import TagPill from "@/components/TagPill";
 import { usePost } from "@/hooks/usePosts";
 import { usePostTags, useTags } from "@/hooks/useTags";
+import { useAssets } from "@/hooks/useAssets";
+import { getAssetUrl } from "@/lib/supabase-helpers";
 import { truncate, stripMarkdown, PERSON_NAME } from "@/lib/seo";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -14,6 +16,7 @@ export default function PostDetalj() {
   const { data: post, isLoading } = usePost(slug || "");
   const { data: postTags } = usePostTags();
   const { data: tags } = useTags();
+  const { data: assets } = useAssets("post", post?.id ?? "");
 
   if (isLoading) {
     return (
@@ -39,6 +42,11 @@ export default function PostDetalj() {
   const tagMap = new Map(tags?.map((t) => [t.id, t]) || []);
   const myTags = postTags?.filter((pt) => pt.post_id === post.id).map((pt) => tagMap.get(pt.tag_id)).filter(Boolean) || [];
 
+  const ogAsset = assets?.find((a) => ["og", "image"].includes(a.kind));
+  const ogImageUrl = ogAsset
+    ? getAssetUrl(ogAsset.storage_bucket, ogAsset.storage_path)
+    : null;
+
   const description = post.excerpt
     ? truncate(post.excerpt)
     : post.content_md
@@ -58,9 +66,10 @@ export default function PostDetalj() {
   return (
     <Layout>
       <SeoHead
-        title={`${post.title} | Alt jeg skaper`}
+        title={`${post.title} | Skriver | Alt jeg skaper`}
         description={description}
         pathname={`/skriver/${post.slug}`}
+        ogImage={ogImageUrl}
         jsonLd={articleSchema}
       />
       <article className="container pt-16 pb-24 max-w-2xl mx-auto">

@@ -59,7 +59,7 @@ export default function ProsjektDetalj() {
   return (
     <Layout>
       <SeoHead
-        title={`${project.title} | Alt jeg skaper`}
+        title={`${project.title} | Prosjekter | Alt jeg skaper`}
         description={description}
         pathname={`/prosjekter/${project.slug}`}
         ogImage={ogImageUrl}
