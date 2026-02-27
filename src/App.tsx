@@ -16,6 +16,17 @@ import Prat from "./pages/Prat";
 import Brief from "./pages/Brief";
 import NotFound from "./pages/NotFound";
 
+// Dashboard
+import { DashboardGuard } from "./components/dashboard/DashboardGuard";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import DashboardLogin from "./pages/dashboard/DashboardLogin";
+import DashboardOverview from "./pages/dashboard/DashboardOverview";
+import DashboardProjects from "./pages/dashboard/DashboardProjects";
+import DashboardProjectEdit from "./pages/dashboard/DashboardProjectEdit";
+import DashboardPosts from "./pages/dashboard/DashboardPosts";
+import DashboardArchive from "./pages/dashboard/DashboardArchive";
+import DashboardLeads from "./pages/dashboard/DashboardLeads";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,6 +47,18 @@ const App = () => (
           <Route path="/musikk" element={<Musikk />} />
           <Route path="/prat" element={<Prat />} />
           <Route path="/brief" element={<Brief />} />
+
+          {/* Dashboard */}
+          <Route path="/dashboard/login" element={<DashboardLogin />} />
+          <Route path="/dashboard" element={<DashboardGuard><DashboardLayout /></DashboardGuard>}>
+            <Route index element={<DashboardOverview />} />
+            <Route path="projects" element={<DashboardProjects />} />
+            <Route path="projects/:id" element={<DashboardProjectEdit />} />
+            <Route path="posts" element={<DashboardPosts />} />
+            <Route path="archive" element={<DashboardArchive />} />
+            <Route path="leads" element={<DashboardLeads />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
