@@ -138,6 +138,7 @@ export default function Brief() {
           Steg {step + 1} av {steps.length + 2}
         </p>
 
+        <div className="min-h-[320px]">
         {isStepPhase && (
           <StepSelect
             title={steps[step].title}
@@ -208,14 +209,18 @@ export default function Brief() {
           </div>
         )}
 
-        {step > 0 && (
-          <button
-            onClick={() => setStep(step - 1)}
-            className="mt-6 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← Tilbake
-          </button>
-        )}
+        </div>
+
+        <div className="h-10 mt-6">
+          {step > 0 && (
+            <button
+              onClick={() => setStep(step - 1)}
+              className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Tilbake
+            </button>
+          )}
+        </div>
       </section>
     </Layout>
   );

@@ -11,8 +11,8 @@ const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error("Missing env: VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY must be set.");
-  process.exit(1);
+  console.warn("Skipping sitemap: VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY not set.");
+  process.exit(0);
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
