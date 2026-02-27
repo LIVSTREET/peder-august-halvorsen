@@ -1,14 +1,167 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Layout from "@/components/layout/Layout";
+import SectionHeader from "@/components/SectionHeader";
+import BrowserFrame from "@/components/BrowserFrame";
+import CTAButton from "@/components/CTAButton";
+import EmptyState from "@/components/EmptyState";
+import { useProjects } from "@/hooks/useProjects";
+import { useArchiveItems } from "@/hooks/useArchiveItems";
+import { useAssets } from "@/hooks/useAssets";
+import { getAssetUrl } from "@/lib/supabase-helpers";
+import { Link } from "react-router-dom";
 
-const Index = () => {
+export default function Index() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <Layout>
+      <Hero />
+      <ArbeidSection />
+      <BuildingNowSection />
+    </Layout>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="container pt-20 pb-24 md:pt-32 md:pb-32">
+      <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
+        Alt jeg skaper<span className="text-primary">.</span>
+      </h1>
+      <p className="mt-6 text-lg md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
+        Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker.
+      </p>
+      <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
+        Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
+      </p>
+      <div className="mt-10 flex flex-wrap gap-4">
+        <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
+        <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
+      </div>
+    </section>
+  );
+}
+
+function ArbeidSection() {
+  const { data: projects, isLoading } = useProjects();
+
+  return (
+    <section className="container pb-24">
+      <SectionHeader title="Arbeid" subtitle="Utvalgte prosjekter" />
+      {isLoading ? (
+        <div className="py-8 text-muted-foreground text-sm">Laster…</div>
+      ) : !projects || projects.length === 0 ? (
+        <EmptyState message="Ingen prosjekter ennå" sub="Bygger nå — kommer snart." />
+      ) : (
+        <ProjectGrid projects={projects} />
+      )}
+    </section>
+  );
+}
+
+function ProjectGrid({ projects }: { projects: any[] }) {
+  const featured = projects[0];
+  const rest = projects.slice(1, 7);
+
+  return (
+    <div className="space-y-12">
+      {featured && <FeaturedProject project={featured} />}
+      {rest.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {rest.map((p) => (
+            <ProjectCard key={p.id} project={p} />
+          ))}
+        </div>
+      )}
+      <div className="pt-4">
+        <Link to="/prosjekter" className="text-sm font-mono text-primary hover:underline underline-offset-4">
+          Se alle prosjekter →
+        </Link>
       </div>
     </div>
   );
-};
+}
 
-export default Index;
+function FeaturedProject({ project }: { project: any }) {
+  const { data: assets } = useAssets("project", project.id);
+  const firstAsset = assets?.[0];
+
+  return (
+    <Link to={`/prosjekter/${project.slug}`} className="block group">
+      <BrowserFrame url={project.url || project.slug}>
+        {firstAsset ? (
+          <img
+            src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
+            alt={firstAsset.alt || project.title}
+            className="w-full aspect-video object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full aspect-video bg-muted flex items-center justify-center">
+            <span className="text-muted-foreground font-mono text-sm">{project.title}</span>
+          </div>
+        )}
+      </BrowserFrame>
+      <div className="mt-4">
+        <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+          {project.title}
+        </h3>
+        {project.subtitle && (
+          <p className="mt-1 text-sm text-muted-foreground">{project.subtitle}</p>
+        )}
+      </div>
+    </Link>
+  );
+}
+
+function ProjectCard({ project }: { project: any }) {
+  const { data: assets } = useAssets("project", project.id);
+  const firstAsset = assets?.[0];
+
+  return (
+    <Link to={`/prosjekter/${project.slug}`} className="block group">
+      <BrowserFrame url={project.url || project.slug}>
+        {firstAsset ? (
+          <img
+            src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
+            alt={firstAsset.alt || project.title}
+            className="w-full aspect-video object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full aspect-video bg-muted flex items-center justify-center">
+            <span className="text-muted-foreground font-mono text-xs">{project.title}</span>
+          </div>
+        )}
+      </BrowserFrame>
+      <h3 className="mt-3 font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+        {project.title}
+      </h3>
+      {project.role && (
+        <p className="mt-0.5 text-xs font-mono text-muted-foreground">{project.role}</p>
+      )}
+    </Link>
+  );
+}
+
+function BuildingNowSection() {
+  const { data: items } = useArchiveItems();
+  const buildLogs = items?.filter((i) => i.kind === "buildlog").slice(0, 5);
+
+  return (
+    <section className="container pb-24">
+      <SectionHeader title="Nå bygger jeg" />
+      {!buildLogs || buildLogs.length === 0 ? (
+        <EmptyState message="Alltid i bevegelse" sub="Oppdateringer kommer snart." />
+      ) : (
+        <ul className="divide-y divide-border">
+          {buildLogs.map((item) => (
+            <li key={item.id} className="py-3 flex items-baseline justify-between">
+              <span className="text-foreground font-body">{item.title}</span>
+              <span className="text-xs font-mono text-muted-foreground">
+                {item.kind}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
