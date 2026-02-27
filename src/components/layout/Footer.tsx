@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
+    <footer className="border-t border-border mt-auto pb-[env(safe-area-inset-bottom)]">
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
