@@ -46,7 +46,7 @@ function Hero() {
   return (
     <section className="container pt-20 pb-24 md:pt-32 md:pb-32">
       <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
-        Alt jeg skaper<span className="text-primary">.</span>
+        Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
       </h1>
       <p className="mt-4 text-xl md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
         Peder August Halvorsen
