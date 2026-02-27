@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ProjectAssetsSection } from "@/components/dashboard/ProjectAssetsSection";
+import { getBaseUrl } from "@/lib/seo";
+import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -50,7 +52,21 @@ export default function DashboardProjectEdit() {
     enabled: !!id,
   });
 
-  
+  const isPublished = project?.status === "published";
+  const slugChanged = isPublished && form.slug !== (project?.slug ?? "");
+
+  const hasChanges = !!project && (
+    form.title !== project.title ||
+    form.slug !== project.slug ||
+    form.subtitle !== (project.subtitle ?? "") ||
+    form.description !== (project.description ?? "") ||
+    form.role !== (project.role ?? "") ||
+    form.tech !== (project.tech ?? "") ||
+    form.url !== (project.url ?? "") ||
+    form.status !== project.status
+  );
+
+  const { blocker, confirmLeave, stay } = useUnsavedGuard(hasChanges);
 
   const updateMutation = useMutation({
     mutationFn: async (payload: typeof form) => {
@@ -111,6 +127,21 @@ export default function DashboardProjectEdit() {
 
   return (
     <div className="space-y-8">
+      {blocker.state === "blocked" && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80">
+          <div className="border border-border bg-background p-6 space-y-4 max-w-sm">
+            <p className="font-display font-bold text-foreground">Ulagrede endringer</p>
+            <p className="text-sm text-muted-foreground">
+              Vil du forlate siden uten å lagre?
+            </p>
+            <div className="flex gap-2">
+              <Button size="sm" onClick={stay}>Bli</Button>
+              <Button size="sm" variant="outline" onClick={confirmLeave}>Forlat</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div>
         <button
           onClick={() => navigate("/dashboard/projects")}
@@ -142,6 +173,11 @@ export default function DashboardProjectEdit() {
             onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
             required
           />
+          {slugChanged && (
+            <p className="text-xs text-destructive">
+              Endrer du slug bryter du delinger/lenker.
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="subtitle">Undertittel</Label>
@@ -203,6 +239,18 @@ export default function DashboardProjectEdit() {
               ))}
             </SelectContent>
           </Select>
+          {form.status === "published" && (
+            <p className="text-xs text-muted-foreground mt-1">
+              <a
+                href={`${getBaseUrl()}/prosjekter/${form.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Live →
+              </a>
+            </p>
+          )}
         </div>
 
         {updateMutation.isSuccess && (
