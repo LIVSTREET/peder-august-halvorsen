@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import BrowserFrame from "@/components/BrowserFrame";
 import EmptyState from "@/components/EmptyState";
@@ -12,6 +13,7 @@ export default function Prosjekter() {
 
   return (
     <Layout>
+      <SeoHead title="Prosjekter | Alt jeg skaper" description="Utvalgte prosjekter – nettsider og plattformer jeg har bygget." pathname="/prosjekter" />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-16">
           Prosjekter
@@ -44,6 +46,8 @@ function ProjectListItem({ project }: { project: any }) {
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
             alt={firstAsset.alt || project.title}
+            width={firstAsset.width ?? undefined}
+            height={firstAsset.height ?? undefined}
             className="w-full aspect-video object-cover"
             loading="lazy"
           />

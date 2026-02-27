@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -99,6 +100,7 @@ export default function Brief() {
   if (submitted) {
     return (
       <Layout>
+        <SeoHead title="Takk! | Alt jeg skaper" description="Briefen din er sendt." pathname="/brief" noindex />
         <section className="container pt-16 pb-24 max-w-xl mx-auto">
           <h1 className="font-display text-3xl font-extrabold text-foreground mb-6">Takk!</h1>
           <p className="text-muted-foreground mb-8">Briefen din er sendt. Her er et sammendrag:</p>
@@ -127,6 +129,7 @@ export default function Brief() {
 
   return (
     <Layout>
+      <SeoHead title="Fortell meg hva du prøver å få til | Alt jeg skaper" description="Fortell meg hva du prøver å få til – jeg hjelper deg videre." pathname="/brief" noindex />
       <section className="container pt-16 pb-24 max-w-xl mx-auto">
         <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">
           Brief

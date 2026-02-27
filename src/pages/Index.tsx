@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import BrowserFrame from "@/components/BrowserFrame";
 import CTAButton from "@/components/CTAButton";
@@ -7,11 +8,33 @@ import { useProjects } from "@/hooks/useProjects";
 import { useArchiveItems } from "@/hooks/useArchiveItems";
 import { useAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
+import { getBaseUrl, PERSON_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: PERSON_NAME,
+  jobTitle: "Builder / Musiker / Arrangør",
+  url: typeof window !== "undefined" ? getBaseUrl() : "",
+};
+
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Alt jeg skaper",
+  url: typeof window !== "undefined" ? getBaseUrl() : "",
+};
 
 export default function Index() {
   return (
     <Layout>
+      <SeoHead
+        title="Alt jeg skaper | Peder August Halvorsen"
+        description="Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker. Peder August Halvorsen – Alt jeg skaper."
+        pathname="/"
+        jsonLd={[personSchema, webSiteSchema]}
+      />
       <Hero />
       <ArbeidSection />
       <BuildingNowSection />
@@ -25,6 +48,9 @@ function Hero() {
       <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
         Alt jeg skaper<span className="text-primary">.</span>
       </h1>
+      <p className="mt-4 text-xl md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+        Peder August Halvorsen
+      </p>
       <p className="mt-6 text-lg md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
         Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker.
       </p>
@@ -90,6 +116,8 @@ function FeaturedProject({ project }: { project: any }) {
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
             alt={firstAsset.alt || project.title}
+            width={firstAsset.width ?? undefined}
+            height={firstAsset.height ?? undefined}
             className="w-full aspect-video object-cover"
             loading="lazy"
           />
@@ -122,6 +150,8 @@ function ProjectCard({ project }: { project: any }) {
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
             alt={firstAsset.alt || project.title}
+            width={firstAsset.width ?? undefined}
+            height={firstAsset.height ?? undefined}
             className="w-full aspect-video object-cover"
             loading="lazy"
           />

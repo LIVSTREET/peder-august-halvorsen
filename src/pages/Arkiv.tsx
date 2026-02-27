@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import TagPill from "@/components/TagPill";
 import EmptyState from "@/components/EmptyState";
@@ -30,6 +31,7 @@ export default function Arkiv() {
 
   return (
     <Layout>
+      <SeoHead title="Arkiv | Alt jeg skaper" description="Arkiv over notater, lenker, bilder og tanker." pathname="/arkiv" />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
           Arkiv

@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import EmptyState from "@/components/EmptyState";
 import { usePosts } from "@/hooks/usePosts";
 import { Link } from "react-router-dom";
@@ -10,6 +11,7 @@ export default function Skriver() {
 
   return (
     <Layout>
+      <SeoHead title="Skriver | Alt jeg skaper" description="Innlegg og tanker om det jeg bygger og lager." pathname="/skriver" />
       <section className="container pt-16 pb-24 max-w-2xl mx-auto">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-16">
           Skriver

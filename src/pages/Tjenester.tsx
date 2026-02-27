@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import CTAButton from "@/components/CTAButton";
 
@@ -52,6 +53,7 @@ const services = [
 export default function Tjenester() {
   return (
     <Layout>
+      <SeoHead title="Tjenester | Alt jeg skaper" description="Nettsider, plattformer, booking og musikk, sparring. Se hva jeg tilbyr." pathname="/tjenester" />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
           Tjenester

@@ -1,7 +1,9 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import TagPill from "@/components/TagPill";
 import { usePost } from "@/hooks/usePosts";
 import { usePostTags, useTags } from "@/hooks/useTags";
+import { truncate, stripMarkdown, PERSON_NAME } from "@/lib/seo";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { format } from "date-fns";
@@ -37,8 +39,30 @@ export default function PostDetalj() {
   const tagMap = new Map(tags?.map((t) => [t.id, t]) || []);
   const myTags = postTags?.filter((pt) => pt.post_id === post.id).map((pt) => tagMap.get(pt.tag_id)).filter(Boolean) || [];
 
+  const description = post.excerpt
+    ? truncate(post.excerpt)
+    : post.content_md
+      ? truncate(stripMarkdown(post.content_md))
+      : `${post.title} – innlegg av ${PERSON_NAME}.`;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description,
+    datePublished: post.published_at || undefined,
+    dateModified: post.updated_at || undefined,
+    author: { "@type": "Person", name: PERSON_NAME },
+  };
+
   return (
     <Layout>
+      <SeoHead
+        title={`${post.title} | Alt jeg skaper`}
+        description={description}
+        pathname={`/skriver/${post.slug}`}
+        jsonLd={articleSchema}
+      />
       <article className="container pt-16 pb-24 max-w-2xl mx-auto">
         <Link to="/skriver" className="text-xs font-mono text-muted-foreground hover:text-primary mb-6 inline-block">
           ← Alle innlegg

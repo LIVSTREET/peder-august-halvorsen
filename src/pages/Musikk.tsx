@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import CTAButton from "@/components/CTAButton";
 
@@ -20,6 +21,7 @@ const packages = [
 export default function Musikk() {
   return (
     <Layout>
+      <SeoHead title="Musikk | Alt jeg skaper" description="Booking, session, bakgrunnsmusikk – musikk og arrangement." pathname="/musikk" />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
           Musikk
