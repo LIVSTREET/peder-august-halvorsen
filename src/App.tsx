@@ -28,6 +28,7 @@ import DashboardPostEdit from "./pages/dashboard/DashboardPostEdit";
 import DashboardPostNew from "./pages/dashboard/DashboardPostNew";
 import DashboardArchive from "./pages/dashboard/DashboardArchive";
 import DashboardLeads from "./pages/dashboard/DashboardLeads";
+import DashboardLeadDetail from "./pages/dashboard/DashboardLeadDetail";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const App = () => (
             <Route path="posts/:id" element={<DashboardPostEdit />} />
             <Route path="archive" element={<DashboardArchive />} />
             <Route path="leads" element={<DashboardLeads />} />
+            <Route path="leads/:id" element={<DashboardLeadDetail />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

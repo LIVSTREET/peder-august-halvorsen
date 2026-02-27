@@ -14,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getBaseUrl } from "@/lib/seo";
+import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -82,6 +84,21 @@ export default function DashboardPostEdit() {
     });
     setTagIds(postTags?.map((pt) => pt.tag_id) ?? []);
   }, [post, postTags]);
+
+  const isPublished = post?.status === "published";
+  const slugChanged = isPublished && form.slug !== (post?.slug ?? "");
+
+  const hasChanges = !!post && (
+    form.title !== post.title ||
+    form.slug !== post.slug ||
+    form.excerpt !== (post.excerpt ?? "") ||
+    form.content_md !== (post.content_md ?? "") ||
+    form.status !== post.status ||
+    JSON.stringify([...tagIds].sort()) !==
+      JSON.stringify([...(postTags?.map((pt) => pt.tag_id) ?? [])].sort())
+  );
+
+  const { blocker, confirmLeave, stay } = useUnsavedGuard(hasChanges);
 
   const updateMutation = useMutation({
     mutationFn: async (payload: typeof form) => {
@@ -176,6 +193,21 @@ export default function DashboardPostEdit() {
 
   return (
     <div className="space-y-8">
+      {blocker.state === "blocked" && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80">
+          <div className="border border-border bg-background p-6 space-y-4 max-w-sm">
+            <p className="font-display font-bold text-foreground">Ulagrede endringer</p>
+            <p className="text-sm text-muted-foreground">
+              Vil du forlate siden uten å lagre?
+            </p>
+            <div className="flex gap-2">
+              <Button size="sm" onClick={stay}>Bli</Button>
+              <Button size="sm" variant="outline" onClick={confirmLeave}>Forlat</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div>
         <button
           onClick={() => navigate("/dashboard/posts")}
@@ -207,6 +239,11 @@ export default function DashboardPostEdit() {
             onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
             required
           />
+          {slugChanged && (
+            <p className="text-xs text-destructive">
+              Endrer du slug bryter du delinger/lenker.
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="excerpt">Utdrag</Label>
@@ -246,6 +283,18 @@ export default function DashboardPostEdit() {
               ))}
             </SelectContent>
           </Select>
+          {form.status === "published" && (
+            <p className="text-xs text-muted-foreground mt-1">
+              <a
+                href={`${getBaseUrl()}/skriver/${form.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Live →
+              </a>
+            </p>
+          )}
         </div>
 
         {/* Tags */}
