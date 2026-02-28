@@ -12,6 +12,7 @@ import {
 const COMMANDS = [
   { label: "Oversikt", to: "/dashboard" },
   { label: "Prosjekter", to: "/dashboard/projects" },
+  { label: "Nytt prosjekt", to: "/dashboard/projects/new" },
   { label: "Skriver", to: "/dashboard/posts" },
   { label: "Ny post", to: "/dashboard/posts/new" },
   { label: "Innhold", to: "/dashboard/content" },

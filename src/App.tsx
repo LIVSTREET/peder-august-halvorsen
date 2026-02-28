@@ -24,6 +24,7 @@ import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DashboardLogin from "./pages/dashboard/DashboardLogin";
 import DashboardOverview from "./pages/dashboard/DashboardOverview";
 import DashboardProjects from "./pages/dashboard/DashboardProjects";
+import DashboardProjectNew from "./pages/dashboard/DashboardProjectNew";
 import DashboardProjectEdit from "./pages/dashboard/DashboardProjectEdit";
 import DashboardPosts from "./pages/dashboard/DashboardPosts";
 import DashboardPostEdit from "./pages/dashboard/DashboardPostEdit";
@@ -67,6 +68,7 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardGuard><DashboardLayout /></DashboardGuard>}>
             <Route index element={<DashboardOverview />} />
             <Route path="projects" element={<DashboardProjects />} />
+            <Route path="projects/new" element={<DashboardProjectNew />} />
             <Route path="projects/:id" element={<DashboardProjectEdit />} />
             <Route path="posts" element={<DashboardPosts />} />
             <Route path="posts/new" element={<DashboardPostNew />} />
