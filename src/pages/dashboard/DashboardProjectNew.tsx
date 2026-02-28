@@ -21,6 +21,7 @@ const STATUS_OPTIONS = [
   { value: "archived", label: "Arkivert" },
 ] as const;
 
+// New project creation form
 export default function DashboardProjectNew() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
