@@ -115,7 +115,7 @@ export default function Brief() {
           </div>
           <div className="mt-10 border-t border-border pt-8">
             <p className="text-foreground text-sm">
-              Jeg tar kontakt innen 1–2 virkedager. Hvis det haster, send en melding til hei@altjegskaper.no.
+              Jeg tar kontakt innen 1–2 virkedager. Hvis det haster, <a href="mailto:kontaktpeder@gmail.com" className="text-primary hover:underline underline-offset-4">send mail</a>.
             </p>
           </div>
         </section>
