@@ -17,7 +17,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col justify-end">
             <p className="text-xs text-muted-foreground/50 italic leading-relaxed">
-              «For vi er satisfies skaperverk, skapt i Kristus Jesus til gode gjerninger.»
+              "I walk by faith, and not by sight"       
             </p>
           </div>
         </div>
