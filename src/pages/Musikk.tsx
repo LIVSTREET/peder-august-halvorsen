@@ -54,7 +54,7 @@ export default function Musikk() {
           </div>
           <div className="flex items-baseline gap-4">
             <span className="text-xs font-mono text-muted-foreground uppercase w-24 shrink-0">Sjangre</span>
-            <span className="text-foreground">Pop, gospel, jazz, lovsang</span>
+            <span className="text-foreground">Pop, gospel, jazz, funk</span>
           </div>
           <div className="flex items-baseline gap-4">
             <span className="text-xs font-mono text-muted-foreground uppercase w-24 shrink-0">Utstyr</span>
