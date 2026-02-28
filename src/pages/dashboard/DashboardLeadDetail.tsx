@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useDashboardLead } from "@/hooks/useDashboardLeads";
+import { useDashboardLead, useUpdateLead } from "@/hooks/useDashboardLeads";
 import { GOALS, STAGES, PRIORITIES, BUDGETS } from "@/lib/brief-labels";
+import { LEAD_STATUSES } from "@/lib/lead-status";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
@@ -49,10 +59,22 @@ function buildMailto(lead: { name?: string | null; email?: string | null }) {
 export default function DashboardLeadDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: lead, isLoading } = useDashboardLead(id);
+  const updateLead = useUpdateLead();
+  const { toast } = useToast();
 
   function handleCopy() {
     if (!lead) return;
-    navigator.clipboard.writeText(buildSummary(lead));
+    navigator.clipboard.writeText(buildSummary(lead)).then(() => {
+      toast({ title: "Kopiert til utklippstavlen" });
+    });
+  }
+
+  function handleStatusChange(status: string) {
+    if (!id) return;
+    updateLead.mutate(
+      { id, status: status as "new" | "contacted" | "warm" | "won" | "lost" },
+      { onSuccess: () => toast({ title: "Status oppdatert" }) }
+    );
   }
 
   if (isLoading || !lead) {
@@ -62,6 +84,8 @@ export default function DashboardLeadDetail() {
       </div>
     );
   }
+
+  const currentStatus = (lead as Record<string, unknown>).status as string ?? "new";
 
   return (
     <div className="space-y-8">
@@ -78,7 +102,17 @@ export default function DashboardLeadDetail() {
         Brief: {lead.name ?? lead.email ?? lead.id}
       </h1>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
+        <Select value={currentStatus} onValueChange={handleStatusChange}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {LEAD_STATUSES.map((s) => (
+              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Button variant="outline" size="sm" onClick={handleCopy}>
           Kopier sammendrag
         </Button>
@@ -98,6 +132,9 @@ export default function DashboardLeadDetail() {
         <Row label="Detaljer" value={lead.details ?? "—"} />
         <Row label="Innsendt" value={formatDate(lead.created_at)} />
         {lead.ai_summary && <Row label="AI-sammendrag" value={lead.ai_summary} />}
+        {(lead as Record<string, unknown>).updated_at && (
+          <Row label="Oppdatert" value={formatDate((lead as Record<string, unknown>).updated_at as string)} />
+        )}
       </div>
     </div>
   );

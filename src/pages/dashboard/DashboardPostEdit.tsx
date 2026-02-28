@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { slugify } from "@/lib/slug";
+import { slugify, isSlugValid, getSlugError } from "@/lib/slug";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,6 +36,7 @@ export default function DashboardPostEdit() {
   });
   const [tagIds, setTagIds] = useState<string[]>([]);
   const [newTagLabel, setNewTagLabel] = useState("");
+  const [slugError, setSlugError] = useState<string | null>(null);
 
   const { data: post, isLoading } = useQuery({
     queryKey: ["dashboard", "post", id],
@@ -83,6 +84,7 @@ export default function DashboardPostEdit() {
       status: post.status as "draft" | "published" | "archived",
     });
     setTagIds(postTags?.map((pt) => pt.tag_id) ?? []);
+    setSlugError(null);
   }, [post, postTags]);
 
   const isPublished = post?.status === "published";
@@ -177,6 +179,14 @@ export default function DashboardPostEdit() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.status === "published") {
+      const err = getSlugError(form.slug);
+      if (err) {
+        setSlugError(err);
+        return;
+      }
+    }
+    setSlugError(null);
     updateMutation.mutate(form);
     syncTagsMutation.mutate(tagIds);
   }
@@ -232,7 +242,16 @@ export default function DashboardPostEdit() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="slug">Slug</Label>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="slug">Slug</Label>
+            <button
+              type="button"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setForm((f) => ({ ...f, slug: slugify(f.title) || f.slug }))}
+            >
+              Regenerer fra tittel
+            </button>
+          </div>
           <Input
             id="slug"
             value={form.slug}
@@ -243,6 +262,9 @@ export default function DashboardPostEdit() {
             <p className="text-xs text-destructive">
               Endrer du slug bryter du delinger/lenker.
             </p>
+          )}
+          {slugError && (
+            <p className="text-xs text-destructive">{slugError}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -283,7 +305,7 @@ export default function DashboardPostEdit() {
               ))}
             </SelectContent>
           </Select>
-          {form.status === "published" && (
+          {form.status === "published" && isSlugValid(form.slug) && (
             <p className="text-xs text-muted-foreground mt-1">
               <a
                 href={`${getBaseUrl()}/skriver/${form.slug}`}
@@ -366,6 +388,17 @@ export default function DashboardPostEdit() {
           <Button type="submit" disabled={updateMutation.isPending}>
             {updateMutation.isPending ? "Lagrer…" : "Lagre"}
           </Button>
+          {form.status === "published" && isSlugValid(form.slug) && (
+            <Button type="button" variant="outline" asChild>
+              <a
+                href={`${getBaseUrl()}/skriver/${form.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Åpne live
+              </a>
+            </Button>
+          )}
           <Button type="button" variant="outline" asChild>
             <Link to={`/skriver/${post.slug}`} target="_blank">
               Forhåndsvis

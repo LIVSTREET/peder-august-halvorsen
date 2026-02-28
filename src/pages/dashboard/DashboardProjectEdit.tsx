@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { slugify, isSlugValid, getSlugError } from "@/lib/slug";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,6 +38,7 @@ export default function DashboardProjectEdit() {
     url: "",
     status: "draft" as "draft" | "published" | "archived",
   });
+  const [slugError, setSlugError] = useState<string | null>(null);
 
   const { data: project, isLoading } = useQuery({
     queryKey: ["dashboard", "project", id],
@@ -110,6 +112,7 @@ export default function DashboardProjectEdit() {
       url: project.url ?? "",
       status: project.status as "draft" | "published" | "archived",
     });
+    setSlugError(null);
   }, [project]);
 
   if (isLoading || !project) {
@@ -122,6 +125,14 @@ export default function DashboardProjectEdit() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.status === "published") {
+      const err = getSlugError(form.slug);
+      if (err) {
+        setSlugError(err);
+        return;
+      }
+    }
+    setSlugError(null);
     updateMutation.mutate(form);
   }
 
@@ -166,7 +177,16 @@ export default function DashboardProjectEdit() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="slug">Slug</Label>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="slug">Slug</Label>
+            <button
+              type="button"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setForm((f) => ({ ...f, slug: slugify(f.title) || f.slug }))}
+            >
+              Regenerer fra tittel
+            </button>
+          </div>
           <Input
             id="slug"
             value={form.slug}
@@ -177,6 +197,9 @@ export default function DashboardProjectEdit() {
             <p className="text-xs text-destructive">
               Endrer du slug bryter du delinger/lenker.
             </p>
+          )}
+          {slugError && (
+            <p className="text-xs text-destructive">{slugError}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -239,7 +262,7 @@ export default function DashboardProjectEdit() {
               ))}
             </SelectContent>
           </Select>
-          {form.status === "published" && (
+          {form.status === "published" && isSlugValid(form.slug) && (
             <p className="text-xs text-muted-foreground mt-1">
               <a
                 href={`${getBaseUrl()}/prosjekter/${form.slug}`}
@@ -260,9 +283,22 @@ export default function DashboardProjectEdit() {
           <p className="text-sm text-destructive">Noe gikk galt.</p>
         )}
 
-        <Button type="submit" disabled={updateMutation.isPending}>
-          {updateMutation.isPending ? "Lagrer…" : "Lagre"}
-        </Button>
+        <div className="flex gap-2">
+          <Button type="submit" disabled={updateMutation.isPending}>
+            {updateMutation.isPending ? "Lagrer…" : "Lagre"}
+          </Button>
+          {form.status === "published" && isSlugValid(form.slug) && (
+            <Button type="button" variant="outline" asChild>
+              <a
+                href={`${getBaseUrl()}/prosjekter/${form.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Åpne live
+              </a>
+            </Button>
+          )}
+        </div>
       </form>
 
       <ProjectAssetsSection projectId={project.id} />
