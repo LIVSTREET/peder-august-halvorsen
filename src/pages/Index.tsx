@@ -46,12 +46,29 @@ export default function Index() {
 function Hero() {
   return (
     <section className="container pt-12 pb-16 md:pt-32 md:pb-32">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div className="flex items-center gap-4 md:hidden mb-6">
+        <img
+          src={heroPortrait}
+          alt="Peder August Halvorsen"
+          className="w-16 h-16 object-cover grayscale rounded-full shrink-0"
+          loading="eager"
+        />
         <div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground leading-none">
             Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
-          <p className="mt-3 md:mt-4 text-lg md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+          <p className="mt-1 text-base font-display font-semibold text-foreground/60 tracking-tight">
+            Peder August Halvorsen
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div>
+          <h1 className="hidden md:block font-display text-7xl font-extrabold tracking-tight text-foreground leading-none">
+            Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+          </h1>
+          <p className="hidden md:block mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             Peder August Halvorsen
           </p>
           <p className="mt-4 md:mt-6 text-base md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
@@ -67,7 +84,7 @@ function Hero() {
             <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
           </div>
         </div>
-        <div className="flex justify-center md:justify-end">
+        <div className="hidden md:flex justify-end">
           <img
             src={heroPortrait}
             alt="Peder August Halvorsen"
