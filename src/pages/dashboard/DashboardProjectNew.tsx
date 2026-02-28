@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify, getSlugError } from "@/lib/slug";
-import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 import { errorToast, createdToast } from "@/lib/dashboard-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +33,13 @@ export default function DashboardProjectNew() {
   const [submitting, setSubmitting] = useState(false);
 
   const hasChanges = !!(form.title.trim() || form.slug.trim() || form.subtitle.trim());
-  const { blocker, confirmLeave, stay } = useUnsavedGuard(hasChanges);
+
+  useEffect(() => {
+    if (!hasChanges) return;
+    const handler = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [hasChanges]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -71,20 +76,6 @@ export default function DashboardProjectNew() {
 
   return (
     <div className="space-y-8">
-      {blocker.state === "blocked" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80">
-          <div className="border border-border bg-background p-6 space-y-4 max-w-sm">
-            <p className="font-display font-bold text-foreground">Ulagrede endringer</p>
-            <p className="text-sm text-muted-foreground">
-              Vil du forlate siden uten å lagre?
-            </p>
-            <div className="flex gap-2">
-              <Button size="sm" onClick={stay}>Bli</Button>
-              <Button size="sm" variant="outline" onClick={confirmLeave}>Forlat</Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div>
         <button
