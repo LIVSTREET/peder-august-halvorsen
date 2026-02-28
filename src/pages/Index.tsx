@@ -55,7 +55,9 @@ function Hero() {
             Peder August Halvorsen
           </p>
           <p className="mt-6 text-lg md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
-            Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker.
+            Jeg bygger fleksible plattformer og nettsteder.
+            <br />
+            Arrangør og musiker.
           </p>
           <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
             Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
@@ -69,7 +71,7 @@ function Hero() {
           <img
             src={heroPortrait}
             alt="Peder August Halvorsen"
-            className="aspect-square object-cover w-full max-w-md grayscale"
+            className="aspect-square object-cover w-full max-w-xs grayscale"
             loading="eager"
           />
         </div>
