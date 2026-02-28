@@ -26,6 +26,7 @@ export default function DashboardProjects() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<{
     id: string; title: string; slug: string; subtitle: string | null;
+    description: string | null; role: string | null; tech: string | null; url: string | null;
     status: "draft" | "published" | "archived";
   } | null>(null);
 
@@ -112,6 +113,10 @@ export default function DashboardProjects() {
                   title: p.title,
                   slug: p.slug,
                   subtitle: p.subtitle,
+                  description: p.description,
+                  role: p.role,
+                  tech: p.tech,
+                  url: p.url,
                   status: p.status,
                 })}
               >
