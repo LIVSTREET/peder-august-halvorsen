@@ -186,7 +186,14 @@ export default function DashboardProjectEdit() {
           <Input
             id="title"
             value={form.title}
-            onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+            onChange={(e) => {
+              const title = e.target.value;
+              setForm((f) => ({
+                ...f,
+                title,
+                ...(!isPublished ? { slug: slugify(title) || f.slug } : {}),
+              }));
+            }}
             required
           />
         </div>
@@ -205,6 +212,8 @@ export default function DashboardProjectEdit() {
             id="slug"
             value={form.slug}
             onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+            readOnly={!isPublished}
+            className={!isPublished ? "bg-muted/50" : ""}
             required
           />
           {slugChanged && (

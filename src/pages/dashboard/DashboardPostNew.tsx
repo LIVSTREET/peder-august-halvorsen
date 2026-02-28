@@ -54,8 +54,10 @@ export default function DashboardPostNew() {
           <Input
             id="slug"
             value={slug}
-            onChange={(e) => setSlug(e.target.value)}
+            readOnly
+            className="bg-muted/50"
           />
+          <p className="text-xs text-muted-foreground">Genereres automatisk fra tittel.</p>
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
         <Button type="submit" disabled={loading}>
