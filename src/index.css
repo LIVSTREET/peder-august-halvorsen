@@ -79,6 +79,16 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Use dvh for full-height layouts where supported */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   h1, h2, h3, h4, h5, h6 {

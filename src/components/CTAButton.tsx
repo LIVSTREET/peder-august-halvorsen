@@ -8,7 +8,7 @@ interface CTAButtonProps {
 }
 
 export default function CTAButton({ to, children, variant = "primary", className = "" }: CTAButtonProps) {
-  const base = "inline-block whitespace-nowrap px-6 py-3 font-body text-sm font-medium tracking-wide uppercase transition-all duration-200 border";
+  const base = "inline-block whitespace-nowrap px-6 py-3 min-h-[44px] font-body text-sm font-medium tracking-wide uppercase transition-all duration-200 border active:scale-[0.98]";
   const variants = {
     primary: "bg-primary text-primary-foreground border-primary hover:brightness-110",
     secondary: "bg-secondary text-secondary-foreground border-secondary hover:brightness-110",

@@ -15,7 +15,7 @@ export default function Header() {
   const { pathname } = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border">
+    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border" style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
       <div className="container flex items-center justify-between h-14">
         <Link to="/" className="font-display font-bold text-lg text-foreground tracking-tight">
           PAH<span className="text-primary">.</span>
@@ -45,7 +45,7 @@ function MobileNav() {
 
   return (
     <div className="md:hidden">
-      <button onClick={() => setOpen(!open)} className="text-foreground p-2" aria-label="Meny">
+      <button onClick={() => setOpen(!open)} className="text-foreground p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Meny">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
           {open ? (
             <path d="M5 5l10 10M15 5L5 15" />
@@ -55,15 +55,15 @@ function MobileNav() {
         </svg>
       </button>
       {open && (
-        <div className="absolute top-14 left-0 right-0 bg-background border-b border-border py-4">
-          <nav className="container flex flex-col gap-3">
+        <div className="absolute top-14 left-0 right-0 bg-background border-b border-border py-2" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          <nav className="container flex flex-col">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className={`text-sm font-body ${
-                  pathname === l.to ? "text-primary" : "text-muted-foreground"
+                className={`text-sm font-body py-3 min-h-[44px] flex items-center ${
+                  pathname === l.to ? "text-primary" : "text-muted-foreground active:text-foreground"
                 }`}
               >
                 {l.label}
