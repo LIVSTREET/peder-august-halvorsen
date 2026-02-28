@@ -62,7 +62,7 @@ function Hero() {
           <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
             Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
           </p>
-          <div className="mt-10 flex flex-nowrap gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4">
             <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
             <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
           </div>
