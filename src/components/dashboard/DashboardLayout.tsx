@@ -62,7 +62,7 @@ export default function DashboardLayout() {
 
       {/* Main */}
       <div className="flex-1 min-w-0 overflow-auto">
-        <div className="max-w-4xl mx-auto px-6 py-10">
+        <div className="max-w-6xl mx-auto px-6 py-10">
           <Outlet />
         </div>
       </div>
