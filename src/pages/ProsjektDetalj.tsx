@@ -108,7 +108,7 @@ export default function ProsjektDetalj() {
         )}
 
         {project.description && (
-          <div className="mt-10 text-foreground/80 leading-relaxed whitespace-pre-line">
+          <div className="mt-10 text-foreground/80 leading-relaxed whitespace-pre-line text-justify">
             {project.description}
           </div>
         )}
