@@ -48,7 +48,7 @@ function Hero() {
     <section className="container pt-20 pb-24 md:pt-32 md:pb-32">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
         <div>
-          <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
+          <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
             Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
           <p className="mt-4 text-xl md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
@@ -62,7 +62,7 @@ function Hero() {
           <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
             Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-nowrap gap-4">
             <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
             <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
           </div>
