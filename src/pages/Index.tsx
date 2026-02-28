@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import heroPortrait from "@/assets/hero-portrait.jpg";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import BrowserFrame from "@/components/BrowserFrame";
@@ -45,21 +46,33 @@ export default function Index() {
 function Hero() {
   return (
     <section className="container pt-20 pb-24 md:pt-32 md:pb-32">
-      <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
-        Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
-      </h1>
-      <p className="mt-4 text-xl md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
-        Peder August Halvorsen
-      </p>
-      <p className="mt-6 text-lg md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
-        Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker.
-      </p>
-      <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
-        Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
-      </p>
-      <div className="mt-10 flex flex-wrap gap-4">
-        <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
-        <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div>
+          <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-none">
+            Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+          </h1>
+          <p className="mt-4 text-xl md:text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+            Peder August Halvorsen
+          </p>
+          <p className="mt-6 text-lg md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
+            Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker.
+          </p>
+          <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
+            Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
+            <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
+          </div>
+        </div>
+        <div className="flex justify-center md:justify-end">
+          <img
+            src={heroPortrait}
+            alt="Peder August Halvorsen"
+            className="aspect-square object-cover w-full max-w-md grayscale"
+            loading="eager"
+          />
+        </div>
       </div>
     </section>
   );
