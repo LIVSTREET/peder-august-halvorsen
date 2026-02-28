@@ -76,28 +76,20 @@ function ServiceSection({ service }: { service: (typeof services)[0] }) {
   return (
     <div>
       <SectionHeader title={service.title} />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
         <div>
-          <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">Hva du får</p>
-          <ul className="space-y-2">
+          <p className="text-xs font-mono text-primary uppercase tracking-widest mb-4">Hva du får</p>
+          <ul className="space-y-3">
             {service.what.map((w) => (
-              <li key={w} className="text-sm text-foreground/80 leading-relaxed">— {w}</li>
+              <li key={w} className="text-foreground/80 leading-relaxed">— {w}</li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="text-xs font-mono text-secondary uppercase tracking-widest mb-3">Passer for</p>
-          <ul className="space-y-2">
+          <p className="text-xs font-mono text-secondary uppercase tracking-widest mb-4">Passer for</p>
+          <ul className="space-y-3">
             {service.fits.map((f) => (
-              <li key={f} className="text-sm text-foreground/80">— {f}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-3">Passer ikke for</p>
-          <ul className="space-y-2">
-            {service.notFits.map((n) => (
-              <li key={n} className="text-sm text-muted-foreground">— {n}</li>
+              <li key={f} className="text-foreground/80">— {f}</li>
             ))}
           </ul>
         </div>
