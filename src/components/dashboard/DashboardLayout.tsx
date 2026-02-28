@@ -7,6 +7,7 @@ const nav = [
   { to: "/dashboard", end: true, label: "Oversikt" },
   { to: "/dashboard/projects", end: false, label: "Prosjekter" },
   { to: "/dashboard/posts", end: false, label: "Skriver" },
+  { to: "/dashboard/content", end: false, label: "Innhold" },
   { to: "/dashboard/archive", end: false, label: "Arkiv" },
   { to: "/dashboard/leads", end: false, label: "Leads" },
 ];

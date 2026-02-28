@@ -5,7 +5,7 @@ import BrowserFrame from "@/components/BrowserFrame";
 import CTAButton from "@/components/CTAButton";
 import EmptyState from "@/components/EmptyState";
 import { useProjects } from "@/hooks/useProjects";
-import { useArchiveItems } from "@/hooks/useArchiveItems";
+import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getBaseUrl, PERSON_NAME } from "@/lib/seo";
@@ -172,8 +172,8 @@ function ProjectCard({ project }: { project: any }) {
 }
 
 function BuildingNowSection() {
-  const { data: items } = useArchiveItems();
-  const buildLogs = items?.filter((i) => i.kind === "buildlog").slice(0, 5);
+  const { data: items } = usePublishedContentByType("build");
+  const buildLogs = items?.slice(0, 5);
 
   return (
     <section className="container pb-24">
@@ -184,14 +184,23 @@ function BuildingNowSection() {
         <ul className="divide-y divide-border">
           {buildLogs.map((item) => (
             <li key={item.id} className="py-3 flex items-baseline justify-between">
-              <span className="text-foreground font-body">{item.title}</span>
-              <span className="text-xs font-mono text-muted-foreground">
-                {item.kind}
-              </span>
+              <Link to={`/na-bygger-jeg/${item.slug}`} className="text-foreground font-body hover:text-primary transition-colors">
+                {item.title}
+              </Link>
+              {item.published_at && (
+                <span className="text-xs font-mono text-muted-foreground">
+                  {new Date(item.published_at).toLocaleDateString("nb-NO")}
+                </span>
+              )}
             </li>
           ))}
         </ul>
       )}
+      <div className="pt-4">
+        <Link to="/na-bygger-jeg" className="text-sm font-mono text-primary hover:underline underline-offset-4">
+          Se alt →
+        </Link>
+      </div>
     </section>
   );
 }

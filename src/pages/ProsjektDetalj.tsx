@@ -7,12 +7,15 @@ import { useProject } from "@/hooks/useProjects";
 import { useProjectAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { truncate, PERSON_NAME } from "@/lib/seo";
+import { usePublishedContentByProject } from "@/hooks/useContentItems";
+import { CONTENT_TYPE_ROUTES } from "@/lib/content-types";
 import { useParams, Link } from "react-router-dom";
 
 export default function ProsjektDetalj() {
   const { slug } = useParams<{ slug: string }>();
   const { data: project, isLoading } = useProject(slug || "");
   const { data: assets } = useProjectAssets(project?.id);
+  const { data: contentUpdates } = usePublishedContentByProject(project?.id);
 
   if (isLoading) {
     return (
@@ -124,6 +127,29 @@ export default function ProsjektDetalj() {
                 />
               </BrowserFrame>
             ))}
+          </div>
+        )}
+
+        {contentUpdates && contentUpdates.length > 0 && (
+          <div className="mt-12">
+            <h2 className="font-display text-xl font-bold text-foreground mb-4">Siste oppdateringer</h2>
+            <ul className="divide-y divide-border">
+              {contentUpdates.map((u: any) => (
+                <li key={u.id} className="py-3 flex items-baseline justify-between">
+                  <Link
+                    to={`${CONTENT_TYPE_ROUTES[u.type as keyof typeof CONTENT_TYPE_ROUTES]?.path ?? "/na-bygger-jeg"}/${u.slug}`}
+                    className="text-foreground hover:text-primary transition-colors"
+                  >
+                    {u.title}
+                  </Link>
+                  {u.published_at && (
+                    <span className="text-xs font-mono text-muted-foreground">
+                      {new Date(u.published_at).toLocaleDateString("nb-NO")}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 
