@@ -1,6 +1,7 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import { DashboardCommandPalette } from "@/components/dashboard/DashboardCommandPalette";
 
 const nav = [
   { to: "/dashboard", end: true, label: "Oversikt" },
@@ -13,6 +14,7 @@ const nav = [
 export default function DashboardLayout() {
   return (
     <div className="min-h-screen flex bg-background">
+      <DashboardCommandPalette />
       {/* Sidebar */}
       <aside className="w-56 shrink-0 border-r border-border flex flex-col">
         <div className="p-5 border-b border-border">

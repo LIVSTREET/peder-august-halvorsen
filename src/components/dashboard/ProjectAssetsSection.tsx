@@ -5,6 +5,7 @@ import { useProjectAssetsMutations } from "@/hooks/useProjectAssetsMutations";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getImageDimensions } from "@/lib/image-utils";
 import { validateFile, buildStoragePath, MAX_FILE_BYTES } from "@/lib/upload-utils";
+import { useDeleteWithUndo } from "@/hooks/useDeleteWithUndo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,11 +20,13 @@ export function ProjectAssetsSection({ projectId }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [alt, setAlt] = useState("");
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const showDeletedToast = useDeleteWithUndo();
 
   const { data: assets = [] } = useProjectAssets(projectId);
   const {
     insertAsset,
-    deleteAsset,
+    softDeleteAsset,
+    undoDeleteAsset,
     reorderAsset,
     isInserting,
   } = useProjectAssetsMutations(projectId);
@@ -76,9 +79,11 @@ export function ProjectAssetsSection({ projectId }: Props) {
     e.target.value = "";
   }
 
-  async function handleDelete(asset: { id: string; storage_path: string }) {
-    if (!confirm("Slette dette bildet?")) return;
-    await deleteAsset({ id: asset.id, storagePath: asset.storage_path });
+  async function handleDelete(asset: { id: string }) {
+    await softDeleteAsset({ id: asset.id });
+    showDeletedToast(() => {
+      undoDeleteAsset({ id: asset.id });
+    });
   }
 
   async function handleMove(asset: { id: string; sort_order: number }, direction: "up" | "down") {

@@ -44,10 +44,26 @@ export function useProjectAssetsMutations(projectId: string | undefined) {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async ({ id, storagePath }: { id: string; storagePath: string }) => {
-      await supabase.from("assets").delete().eq("id", id);
-      await supabase.storage.from(BUCKET).remove([storagePath]);
+  const softDeleteMutation = useMutation({
+    mutationFn: async ({ id }: { id: string }) => {
+      const { error } = await supabase
+        .from("assets")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["assets", "project", projectId] });
+    },
+  });
+
+  const undoDeleteMutation = useMutation({
+    mutationFn: async ({ id }: { id: string }) => {
+      const { error } = await supabase
+        .from("assets")
+        .update({ deleted_at: null })
+        .eq("id", id);
+      if (error) throw error;
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["assets", "project", projectId] });
@@ -69,9 +85,10 @@ export function useProjectAssetsMutations(projectId: string | undefined) {
 
   return {
     insertAsset: insertMutation.mutateAsync,
-    deleteAsset: deleteMutation.mutateAsync,
+    softDeleteAsset: softDeleteMutation.mutateAsync,
+    undoDeleteAsset: undoDeleteMutation.mutateAsync,
     reorderAsset: reorderMutation.mutateAsync,
     isInserting: insertMutation.isPending,
-    isDeleting: deleteMutation.isPending,
+    isDeleting: softDeleteMutation.isPending,
   };
 }
