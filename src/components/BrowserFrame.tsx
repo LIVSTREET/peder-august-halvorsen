@@ -19,7 +19,7 @@ export default function BrowserFrame({ url, children, className = "" }: BrowserF
           </div>
         )}
       </div>
-      <div className="bg-muted/10">
+      <div className="bg-muted/10 grain-excluded">
         {children}
       </div>
     </div>
