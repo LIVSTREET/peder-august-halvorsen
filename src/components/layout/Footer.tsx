@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <p className="font-display font-bold text-lg text-foreground">
-              ajs<span className="text-primary">.</span>
+              PAH<span className="text-primary">.</span>
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               Bygger fleksible plattformer og nettsteder.
