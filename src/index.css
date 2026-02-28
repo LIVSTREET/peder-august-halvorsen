@@ -103,6 +103,11 @@ body::after {
   background-size: 128px 128px;
 }
 
+.grain-excluded {
+  position: relative;
+  z-index: 10000;
+}
+
 /* Editorial prose styling */
 .prose-editorial {
   font-family: var(--font-body);
