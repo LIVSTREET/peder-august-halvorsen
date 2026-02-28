@@ -19,3 +19,10 @@ export function copiedToast(what?: string) {
 export function deletedToast() {
   return toast({ title: "Slettet", description: "Elementet er fjernet." });
 }
+
+export function createdToast(message?: string) {
+  return toast({
+    title: message ?? "Opprettet",
+    description: message ? undefined : "Elementet er opprettet.",
+  });
+}

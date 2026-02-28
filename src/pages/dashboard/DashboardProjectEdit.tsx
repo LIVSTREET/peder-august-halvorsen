@@ -15,10 +15,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ProjectAssetsSection } from "@/components/dashboard/ProjectAssetsSection";
+import { ProjectPreviewCard } from "@/components/dashboard/ProjectPreviewCard";
 import { getBaseUrl } from "@/lib/seo";
 import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 import { SaveIndicator } from "@/components/dashboard/SaveIndicator";
 import { savedToast, errorToast } from "@/lib/dashboard-toast";
+import { useProjectAssets } from "@/hooks/useAssets";
+import { getAssetUrl } from "@/lib/supabase-helpers";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -55,6 +58,12 @@ export default function DashboardProjectEdit() {
     },
     enabled: !!id,
   });
+
+  const { data: assets } = useProjectAssets(project?.id);
+  const firstAsset = assets?.[0];
+  const coverUrl = firstAsset
+    ? getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)
+    : null;
 
   const isPublished = project?.status === "published";
   const slugChanged = isPublished && form.slug !== (project?.slug ?? "");
@@ -180,6 +189,8 @@ export default function DashboardProjectEdit() {
         />
       </div>
 
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1 min-w-0">
       <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
         <div className="space-y-2">
           <Label htmlFor="title">Tittel</Label>
@@ -319,6 +330,20 @@ export default function DashboardProjectEdit() {
       </form>
 
       <ProjectAssetsSection projectId={project.id} />
+        </div>
+
+        <div className="lg:w-72 shrink-0 space-y-4">
+          <p className="text-xs font-mono text-muted-foreground">Preview</p>
+          <ProjectPreviewCard
+            title={form.title}
+            slug={form.slug}
+            excerpt={form.subtitle}
+            coverUrl={coverUrl}
+            status={form.status}
+            publicPath={`/prosjekter/${form.slug}`}
+          />
+        </div>
+      </div>
     </div>
   );
 }

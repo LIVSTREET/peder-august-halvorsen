@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -33,11 +34,16 @@ export default function DashboardProjects() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-display text-2xl font-bold text-foreground">Prosjekter</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Alle prosjekter. Bytt status og rediger.
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl font-bold text-foreground">Prosjekter</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Alle prosjekter. Bytt status og rediger.
+          </p>
+        </div>
+        <Button asChild size="sm">
+          <Link to="/dashboard/projects/new">Nytt prosjekt</Link>
+        </Button>
       </div>
 
       {isLoading ? (
