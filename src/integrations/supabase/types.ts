@@ -200,6 +200,66 @@ export type Database = {
         }
         Relationships: []
       }
+      content_items: {
+        Row: {
+          body: string | null
+          cover_asset_id: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          project_id: string | null
+          published_at: string | null
+          slug: string
+          status: string
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          cover_asset_id?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          project_id?: string | null
+          published_at?: string | null
+          slug: string
+          status?: string
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          cover_asset_id?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          project_id?: string | null
+          published_at?: string | null
+          slug?: string
+          status?: string
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_items_cover_asset_id_fkey"
+            columns: ["cover_asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           created_at: string

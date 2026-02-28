@@ -15,6 +15,8 @@ import Musikk from "./pages/Musikk";
 import Prat from "./pages/Prat";
 import Brief from "./pages/Brief";
 import NotFound from "./pages/NotFound";
+import ContentListe from "./pages/ContentListe";
+import ContentDetalj from "./pages/ContentDetalj";
 
 // Dashboard
 import { DashboardGuard } from "./components/dashboard/DashboardGuard";
@@ -29,6 +31,9 @@ import DashboardPostNew from "./pages/dashboard/DashboardPostNew";
 import DashboardArchive from "./pages/dashboard/DashboardArchive";
 import DashboardLeads from "./pages/dashboard/DashboardLeads";
 import DashboardLeadDetail from "./pages/dashboard/DashboardLeadDetail";
+import DashboardContent from "./pages/dashboard/DashboardContent";
+import DashboardContentNew from "./pages/dashboard/DashboardContentNew";
+import DashboardContentEdit from "./pages/dashboard/DashboardContentEdit";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +56,12 @@ const App = () => (
           <Route path="/prat" element={<Prat />} />
           <Route path="/brief" element={<Brief />} />
 
+          {/* Content */}
+          <Route path="/arbeid" element={<ContentListe type="work" title="Arbeid" description="Utvalgte arbeider og oppdateringer." />} />
+          <Route path="/arbeid/:slug" element={<ContentDetalj type="work" />} />
+          <Route path="/na-bygger-jeg" element={<ContentListe type="build" title="Nå bygger jeg" description="Det jeg jobber med akkurat nå." />} />
+          <Route path="/na-bygger-jeg/:slug" element={<ContentDetalj type="build" />} />
+
           {/* Dashboard */}
           <Route path="/dashboard/login" element={<DashboardLogin />} />
           <Route path="/dashboard" element={<DashboardGuard><DashboardLayout /></DashboardGuard>}>
@@ -63,6 +74,9 @@ const App = () => (
             <Route path="archive" element={<DashboardArchive />} />
             <Route path="leads" element={<DashboardLeads />} />
             <Route path="leads/:id" element={<DashboardLeadDetail />} />
+            <Route path="content" element={<DashboardContent />} />
+            <Route path="content/new" element={<DashboardContentNew />} />
+            <Route path="content/:id" element={<DashboardContentEdit />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

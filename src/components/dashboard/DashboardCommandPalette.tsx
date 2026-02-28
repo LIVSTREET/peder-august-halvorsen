@@ -14,6 +14,8 @@ const COMMANDS = [
   { label: "Prosjekter", to: "/dashboard/projects" },
   { label: "Skriver", to: "/dashboard/posts" },
   { label: "Ny post", to: "/dashboard/posts/new" },
+  { label: "Innhold", to: "/dashboard/content" },
+  { label: "Nytt innhold", to: "/dashboard/content/new" },
   { label: "Arkiv", to: "/dashboard/archive" },
   { label: "Leads", to: "/dashboard/leads" },
 ];
