@@ -1,8 +1,8 @@
 import imageCompression from "browser-image-compression";
 
-const MAX_SIZE_MB = 0.4;
-const MAX_WIDTH_OR_HEIGHT = 1920;
-const INITIAL_QUALITY = 0.85;
+const MAX_SIZE_MB = 1.2;
+const MAX_WIDTH_OR_HEIGHT = 2400;
+const INITIAL_QUALITY = 0.95;
 
 export async function compressImageForUpload(file: File): Promise<File> {
   const type = file.type;
