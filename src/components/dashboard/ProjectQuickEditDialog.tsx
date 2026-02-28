@@ -25,11 +25,15 @@ type Project = {
   title: string;
   slug: string;
   subtitle: string | null;
+  description: string | null;
+  role: string | null;
+  tech: string | null;
+  url: string | null;
   status: "draft" | "published" | "archived";
 };
 
 type Props = {
-  project: Project | null;        // null = create mode
+  project: Project | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onCreated?: (id: string) => void;
@@ -43,6 +47,10 @@ export function ProjectQuickEditDialog({ project, open, onOpenChange, onCreated 
     title: "",
     slug: "",
     subtitle: "",
+    description: "",
+    role: "",
+    tech: "",
+    url: "",
     status: "draft" as "draft" | "published" | "archived",
   });
   const [submitting, setSubmitting] = useState(false);
@@ -54,10 +62,14 @@ export function ProjectQuickEditDialog({ project, open, onOpenChange, onCreated 
         title: project.title,
         slug: project.slug,
         subtitle: project.subtitle ?? "",
+        description: project.description ?? "",
+        role: project.role ?? "",
+        tech: project.tech ?? "",
+        url: project.url ?? "",
         status: project.status,
       });
     } else {
-      setForm({ title: "", slug: "", subtitle: "", status: "draft" });
+      setForm({ title: "", slug: "", subtitle: "", description: "", role: "", tech: "", url: "", status: "draft" });
     }
   }, [open, project]);
 
@@ -65,32 +77,25 @@ export function ProjectQuickEditDialog({ project, open, onOpenChange, onCreated 
     e.preventDefault();
     setSubmitting(true);
 
+    const payload = {
+      title: form.title.trim() || "Uten tittel",
+      slug: form.slug.trim() || slugify(form.title) || "prosjekt",
+      subtitle: form.subtitle.trim() || null,
+      description: form.description.trim() || null,
+      role: form.role.trim() || null,
+      tech: form.tech.trim() || null,
+      url: form.url.trim() || null,
+      status: form.status,
+      ...(form.status === "published" ? { published_at: new Date().toISOString() } : {}),
+    };
+
     if (isEdit) {
-      const { error } = await supabase
-        .from("projects")
-        .update({
-          title: form.title.trim() || "Uten tittel",
-          slug: form.slug,
-          subtitle: form.subtitle.trim() || null,
-          status: form.status,
-          ...(form.status === "published" ? { published_at: new Date().toISOString() } : {}),
-        })
-        .eq("id", project!.id);
+      const { error } = await supabase.from("projects").update(payload).eq("id", project!.id);
       setSubmitting(false);
       if (error) { errorToast(error.message); return; }
       savedToast();
     } else {
-      const { data, error } = await supabase
-        .from("projects")
-        .insert({
-          title: form.title.trim() || "Uten tittel",
-          slug: form.slug.trim() || slugify(form.title) || "prosjekt",
-          subtitle: form.subtitle.trim() || null,
-          status: form.status,
-          ...(form.status === "published" ? { published_at: new Date().toISOString() } : {}),
-        })
-        .select()
-        .single();
+      const { data, error } = await supabase.from("projects").insert(payload).select().single();
       setSubmitting(false);
       if (error) { errorToast(error.message); return; }
       createdToast("Prosjekt opprettet");
@@ -104,7 +109,7 @@ export function ProjectQuickEditDialog({ project, open, onOpenChange, onCreated 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display">
             {isEdit ? "Rediger prosjekt" : "Nytt prosjekt"}
@@ -133,17 +138,49 @@ export function ProjectQuickEditDialog({ project, open, onOpenChange, onCreated 
               id="pq-slug"
               value={form.slug}
               onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-              readOnly={!isEdit}
-              className={!isEdit ? "bg-muted/50" : ""}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="pq-subtitle">Undertittel</Label>
-            <Textarea
+            <Input
               id="pq-subtitle"
               value={form.subtitle}
               onChange={(e) => setForm((f) => ({ ...f, subtitle: e.target.value }))}
-              rows={2}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="pq-description">Beskrivelse</Label>
+            <Textarea
+              id="pq-description"
+              value={form.description}
+              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+              rows={5}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="pq-role">Rolle</Label>
+              <Input
+                id="pq-role"
+                value={form.role}
+                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="pq-tech">Tech (kommaseparert)</Label>
+              <Input
+                id="pq-tech"
+                value={form.tech}
+                onChange={(e) => setForm((f) => ({ ...f, tech: e.target.value }))}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="pq-url">URL</Label>
+            <Input
+              id="pq-url"
+              value={form.url}
+              onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
             />
           </div>
           <div className="space-y-2">

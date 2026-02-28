@@ -26,6 +26,7 @@ export default function DashboardPosts() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<{
     id: string; title: string; slug: string;
+    excerpt: string | null; content_md: string | null;
     status: "draft" | "published" | "archived"; published_at: string | null;
   } | null>(null);
 
@@ -108,6 +109,8 @@ export default function DashboardPosts() {
                   id: p.id,
                   title: p.title,
                   slug: p.slug,
+                  excerpt: p.excerpt,
+                  content_md: p.content_md,
                   status: p.status,
                   published_at: p.published_at,
                 })}

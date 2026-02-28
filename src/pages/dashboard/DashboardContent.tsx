@@ -24,6 +24,7 @@ export default function DashboardContent() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<{
     id: string; title: string; slug: string; type: string; status: string;
+    excerpt: string | null; body: string | null; project_id: string | null;
   } | null>(null);
 
   const filters = {
@@ -38,7 +39,7 @@ export default function DashboardContent() {
   }
 
   function openEdit(row: any) {
-    setEditingItem({ id: row.id, title: row.title, slug: row.slug, type: row.type, status: row.status });
+    setEditingItem({ id: row.id, title: row.title, slug: row.slug, type: row.type, status: row.status, excerpt: row.excerpt ?? null, body: row.body ?? null, project_id: row.project_id ?? null });
     setDialogOpen(true);
   }
 
