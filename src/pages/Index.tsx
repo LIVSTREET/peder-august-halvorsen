@@ -65,7 +65,7 @@ function Hero() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
         <div>
-          <h1 className="hidden md:block font-display text-7xl font-extrabold tracking-tight text-foreground leading-none">
+          <h1 className="hidden md:block font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
             Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
           <p className="hidden md:block mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
@@ -79,7 +79,7 @@ function Hero() {
           <p className="mt-2 md:mt-3 text-sm md:text-base text-muted-foreground max-w-lg font-body">
             Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
           </p>
-          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
+          <div className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
             <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
             <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
           </div>
