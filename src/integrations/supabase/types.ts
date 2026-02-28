@@ -159,6 +159,9 @@ export type Database = {
           phone: string | null
           priority: string | null
           stage: string | null
+          status: string | null
+          tags: string[] | null
+          updated_at: string | null
         }
         Insert: {
           ai_summary?: string | null
@@ -172,6 +175,9 @@ export type Database = {
           phone?: string | null
           priority?: string | null
           stage?: string | null
+          status?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
         }
         Update: {
           ai_summary?: string | null
@@ -185,6 +191,9 @@ export type Database = {
           phone?: string | null
           priority?: string | null
           stage?: string | null
+          status?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
         }
         Relationships: []
       }

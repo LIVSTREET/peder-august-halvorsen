@@ -4,6 +4,7 @@ import { useProjectAssets } from "@/hooks/useAssets";
 import { useProjectAssetsMutations } from "@/hooks/useProjectAssetsMutations";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getImageDimensions } from "@/lib/image-utils";
+import { validateFile, buildStoragePath, MAX_FILE_BYTES } from "@/lib/upload-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,12 +34,22 @@ export function ProjectAssetsSection({ projectId }: Props) {
     const file = e.target.files?.[0];
     if (!file || !projectId) return;
     setUploadError(null);
-    const ext = file.name.split(".").pop() || "jpg";
-    const storagePath = `projects/${projectId}/${crypto.randomUUID()}.${ext}`;
+
+    const validation = validateFile(file);
+    if (!validation.ok) {
+      setUploadError((validation as { ok: false; message: string }).message);
+      e.target.value = "";
+      return;
+    }
+
+    const storagePath = buildStoragePath("project", projectId, file);
 
     const { error: uploadErr } = await supabase.storage
       .from(BUCKET)
-      .upload(storagePath, file, { upsert: false });
+      .upload(storagePath, file, {
+        upsert: false,
+        cacheControl: "public, max-age=31536000, immutable",
+      });
 
     if (uploadErr) {
       setUploadError(uploadErr.message);
@@ -99,7 +110,7 @@ export function ProjectAssetsSection({ projectId }: Props) {
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.pdf"
           className="hidden"
           onChange={handleFileChange}
         />
@@ -111,6 +122,9 @@ export function ProjectAssetsSection({ projectId }: Props) {
         >
           {isInserting ? "Laster opp…" : "Last opp bilde"}
         </Button>
+        <p className="text-xs text-muted-foreground mt-1">
+          Bilder og PDF, maks {MAX_FILE_BYTES / 1024 / 1024} MB.
+        </p>
       </div>
 
       {uploadError && (
