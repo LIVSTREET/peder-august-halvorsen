@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDashboardPosts } from "@/hooks/useDashboardPosts";
 import { PostsListSkeleton } from "@/components/dashboard/PostsListSkeleton";
-import { PostQuickEditDialog } from "@/components/dashboard/PostQuickEditDialog";
 import {
   Select,
   SelectContent,
@@ -10,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const STATUS_OPTIONS = [
@@ -23,12 +21,6 @@ export default function DashboardPosts() {
   const { data: posts, isLoading, setStatus } = useDashboardPosts();
   const navigate = useNavigate();
   const [updatingId, setUpdatingId] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingPost, setEditingPost] = useState<{
-    id: string; title: string; slug: string;
-    excerpt: string | null; content_md: string | null;
-    status: "draft" | "published" | "archived"; published_at: string | null;
-  } | null>(null);
 
   async function handleStatusChange(postId: string, value: string, publishedAt: string | null) {
     if (!value || !["draft", "published", "archived"].includes(value)) return;
@@ -44,31 +36,14 @@ export default function DashboardPosts() {
     }
   }
 
-  function openCreate() {
-    setEditingPost(null);
-    setDialogOpen(true);
-  }
-
-  function openEdit(p: typeof editingPost) {
-    setEditingPost(p);
-    setDialogOpen(true);
-  }
-
   return (
     <div className="space-y-6">
-      <PostQuickEditDialog
-        post={editingPost}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        onCreated={(id) => navigate(`/dashboard/posts/${id}`)}
-      />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-foreground">Skriver</h1>
           <p className="text-muted-foreground text-sm">Alle innlegg. Bytt status eller rediger.</p>
         </div>
-        <Button size="sm" onClick={openCreate}>Nytt innlegg</Button>
+        <Button size="sm" onClick={() => navigate("/dashboard/posts/new")}>Nytt innlegg</Button>
       </div>
 
       {isLoading ? (
@@ -105,15 +80,7 @@ export default function DashboardPosts() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => openEdit({
-                  id: p.id,
-                  title: p.title,
-                  slug: p.slug,
-                  excerpt: p.excerpt,
-                  content_md: p.content_md,
-                  status: p.status,
-                  published_at: p.published_at,
-                })}
+                onClick={() => navigate(`/dashboard/posts/${p.id}`)}
               >
                 Rediger
               </Button>

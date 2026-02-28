@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDashboardContentItems } from "@/hooks/useContentItems";
 import { CONTENT_TYPES, CONTENT_STATUSES, TYPE_LABEL } from "@/lib/content-types";
-import { ContentQuickEditDialog } from "@/components/dashboard/ContentQuickEditDialog";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -21,11 +20,6 @@ export default function DashboardContent() {
   const navigate = useNavigate();
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<{
-    id: string; title: string; slug: string; type: string; status: string;
-    excerpt: string | null; body: string | null; project_id: string | null;
-  } | null>(null);
 
   const filters = {
     type: typeFilter !== "all" ? (typeFilter as "work" | "build" | "archive") : undefined,
@@ -33,31 +27,14 @@ export default function DashboardContent() {
   };
   const { data: items, isLoading } = useDashboardContentItems(filters);
 
-  function openCreate() {
-    setEditingItem(null);
-    setDialogOpen(true);
-  }
-
-  function openEdit(row: any) {
-    setEditingItem({ id: row.id, title: row.title, slug: row.slug, type: row.type, status: row.status, excerpt: row.excerpt ?? null, body: row.body ?? null, project_id: row.project_id ?? null });
-    setDialogOpen(true);
-  }
-
   return (
     <div className="space-y-6">
-      <ContentQuickEditDialog
-        item={editingItem}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        onCreated={(id) => navigate(`/dashboard/content/${id}`)}
-      />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-foreground">Innhold</h1>
           <p className="text-sm text-muted-foreground">Arbeid, Nå bygger jeg, Arkiv.</p>
         </div>
-        <Button size="sm" onClick={openCreate}>Nytt innhold</Button>
+        <Button size="sm" onClick={() => navigate("/dashboard/content/new")}>Nytt innhold</Button>
       </div>
 
       <div className="flex gap-3">
@@ -101,12 +78,9 @@ export default function DashboardContent() {
                 <TableCell className="text-muted-foreground text-xs">{TYPE_LABEL[row.type] ?? row.type}</TableCell>
                 <TableCell className="text-xs">{row.status}</TableCell>
                 <TableCell className="text-xs text-muted-foreground">{formatDate(row.updated_at)}</TableCell>
-                <TableCell className="text-right space-x-1">
-                  <Button variant="ghost" size="sm" onClick={() => openEdit(row)}>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="sm" onClick={() => navigate(`/dashboard/content/${row.id}`)}>
                     Rediger
-                  </Button>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to={`/dashboard/content/${row.id}`}>Åpne</Link>
                   </Button>
                 </TableCell>
               </TableRow>
