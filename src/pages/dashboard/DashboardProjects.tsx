@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDashboardProjects } from "@/hooks/useDashboardProjects";
 import { ProjectsListSkeleton } from "@/components/dashboard/ProjectsListSkeleton";
-import { ProjectQuickEditDialog } from "@/components/dashboard/ProjectQuickEditDialog";
 import {
   Select,
   SelectContent,
@@ -10,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const STATUS_OPTIONS = [
@@ -23,12 +21,6 @@ export default function DashboardProjects() {
   const { data: projects, isLoading, setStatus } = useDashboardProjects();
   const navigate = useNavigate();
   const [updatingId, setUpdatingId] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingProject, setEditingProject] = useState<{
-    id: string; title: string; slug: string; subtitle: string | null;
-    description: string | null; role: string | null; tech: string | null; url: string | null;
-    status: "draft" | "published" | "archived";
-  } | null>(null);
 
   async function handleStatusChange(projectId: string, value: string) {
     if (!["draft", "published", "archived"].includes(value)) return;
@@ -40,25 +32,8 @@ export default function DashboardProjects() {
     }
   }
 
-  function openCreate() {
-    setEditingProject(null);
-    setDialogOpen(true);
-  }
-
-  function openEdit(p: typeof editingProject) {
-    setEditingProject(p);
-    setDialogOpen(true);
-  }
-
   return (
     <div className="space-y-8">
-      <ProjectQuickEditDialog
-        project={editingProject}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        onCreated={(id) => navigate(`/dashboard/projects/${id}`)}
-      />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-foreground">Prosjekter</h1>
@@ -66,7 +41,7 @@ export default function DashboardProjects() {
             Alle prosjekter. Bytt status og rediger.
           </p>
         </div>
-        <Button size="sm" onClick={openCreate}>Nytt prosjekt</Button>
+        <Button size="sm" onClick={() => navigate("/dashboard/projects/new")}>Nytt prosjekt</Button>
       </div>
 
       {isLoading ? (
@@ -108,17 +83,7 @@ export default function DashboardProjects() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => openEdit({
-                  id: p.id,
-                  title: p.title,
-                  slug: p.slug,
-                  subtitle: p.subtitle,
-                  description: p.description,
-                  role: p.role,
-                  tech: p.tech,
-                  url: p.url,
-                  status: p.status,
-                })}
+                onClick={() => navigate(`/dashboard/projects/${p.id}`)}
               >
                 Rediger
               </Button>
