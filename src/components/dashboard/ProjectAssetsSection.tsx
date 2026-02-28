@@ -5,6 +5,7 @@ import { useProjectAssetsMutations } from "@/hooks/useProjectAssetsMutations";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getImageDimensions } from "@/lib/image-utils";
 import { validateFile, buildStoragePath, MAX_FILE_BYTES } from "@/lib/upload-utils";
+import { compressImageForUpload } from "@/lib/compress-image";
 import { useDeleteWithUndo } from "@/hooks/useDeleteWithUndo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,16 +47,19 @@ export function ProjectAssetsSection({ projectId }: Props) {
         : 0;
 
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const validation = validateFile(file);
+      let fileToUpload = files[i];
+      if (fileToUpload.type.startsWith("image/") && fileToUpload.type !== "image/gif") {
+        fileToUpload = await compressImageForUpload(fileToUpload);
+      }
+      const validation = validateFile(fileToUpload);
       if (!validation.ok) {
         setUploadError((validation as { ok: false; message: string }).message);
         break;
       }
-      const storagePath = buildStoragePath("project", projectId, file);
+      const storagePath = buildStoragePath("project", projectId, fileToUpload);
       const { error: uploadErr } = await supabase.storage
         .from(BUCKET)
-        .upload(storagePath, file, {
+        .upload(storagePath, fileToUpload, {
           upsert: false,
           cacheControl: "public, max-age=31536000, immutable",
         });
