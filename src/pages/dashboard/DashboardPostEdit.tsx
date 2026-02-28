@@ -270,6 +270,8 @@ export default function DashboardPostEdit() {
             id="slug"
             value={form.slug}
             onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+            readOnly={!isPublished}
+            className={!isPublished ? "bg-muted/50" : ""}
             required
           />
           {slugChanged && (
