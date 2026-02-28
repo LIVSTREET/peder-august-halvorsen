@@ -108,6 +108,7 @@ export type Database = {
         Row: {
           alt: string | null
           created_at: string
+          deleted_at: string | null
           height: number | null
           id: string
           kind: string
@@ -121,6 +122,7 @@ export type Database = {
         Insert: {
           alt?: string | null
           created_at?: string
+          deleted_at?: string | null
           height?: number | null
           id?: string
           kind?: string
@@ -134,6 +136,7 @@ export type Database = {
         Update: {
           alt?: string | null
           created_at?: string
+          deleted_at?: string | null
           height?: number | null
           id?: string
           kind?: string

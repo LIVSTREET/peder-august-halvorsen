@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDashboardPosts } from "@/hooks/useDashboardPosts";
+import { PostsListSkeleton } from "@/components/dashboard/PostsListSkeleton";
 import {
   Select,
   SelectContent,
@@ -48,7 +49,7 @@ export default function DashboardPosts() {
       </div>
 
       {isLoading ? (
-        <p className="text-muted-foreground text-sm">Laster…</p>
+        <PostsListSkeleton />
       ) : (
         <ul className="divide-y divide-border">
           {posts?.map((p) => (

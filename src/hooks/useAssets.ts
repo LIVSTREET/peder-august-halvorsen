@@ -9,6 +9,7 @@ export function useAssets(ownerType: string, ownerId?: string) {
         .from("assets")
         .select("*")
         .eq("owner_type", ownerType)
+        .is("deleted_at", null)
         .order("sort_order");
       if (ownerId) q = q.eq("owner_id", ownerId);
       const { data, error } = await q;

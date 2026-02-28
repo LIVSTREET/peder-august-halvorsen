@@ -4,35 +4,23 @@ import { useDashboardLeads, useUpdateLead } from "@/hooks/useDashboardLeads";
 import { GOALS } from "@/lib/brief-labels";
 import { LEAD_STATUSES } from "@/lib/lead-status";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { LeadsTableSkeleton } from "@/components/dashboard/LeadsTableSkeleton";
+import { copiedToast } from "@/lib/dashboard-toast";
+import { getBaseUrl } from "@/lib/seo";
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("nb-NO", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+  return new Date(iso).toLocaleDateString("nb-NO", { day: "2-digit", month: "short", year: "numeric" });
 }
 
 export default function DashboardLeads() {
   const [statusFilter, setStatusFilter] = useState("all");
-  const { toast } = useToast();
   const { data: leads, isLoading } = useDashboardLeads();
   const updateLead = useUpdateLead();
 
@@ -44,16 +32,11 @@ export default function DashboardLeads() {
 
   function copyMail(email: string | null) {
     if (!email) return;
-    navigator.clipboard.writeText(email).then(() => {
-      toast({ title: "Kopiert", description: "E-post i utklippstavle" });
-    });
+    navigator.clipboard.writeText(email).then(() => copiedToast("E-post i utklippstavle"));
   }
 
   function handleStatusChange(leadId: string, status: string) {
-    updateLead.mutate(
-      { id: leadId, status: status as "new" | "contacted" | "warm" | "won" | "lost" },
-      { onSuccess: () => toast({ title: "Oppdatert" }) }
-    );
+    updateLead.mutate({ id: leadId, status: status as "new" | "contacted" | "warm" | "won" | "lost" });
   }
 
   return (
@@ -78,7 +61,22 @@ export default function DashboardLeads() {
       </div>
 
       {isLoading ? (
-        <p className="text-muted-foreground text-sm">Laster…</p>
+        <LeadsTableSkeleton />
+      ) : filtered.length === 0 ? (
+        <div className="py-12 text-center space-y-3">
+          <p className="font-display text-lg text-muted-foreground">Ingen leads enda</p>
+          <p className="text-sm text-muted-foreground/60">Del lenken under for å samle inn brief fra besøkende.</p>
+          <p className="text-xs font-mono text-muted-foreground">{getBaseUrl()}/brief</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              navigator.clipboard.writeText(`${getBaseUrl()}/brief`).then(() => copiedToast("Brief-lenke i utklippstavlen"))
+            }
+          >
+            Kopier lenke
+          </Button>
+        </div>
       ) : (
         <Table>
           <TableHeader>
@@ -94,9 +92,7 @@ export default function DashboardLeads() {
           <TableBody>
             {filtered.map((lead) => (
               <TableRow key={lead.id}>
-                <TableCell className="text-xs text-muted-foreground">
-                  {formatDate(lead.created_at)}
-                </TableCell>
+                <TableCell className="text-xs text-muted-foreground">{formatDate(lead.created_at)}</TableCell>
                 <TableCell>
                   <Select
                     value={(lead as Record<string, unknown>).status as string ?? "new"}
@@ -117,9 +113,7 @@ export default function DashboardLeads() {
                 <TableCell>{lead.email ?? "—"}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => copyMail(lead.email)}>
-                      Kopier mail
-                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => copyMail(lead.email)}>Kopier mail</Button>
                     <Button variant="ghost" size="sm" asChild>
                       <Link to={`/dashboard/leads/${lead.id}`}>Åpne</Link>
                     </Button>

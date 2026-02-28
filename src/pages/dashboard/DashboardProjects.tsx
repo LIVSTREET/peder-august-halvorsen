@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDashboardProjects } from "@/hooks/useDashboardProjects";
+import { ProjectsListSkeleton } from "@/components/dashboard/ProjectsListSkeleton";
 import {
   Select,
   SelectContent,
@@ -40,7 +41,7 @@ export default function DashboardProjects() {
       </div>
 
       {isLoading ? (
-        <p className="text-muted-foreground text-sm">Laster…</p>
+        <ProjectsListSkeleton />
       ) : (
         <div className="space-y-2">
           {projects?.map((p) => (

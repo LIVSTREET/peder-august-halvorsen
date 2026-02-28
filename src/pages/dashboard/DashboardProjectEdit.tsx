@@ -17,6 +17,8 @@ import {
 import { ProjectAssetsSection } from "@/components/dashboard/ProjectAssetsSection";
 import { getBaseUrl } from "@/lib/seo";
 import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
+import { SaveIndicator } from "@/components/dashboard/SaveIndicator";
+import { savedToast, errorToast } from "@/lib/dashboard-toast";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -97,7 +99,9 @@ export default function DashboardProjectEdit() {
       qc.invalidateQueries({ queryKey: ["dashboard", "projects"] });
       qc.invalidateQueries({ queryKey: ["dashboard", "project", id] });
       qc.invalidateQueries({ queryKey: ["projects"] });
+      savedToast();
     },
+    onError: (err) => errorToast(err?.message),
   });
 
   useEffect(() => {
@@ -162,9 +166,19 @@ export default function DashboardProjectEdit() {
         </button>
       </div>
 
-      <h1 className="font-display text-2xl font-bold text-foreground">
-        Rediger prosjekt
-      </h1>
+      <div className="flex items-center gap-3">
+        <h1 className="font-display text-2xl font-bold text-foreground">
+          Rediger prosjekt
+        </h1>
+        <SaveIndicator
+          status={
+            updateMutation.isPending ? "saving"
+              : updateMutation.isSuccess ? "saved"
+              : hasChanges ? "idle"
+              : "hidden"
+          }
+        />
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
         <div className="space-y-2">
@@ -276,12 +290,6 @@ export default function DashboardProjectEdit() {
           )}
         </div>
 
-        {updateMutation.isSuccess && (
-          <p className="text-sm text-primary">Lagret!</p>
-        )}
-        {updateMutation.isError && (
-          <p className="text-sm text-destructive">Noe gikk galt.</p>
-        )}
 
         <div className="flex gap-2">
           <Button type="submit" disabled={updateMutation.isPending}>
