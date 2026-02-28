@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 pt-4 border-t border-border">
           <p className="text-xs text-muted-foreground/40">
-            © {new Date().getFullYear()}
+            © {new Date().getFullYear()} · <a href="/dashboard" className="hover:text-muted-foreground/60 transition-colors">◆</a>
           </p>
         </div>
       </div>
