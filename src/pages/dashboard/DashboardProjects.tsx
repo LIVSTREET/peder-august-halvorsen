@@ -33,15 +33,15 @@ export default function DashboardProjects() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-foreground">Prosjekter</h1>
-          <p className="text-muted-foreground text-sm mt-1">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Prosjekter</h1>
+          <p className="text-muted-foreground text-sm mt-1 hidden sm:block">
             Alle prosjekter. Bytt status og rediger.
           </p>
         </div>
-        <Button size="sm" onClick={() => navigate("/dashboard/projects/new")}>Nytt prosjekt</Button>
+        <Button size="sm" className="shrink-0" onClick={() => navigate("/dashboard/projects/new")}>Nytt prosjekt</Button>
       </div>
 
       {isLoading ? (
@@ -51,7 +51,7 @@ export default function DashboardProjects() {
           {projects?.map((p) => (
             <div
               key={p.id}
-              className="flex items-center gap-4 py-3 px-4 border border-border rounded-md"
+              className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 py-3 px-3 sm:px-4 border border-border rounded-md"
             >
               <div className="flex-1 min-w-0">
                 <Link
@@ -60,33 +60,35 @@ export default function DashboardProjects() {
                 >
                   {p.title}
                 </Link>
-                <p className="text-muted-foreground text-xs font-mono">{p.slug}</p>
+                <p className="text-muted-foreground text-xs font-mono truncate">{p.slug}</p>
               </div>
 
-              <Select
-                value={p.status}
-                onValueChange={(v) => handleStatusChange(p.id, v)}
-                disabled={updatingId === p.id}
-              >
-                <SelectTrigger className="w-[130px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {STATUS_OPTIONS.map((o) => (
-                    <SelectItem key={o.value} value={o.value}>
-                      {o.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="flex items-center gap-2">
+                <Select
+                  value={p.status}
+                  onValueChange={(v) => handleStatusChange(p.id, v)}
+                  disabled={updatingId === p.id}
+                >
+                  <SelectTrigger className="w-[120px] h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STATUS_OPTIONS.map((o) => (
+                      <SelectItem key={o.value} value={o.value}>
+                        {o.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate(`/dashboard/projects/${p.id}`)}
-              >
-                Rediger
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate(`/dashboard/projects/${p.id}`)}
+                >
+                  Rediger
+                </Button>
+              </div>
             </div>
           ))}
         </div>

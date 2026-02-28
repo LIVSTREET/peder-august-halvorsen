@@ -4,9 +4,6 @@ import { useDashboardLeads, useUpdateLead } from "@/hooks/useDashboardLeads";
 import { GOALS } from "@/lib/brief-labels";
 import { LEAD_STATUSES } from "@/lib/lead-status";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
-import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -16,7 +13,7 @@ import { getBaseUrl } from "@/lib/seo";
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("nb-NO", { day: "2-digit", month: "short", year: "numeric" });
+  return new Date(iso).toLocaleDateString("nb-NO", { day: "2-digit", month: "short" });
 }
 
 export default function DashboardLeads() {
@@ -42,13 +39,13 @@ export default function DashboardLeads() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-bold text-foreground">Leads</h1>
-        <p className="text-muted-foreground text-sm">Brief-innsendelser. Status og hurtighandlinger.</p>
+        <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Leads</h1>
+        <p className="text-muted-foreground text-sm hidden sm:block">Brief-innsendelser. Status og hurtighandlinger.</p>
       </div>
 
       <div className="flex gap-2">
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-32 h-8 text-xs">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -66,7 +63,7 @@ export default function DashboardLeads() {
         <div className="py-12 text-center space-y-3">
           <p className="font-display text-lg text-muted-foreground">Ingen leads enda</p>
           <p className="text-sm text-muted-foreground/60">Del lenken under for å samle inn brief fra besøkende.</p>
-          <p className="text-xs font-mono text-muted-foreground">{getBaseUrl()}/brief</p>
+          <p className="text-xs font-mono text-muted-foreground break-all">{getBaseUrl()}/brief</p>
           <Button
             variant="outline"
             size="sm"
@@ -78,51 +75,39 @@ export default function DashboardLeads() {
           </Button>
         </div>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Dato</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Mål</TableHead>
-              <TableHead>Navn</TableHead>
-              <TableHead>E-post</TableHead>
-              <TableHead>Handlinger</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filtered.map((lead) => (
-              <TableRow key={lead.id}>
-                <TableCell className="text-xs text-muted-foreground">{formatDate(lead.created_at)}</TableCell>
-                <TableCell>
-                  <Select
-                    value={(lead as Record<string, unknown>).status as string ?? "new"}
-                    onValueChange={(v) => handleStatusChange(lead.id, v)}
-                  >
-                    <SelectTrigger className="w-32 h-8 text-xs">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {LEAD_STATUSES.map((s) => (
-                        <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </TableCell>
-                <TableCell>{GOALS[lead.goal ?? ""] ?? lead.goal ?? "—"}</TableCell>
-                <TableCell>{lead.name ?? "—"}</TableCell>
-                <TableCell>{lead.email ?? "—"}</TableCell>
-                <TableCell>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => copyMail(lead.email)}>Kopier mail</Button>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to={`/dashboard/leads/${lead.id}`}>Åpne</Link>
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="space-y-2">
+          {filtered.map((lead) => (
+            <div key={lead.id} className="border border-border rounded-md p-3 space-y-2">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground">{lead.name ?? "—"}</p>
+                  <p className="text-xs text-muted-foreground truncate">{lead.email ?? ""}</p>
+                </div>
+                <span className="text-xs text-muted-foreground/60 shrink-0">{formatDate(lead.created_at)}</span>
+              </div>
+              <p className="text-xs text-muted-foreground">{GOALS[lead.goal ?? ""] ?? lead.goal ?? "—"}</p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Select
+                  value={(lead as Record<string, unknown>).status as string ?? "new"}
+                  onValueChange={(v) => handleStatusChange(lead.id, v)}
+                >
+                  <SelectTrigger className="w-[110px] h-7 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LEAD_STATUSES.map((s) => (
+                      <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => copyMail(lead.email)}>Kopier mail</Button>
+                <Button variant="ghost" size="sm" className="h-7 text-xs" asChild>
+                  <Link to={`/dashboard/leads/${lead.id}`}>Åpne</Link>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

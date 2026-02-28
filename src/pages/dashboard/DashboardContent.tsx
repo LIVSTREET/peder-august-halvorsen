@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDashboardContentItems } from "@/hooks/useContentItems";
 import { CONTENT_TYPES, CONTENT_STATUSES, TYPE_LABEL } from "@/lib/content-types";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -13,7 +10,7 @@ import { ContentListSkeleton } from "@/components/dashboard/ContentListSkeleton"
 
 function formatDate(iso: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("nb-NO", { day: "2-digit", month: "short", year: "numeric" });
+  return new Date(iso).toLocaleDateString("nb-NO", { day: "2-digit", month: "short" });
 }
 
 export default function DashboardContent() {
@@ -29,17 +26,17 @@ export default function DashboardContent() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-foreground">Innhold</h1>
-          <p className="text-sm text-muted-foreground">Arbeid, Nå bygger jeg, Arkiv.</p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Innhold</h1>
+          <p className="text-sm text-muted-foreground hidden sm:block">Arbeid, Nå bygger jeg, Arkiv.</p>
         </div>
-        <Button size="sm" onClick={() => navigate("/dashboard/content/new")}>Nytt innhold</Button>
+        <Button size="sm" className="shrink-0" onClick={() => navigate("/dashboard/content/new")}>Nytt innhold</Button>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-2">
         <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="w-32 h-8 text-xs"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Alle typer</SelectItem>
             {CONTENT_TYPES.map((t) => (
@@ -48,7 +45,7 @@ export default function DashboardContent() {
           </SelectContent>
         </Select>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="w-28 h-8 text-xs"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Alle</SelectItem>
             {CONTENT_STATUSES.map((s) => (
@@ -61,32 +58,28 @@ export default function DashboardContent() {
       {isLoading ? (
         <ContentListSkeleton />
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Tittel</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Oppdatert</TableHead>
-              <TableHead />
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items?.map((row: any) => (
-              <TableRow key={row.id}>
-                <TableCell className="font-medium">{row.title}</TableCell>
-                <TableCell className="text-muted-foreground text-xs">{TYPE_LABEL[row.type] ?? row.type}</TableCell>
-                <TableCell className="text-xs">{row.status}</TableCell>
-                <TableCell className="text-xs text-muted-foreground">{formatDate(row.updated_at)}</TableCell>
-                <TableCell className="text-right">
-                  <Button variant="ghost" size="sm" onClick={() => navigate(`/dashboard/content/${row.id}`)}>
-                    Rediger
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="space-y-2">
+          {items?.map((row: any) => (
+            <div
+              key={row.id}
+              className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 py-3 px-3 border border-border rounded-md"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-sm text-foreground truncate">{row.title}</p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{TYPE_LABEL[row.type] ?? row.type}</span>
+                  <span>·</span>
+                  <span>{row.status}</span>
+                  <span>·</span>
+                  <span>{formatDate(row.updated_at)}</span>
+                </div>
+              </div>
+              <Button variant="ghost" size="sm" className="self-end sm:self-auto" onClick={() => navigate(`/dashboard/content/${row.id}`)}>
+                Rediger
+              </Button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

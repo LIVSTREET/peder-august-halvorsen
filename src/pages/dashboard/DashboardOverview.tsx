@@ -37,9 +37,9 @@ export default function DashboardOverview() {
   });
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 md:space-y-10">
       <div>
-        <h1 className="font-display text-2xl font-bold text-foreground">Oversikt</h1>
+        <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Oversikt</h1>
         <p className="text-muted-foreground text-sm mt-1">
           Rask status på innhold og leads.
         </p>
@@ -47,11 +47,11 @@ export default function DashboardOverview() {
 
       {/* Counts */}
       <section className="space-y-3">
-        <h2 className="font-display text-lg font-semibold text-foreground">Antall</h2>
+        <h2 className="font-display text-base md:text-lg font-semibold text-foreground">Antall</h2>
         {countsLoading ? (
           <p className="text-muted-foreground text-sm">Laster…</p>
         ) : counts ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
             <CountBlock label="Prosjekter" value={counts.projects} />
             <CountBlock label="Innlegg" value={counts.posts} />
             <CountBlock label="Arkiv" value={counts.archive} />
@@ -62,7 +62,7 @@ export default function DashboardOverview() {
 
       {/* Recent leads */}
       <section className="space-y-3">
-        <h2 className="font-display text-lg font-semibold text-foreground">Siste aktivitet</h2>
+        <h2 className="font-display text-base md:text-lg font-semibold text-foreground">Siste aktivitet</h2>
         {leadsLoading ? (
           <p className="text-muted-foreground text-sm">Laster…</p>
         ) : recentLeads && recentLeads.length > 0 ? (
@@ -70,14 +70,14 @@ export default function DashboardOverview() {
             {recentLeads.map((lead) => (
               <div
                 key={lead.id}
-                className="flex items-center gap-4 py-2 border-b border-border text-sm"
+                className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 py-2 border-b border-border text-sm"
               >
-                <span className="text-foreground font-medium min-w-[100px]">
+                <span className="text-foreground font-medium">
                   {lead.name ?? "—"}
                 </span>
-                <span className="text-muted-foreground">{lead.email ?? ""}</span>
-                <span className="text-muted-foreground">{lead.goal ?? ""}</span>
-                <span className="text-muted-foreground/60 ml-auto text-xs">
+                <span className="text-muted-foreground text-xs sm:text-sm truncate">{lead.email ?? ""}</span>
+                <span className="text-muted-foreground text-xs sm:text-sm hidden sm:inline">{lead.goal ?? ""}</span>
+                <span className="text-muted-foreground/60 sm:ml-auto text-xs">
                   {lead.created_at
                     ? new Date(lead.created_at).toLocaleDateString("nb-NO")
                     : ""}
@@ -95,9 +95,9 @@ export default function DashboardOverview() {
 
 function CountBlock({ label, value }: { label: string; value: number }) {
   return (
-    <div className="border border-border rounded-md p-4">
+    <div className="border border-border rounded-md p-3 md:p-4">
       <p className="text-muted-foreground text-xs font-mono uppercase">{label}</p>
-      <p className="font-display text-2xl font-bold text-foreground mt-1">{value}</p>
+      <p className="font-display text-xl md:text-2xl font-bold text-foreground mt-1">{value}</p>
     </div>
   );
 }
