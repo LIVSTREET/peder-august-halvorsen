@@ -9,9 +9,9 @@ export default function SectionHeader({ title, subtitle, className = "" }: Secti
     <div className={`mb-10 ${className}`}>
       <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-foreground">{title}</h2>
       {subtitle && (
-        <p className="mt-2 text-muted-foreground font-body text-base">{subtitle}</p>
+        <p className="mt-1.5 text-muted-foreground font-body text-base">{subtitle}</p>
       )}
-      <div className="mt-4 h-px bg-border" />
+      <div className="mt-5 h-px bg-border/60" />
     </div>
   );
 }

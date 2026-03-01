@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
-      <div className="container py-12">
+      <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <p className="font-display font-bold text-lg text-foreground">
