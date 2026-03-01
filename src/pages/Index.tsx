@@ -10,7 +10,9 @@ import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getBaseUrl, PERSON_NAME } from "@/lib/seo";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useLocale } from "@/contexts/LocaleContext";
+import { tKey, tField } from "@/lib/i18n";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -28,15 +30,15 @@ const webSiteSchema = {
 };
 
 export default function Index() {
-  const { pathname } = useLocation();
+  const { locale } = useLocale();
+  const title = locale === "en" ? "What I create | Peder August Halvorsen" : "Alt jeg skaper | Peder August Halvorsen";
+  const description = locale === "en"
+    ? "I build flexible platforms and websites. Organiser and musician. Peder August Halvorsen – What I create."
+    : "Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker. Peder August Halvorsen – Alt jeg skaper.";
+
   return (
     <Layout>
-      <SeoHead
-        title="Alt jeg skaper | Peder August Halvorsen"
-        description="Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker. Peder August Halvorsen – Alt jeg skaper."
-        pathname={pathname}
-        jsonLd={[personSchema, webSiteSchema]}
-      />
+      <SeoHead title={title} description={description} jsonLd={[personSchema, webSiteSchema]} />
       <Hero />
       <ArbeidSection />
       <BuildingNowSection />
@@ -45,6 +47,8 @@ export default function Index() {
 }
 
 function Hero() {
+  const { locale, withLocalePath } = useLocale();
+
   return (
     <section className="container pt-12 pb-16 md:pt-32 md:pb-32">
       <div className="flex items-center gap-4 md:hidden mb-6">
@@ -56,10 +60,11 @@ function Hero() {
         />
         <div>
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground leading-none">
-            Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+            {tKey("Alt jeg skaper", "What I create", locale)}
+            <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
           <p className="mt-1 text-base font-display font-semibold text-foreground/60 tracking-tight">
-            Peder August Halvorsen
+            {PERSON_NAME}
           </p>
         </div>
       </div>
@@ -67,22 +72,27 @@ function Hero() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
         <div>
           <h1 className="hidden md:block font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
-            Alt jeg skaper<Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+            {tKey("Alt jeg skaper", "What I create", locale)}
+            <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
           <p className="hidden md:block mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
-            Peder August Halvorsen
+            {PERSON_NAME}
           </p>
           <p className="mt-4 md:mt-6 text-base md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
-            Jeg bygger fleksible plattformer og nettsteder.
+            {tKey("Jeg bygger fleksible plattformer og nettsteder.", "I build flexible platforms and websites.", locale)}
             <br />
-            Arrangør og musiker.
+            {tKey("Arrangør og musiker.", "Organiser and musician.", locale)}
           </p>
           <p className="mt-2 md:mt-3 text-sm md:text-base text-muted-foreground max-w-lg font-body">
-            Jeg gir deg verktøy og retning, så du kan gjøre mer selv.
+            {tKey("Jeg gir deg verktøy og retning, så du kan gjøre mer selv.", "I give you tools and direction so you can do more yourself.", locale)}
           </p>
           <div className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-            <CTAButton to="/brief">Fortell meg hva du prøver å få til</CTAButton>
-            <CTAButton to="/prat" variant="outline">Book uforpliktende prat</CTAButton>
+            <CTAButton to={withLocalePath("/brief")}>
+              {tKey("Fortell meg hva du prøver å få til", "Tell me what you're trying to do", locale)}
+            </CTAButton>
+            <CTAButton to={withLocalePath("/prat")} variant="outline">
+              {tKey("Book uforpliktende prat", "Book a no-commitment chat", locale)}
+            </CTAButton>
           </div>
         </div>
         <div className="hidden md:flex justify-end">
@@ -99,15 +109,22 @@ function Hero() {
 }
 
 function ArbeidSection() {
+  const { locale, withLocalePath } = useLocale();
   const { data: projects, isLoading } = useProjects();
 
   return (
     <section className="container pb-24">
-      <SectionHeader title="Arbeid" subtitle="Utvalgte prosjekter" />
+      <SectionHeader
+        title={tKey("Arbeid", "Work", locale)}
+        subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
+      />
       {isLoading ? (
-        <div className="py-8 text-muted-foreground text-sm">Laster…</div>
+        <div className="py-8 text-muted-foreground text-sm">{tKey("Laster…", "Loading…", locale)}</div>
       ) : !projects || projects.length === 0 ? (
-        <EmptyState message="Ingen prosjekter ennå" sub="Bygger nå — kommer snart." />
+        <EmptyState
+          message={tKey("Ingen prosjekter ennå", "No projects yet", locale)}
+          sub={tKey("Bygger nå — kommer snart.", "Building now — coming soon.", locale)}
+        />
       ) : (
         <ProjectGrid projects={projects} />
       )}
@@ -116,6 +133,7 @@ function ArbeidSection() {
 }
 
 function ProjectGrid({ projects }: { projects: any[] }) {
+  const { locale, withLocalePath } = useLocale();
   const featured = projects[0];
   const rest = projects.slice(1, 7);
 
@@ -130,8 +148,8 @@ function ProjectGrid({ projects }: { projects: any[] }) {
         </div>
       )}
       <div className="pt-4">
-        <Link to="/prosjekter" className="text-sm font-mono text-primary hover:underline underline-offset-4">
-          Se alle prosjekter →
+        <Link to={withLocalePath("/prosjekter")} className="text-sm font-mono text-primary hover:underline underline-offset-4">
+          {tKey("Se alle prosjekter →", "See all projects →", locale)}
         </Link>
       </div>
     </div>
@@ -139,16 +157,17 @@ function ProjectGrid({ projects }: { projects: any[] }) {
 }
 
 function FeaturedProject({ project }: { project: any }) {
+  const { locale, withLocalePath } = useLocale();
   const { data: assets } = useAssets("project", project.id);
   const firstAsset = assets?.[0];
 
   return (
-    <Link to={`/prosjekter/${project.slug}`} className="block group">
+    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group">
       <BrowserFrame url={project.url || project.slug}>
         {firstAsset ? (
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
-            alt={firstAsset.alt || project.title}
+            alt={firstAsset.alt || tField(project, "title", locale)}
             width={firstAsset.width ?? undefined}
             height={firstAsset.height ?? undefined}
             className="w-full aspect-video object-cover"
@@ -156,16 +175,16 @@ function FeaturedProject({ project }: { project: any }) {
           />
         ) : (
           <div className="w-full aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground font-mono text-sm">{project.title}</span>
+            <span className="text-muted-foreground font-mono text-sm">{tField(project, "title", locale)}</span>
           </div>
         )}
       </BrowserFrame>
       <div className="mt-4">
         <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-          {project.title}
+          {tField(project, "title", locale)}
         </h3>
-        {project.subtitle && (
-          <p className="mt-1 text-sm text-muted-foreground">{project.subtitle}</p>
+        {(project.subtitle || project.subtitle_en) && (
+          <p className="mt-1 text-sm text-muted-foreground">{tField(project, "subtitle", locale)}</p>
         )}
       </div>
     </Link>
@@ -173,16 +192,17 @@ function FeaturedProject({ project }: { project: any }) {
 }
 
 function ProjectCard({ project }: { project: any }) {
+  const { locale, withLocalePath } = useLocale();
   const { data: assets } = useAssets("project", project.id);
   const firstAsset = assets?.[0];
 
   return (
-    <Link to={`/prosjekter/${project.slug}`} className="block group">
+    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group">
       <BrowserFrame url={project.url || project.slug}>
         {firstAsset ? (
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
-            alt={firstAsset.alt || project.title}
+            alt={firstAsset.alt || tField(project, "title", locale)}
             width={firstAsset.width ?? undefined}
             height={firstAsset.height ?? undefined}
             className="w-full aspect-video object-cover"
@@ -190,12 +210,12 @@ function ProjectCard({ project }: { project: any }) {
           />
         ) : (
           <div className="w-full aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground font-mono text-xs">{project.title}</span>
+            <span className="text-muted-foreground font-mono text-xs">{tField(project, "title", locale)}</span>
           </div>
         )}
       </BrowserFrame>
       <h3 className="mt-3 font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-        {project.title}
+        {tField(project, "title", locale)}
       </h3>
       {project.role && (
         <p className="mt-0.5 text-xs font-mono text-muted-foreground">{project.role}</p>
@@ -205,24 +225,28 @@ function ProjectCard({ project }: { project: any }) {
 }
 
 function BuildingNowSection() {
+  const { locale, withLocalePath } = useLocale();
   const { data: items } = usePublishedContentByType("build");
   const buildLogs = items?.slice(0, 5);
 
   return (
     <section className="container pb-24">
-      <SectionHeader title="Nå bygger jeg" />
+      <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} />
       {!buildLogs || buildLogs.length === 0 ? (
-        <EmptyState message="Alltid i bevegelse" sub="Oppdateringer kommer snart." />
+        <EmptyState
+          message={tKey("Alltid i bevegelse", "Always in motion", locale)}
+          sub={tKey("Oppdateringer kommer snart.", "Updates coming soon.", locale)}
+        />
       ) : (
         <ul className="divide-y divide-border">
-          {buildLogs.map((item) => (
+          {buildLogs.map((item: any) => (
             <li key={item.id} className="py-3 flex items-baseline justify-between">
-              <Link to={`/na-bygger-jeg/${item.slug}`} className="text-foreground font-body hover:text-primary transition-colors">
-                {item.title}
+              <Link to={withLocalePath(`/na-bygger-jeg/${item.slug}`)} className="text-foreground font-body hover:text-primary transition-colors">
+                {tField(item, "title", locale)}
               </Link>
               {item.published_at && (
                 <span className="text-xs font-mono text-muted-foreground">
-                  {new Date(item.published_at).toLocaleDateString("nb-NO")}
+                  {new Date(item.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "nb-NO")}
                 </span>
               )}
             </li>
@@ -230,8 +254,8 @@ function BuildingNowSection() {
         </ul>
       )}
       <div className="pt-4">
-        <Link to="/na-bygger-jeg" className="text-sm font-mono text-primary hover:underline underline-offset-4">
-          Se alt →
+        <Link to={withLocalePath("/na-bygger-jeg")} className="text-sm font-mono text-primary hover:underline underline-offset-4">
+          {tKey("Se alt →", "See all →", locale)}
         </Link>
       </div>
     </section>
