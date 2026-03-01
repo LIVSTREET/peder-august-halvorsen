@@ -10,7 +10,15 @@ export function getBaseUrl(): string {
 export function getCanonicalUrl(pathname: string): string {
   const base = getBaseUrl();
   const path = pathname.startsWith("/") ? pathname : `/${pathname}`;
-  return `${base}${path}`;
+  return `${base.replace(/\/$/, "")}${path}`;
+}
+
+/** Gir full URL for en path (uten locale). Brukes til hreflang. */
+export function getLocaleCanonical(pathWithoutLocale: string, locale: "no" | "en"): string {
+  const base = getBaseUrl().replace(/\/$/, "");
+  const path = pathWithoutLocale === "/" ? "" : pathWithoutLocale.startsWith("/") ? pathWithoutLocale : `/${pathWithoutLocale}`;
+  if (locale === "en") return `${base}/en${path || ""}`;
+  return `${base}${path || "/"}`;
 }
 
 export function truncate(text: string, max = 157): string {

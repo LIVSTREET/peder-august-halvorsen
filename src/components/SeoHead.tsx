@@ -1,10 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import { getCanonicalUrl, getBaseUrl, SITE_NAME } from "@/lib/seo";
+import { getCanonicalUrl, getBaseUrl, getLocaleCanonical, SITE_NAME } from "@/lib/seo";
+import { getPathWithoutLocale, type Locale } from "@/lib/i18n";
 
 interface SeoHeadProps {
   title: string;
   description: string;
+  /** Full pathname (inkl. /en) slik brukeren ser den. */
   pathname: string;
+  /** Hvis ikke satt, inferes fra pathname. */
+  locale?: Locale;
   noindex?: boolean;
   ogImage?: string | null;
   ogTitle?: string;
@@ -15,11 +19,15 @@ export default function SeoHead({
   title,
   description,
   pathname,
+  locale: localeProp,
   noindex = false,
   ogImage,
   ogTitle,
   jsonLd,
 }: SeoHeadProps) {
+  const pathWithoutLocale = getPathWithoutLocale(pathname);
+  const locale: Locale = localeProp ?? (pathname.startsWith("/en") ? "en" : "no");
+
   const canonical = getCanonicalUrl(pathname);
   const baseUrl = getBaseUrl();
   const imageUrl = ogImage
@@ -28,14 +36,21 @@ export default function SeoHead({
       : `${baseUrl.replace(/\/$/, "")}${ogImage.startsWith("/") ? "" : "/"}${ogImage}`
     : `${baseUrl}/og-default.png`;
 
+  const canonicalNo = getLocaleCanonical(pathWithoutLocale, "no");
+  const canonicalEn = getLocaleCanonical(pathWithoutLocale, "en");
+
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonical} />
+      <link rel="alternate" hrefLang="no" href={canonicalNo} />
+      <link rel="alternate" hrefLang="en" href={canonicalEn} />
+      <link rel="alternate" hrefLang="x-default" href={canonicalNo} />
       {noindex && <meta name="robots" content="noindex,nofollow" />}
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonical} />
       <meta property="og:title" content={ogTitle ?? title.replace(/\s*\|\s*Alt jeg skaper$/, "")} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />

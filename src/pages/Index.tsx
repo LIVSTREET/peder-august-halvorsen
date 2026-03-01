@@ -10,7 +10,7 @@ import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getBaseUrl, PERSON_NAME } from "@/lib/seo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -28,12 +28,13 @@ const webSiteSchema = {
 };
 
 export default function Index() {
+  const { pathname } = useLocation();
   return (
     <Layout>
       <SeoHead
         title="Alt jeg skaper | Peder August Halvorsen"
         description="Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker. Peder August Halvorsen – Alt jeg skaper."
-        pathname="/"
+        pathname={pathname}
         jsonLd={[personSchema, webSiteSchema]}
       />
       <Hero />
