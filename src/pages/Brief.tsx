@@ -3,36 +3,40 @@ import SeoHead from "@/components/SeoHead";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useLocale } from "@/contexts/LocaleContext";
+import { tKey } from "@/lib/i18n";
 
 const goals = [
-  { value: "website", label: "Nettside" },
-  { value: "platform", label: "Plattform" },
-  { value: "booking", label: "Booking / musikk" },
-  { value: "event", label: "Arrangement" },
-  { value: "sparring", label: "Sparring" },
-  { value: "other", label: "Annet" },
+  { value: "website", labelNo: "Nettside", labelEn: "Website" },
+  { value: "platform", labelNo: "Plattform", labelEn: "Platform" },
+  { value: "booking", labelNo: "Booking / musikk", labelEn: "Booking / music" },
+  { value: "event", labelNo: "Arrangement", labelEn: "Event" },
+  { value: "sparring", labelNo: "Sparring", labelEn: "Sparring" },
+  { value: "other", labelNo: "Annet", labelEn: "Other" },
 ];
 
 const stages = [
-  { value: "idea", label: "Bare en idé" },
-  { value: "improve", label: "Har noe, vil forbedre" },
-  { value: "launch", label: "Klar for lansering" },
-  { value: "scale", label: "Vil skalere" },
+  { value: "idea", labelNo: "Bare en idé", labelEn: "Just an idea" },
+  { value: "improve", labelNo: "Har noe, vil forbedre", labelEn: "Have something, want to improve" },
+  { value: "launch", labelNo: "Klar for lansering", labelEn: "Ready to launch" },
+  { value: "scale", labelNo: "Vil skalere", labelEn: "Want to scale" },
 ];
 
 const priorities = [
-  { value: "customers", label: "Få kunder / brukere" },
-  { value: "structure", label: "Struktur og system" },
-  { value: "time", label: "Spare tid" },
-  { value: "professional", label: "Se profesjonell ut" },
-  { value: "execute", label: "Komme i gang" },
+  { value: "customers", labelNo: "Få kunder / brukere", labelEn: "Get customers / users" },
+  { value: "structure", labelNo: "Struktur og system", labelEn: "Structure and system" },
+  { value: "time", labelNo: "Spare tid", labelEn: "Save time" },
+  { value: "professional", labelNo: "Se profesjonell ut", labelEn: "Look professional" },
+  { value: "execute", labelNo: "Komme i gang", labelEn: "Get started" },
 ];
 
 const budgets = [
-  { value: "lite", label: "Lite (under 15k)" },
-  { value: "medium", label: "Medium (15–50k)" },
-  { value: "storre", label: "Større (50k+)" },
+  { value: "lite", labelNo: "Lite (under 15k)", labelEn: "Small (under 15k)" },
+  { value: "medium", labelNo: "Medium (15–50k)", labelEn: "Medium (15–50k)" },
+  { value: "storre", labelNo: "Større (50k+)", labelEn: "Larger (50k+)" },
 ];
+
+type BriefOption = { value: string; labelNo: string; labelEn: string };
 
 type FormData = {
   goal: string;
@@ -46,6 +50,7 @@ type FormData = {
 };
 
 export default function Brief() {
+  const { locale } = useLocale();
   const [searchParams] = useSearchParams();
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -69,11 +74,19 @@ export default function Brief() {
   const set = (key: keyof FormData, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
 
+  const optLabel = (opt: BriefOption) =>
+    locale === "en" ? opt.labelEn : opt.labelNo;
+
+  const findLabel = (list: BriefOption[], val: string) => {
+    const found = list.find((o) => o.value === val);
+    return found ? optLabel(found) : val;
+  };
+
   const steps = [
-    { key: "goal" as const, title: "Hva handler det om?", options: goals },
-    { key: "stage" as const, title: "Hvor er du nå?", options: stages },
-    { key: "priority" as const, title: "Hva er viktigst?", options: priorities },
-    { key: "budget_mode" as const, title: "Omtrentlig budsjett?", options: budgets },
+    { key: "goal" as const, title: tKey("Hva handler det om?", "What is it about?", locale), options: goals },
+    { key: "stage" as const, title: tKey("Hvor er du nå?", "Where are you now?", locale), options: stages },
+    { key: "priority" as const, title: tKey("Hva er viktigst?", "What matters most?", locale), options: priorities },
+    { key: "budget_mode" as const, title: tKey("Omtrentlig budsjett?", "Rough budget?", locale), options: budgets },
   ];
 
   async function handleSubmit() {
@@ -92,30 +105,37 @@ export default function Brief() {
     if (!error) setSubmitted(true);
   }
 
-  // Placeholder for future AI summary
-  // async function getAiSummary(submissionId: string) {
-  //   await supabase.functions.invoke('brief-summary', { body: { id: submissionId } });
-  // }
-
   if (submitted) {
     return (
       <Layout>
-        <SeoHead title="Takk! | Alt jeg skaper" description="Briefen din er sendt." pathname="/brief" noindex />
+        <SeoHead
+          title={tKey("Takk! | Alt jeg skaper", "Thanks! | Alt jeg skaper", locale)}
+          description={tKey("Briefen din er sendt.", "Your brief has been submitted.", locale)}
+          pathname="/brief"
+          noindex
+        />
         <section className="container pt-16 pb-24 max-w-xl mx-auto">
-          <h1 className="font-display text-3xl font-extrabold text-foreground mb-6">Takk!</h1>
-          <p className="text-muted-foreground mb-8">Briefen din er sendt. Her er et sammendrag:</p>
+          <h1 className="font-display text-3xl font-extrabold text-foreground mb-6">
+            {tKey("Takk!", "Thanks!", locale)}
+          </h1>
+          <p className="text-muted-foreground mb-8">
+            {tKey("Briefen din er sendt. Her er et sammendrag:", "Your brief has been submitted. Here's a summary:", locale)}
+          </p>
           <div className="space-y-3 text-sm">
-            {form.goal && <SummaryRow label="Mål" value={goals.find((g) => g.value === form.goal)?.label || form.goal} />}
-            {form.stage && <SummaryRow label="Fase" value={stages.find((s) => s.value === form.stage)?.label || form.stage} />}
-            {form.priority && <SummaryRow label="Prioritet" value={priorities.find((p) => p.value === form.priority)?.label || form.priority} />}
-            {form.budget_mode && <SummaryRow label="Budsjett" value={budgets.find((b) => b.value === form.budget_mode)?.label || form.budget_mode} />}
-            {form.details && <SummaryRow label="Detaljer" value={form.details} />}
-            {form.name && <SummaryRow label="Navn" value={form.name} />}
-            {form.email && <SummaryRow label="E-post" value={form.email} />}
+            {form.goal && <SummaryRow label={tKey("Mål", "Goal", locale)} value={findLabel(goals, form.goal)} />}
+            {form.stage && <SummaryRow label={tKey("Fase", "Stage", locale)} value={findLabel(stages, form.stage)} />}
+            {form.priority && <SummaryRow label={tKey("Prioritet", "Priority", locale)} value={findLabel(priorities, form.priority)} />}
+            {form.budget_mode && <SummaryRow label={tKey("Budsjett", "Budget", locale)} value={findLabel(budgets, form.budget_mode)} />}
+            {form.details && <SummaryRow label={tKey("Detaljer", "Details", locale)} value={form.details} />}
+            {form.name && <SummaryRow label={tKey("Navn", "Name", locale)} value={form.name} />}
+            {form.email && <SummaryRow label={tKey("E-post", "Email", locale)} value={form.email} />}
           </div>
           <div className="mt-10 border-t border-border pt-8">
             <p className="text-foreground text-sm">
-              Jeg tar kontakt innen 1–2 virkedager. Hvis det haster, <a href="mailto:kontaktpeder@gmail.com" className="text-primary hover:underline underline-offset-4">send mail</a>.
+              {tKey("Jeg tar kontakt innen 1–2 virkedager. Hvis det haster,", "I'll get back within 1–2 working days. If it's urgent,", locale)}{" "}
+              <a href="mailto:kontaktpeder@gmail.com" className="text-primary hover:underline underline-offset-4">
+                {tKey("send mail", "send email", locale)}
+              </a>.
             </p>
           </div>
         </section>
@@ -129,86 +149,93 @@ export default function Brief() {
 
   return (
     <Layout>
-      <SeoHead title="Fortell meg hva du prøver å få til | Alt jeg skaper" description="Fortell meg hva du prøver å få til – jeg hjelper deg videre." pathname="/brief" noindex />
+      <SeoHead
+        title={tKey("Fortell meg hva du prøver å få til | Alt jeg skaper", "Tell me what you're trying to achieve | Alt jeg skaper", locale)}
+        description={tKey("Fortell meg hva du prøver å få til – jeg hjelper deg videre.", "Tell me what you're trying to achieve – I'll help you forward.", locale)}
+        pathname="/brief"
+        noindex
+      />
       <section className="container pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] max-w-xl mx-auto">
-        <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">
-          Brief
-        </h1>
+        <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">Brief</h1>
         <p className="text-muted-foreground text-sm mb-10">
-          Steg {step + 1} av {steps.length + 2}
+          {tKey("Steg", "Step", locale)} {step + 1} {tKey("av", "of", locale)} {steps.length + 2}
         </p>
 
         <div className="min-h-[430px] md:min-h-[460px]">
-        {isStepPhase && (
-          <StepSelect
-            title={steps[step].title}
-            options={steps[step].options}
-            value={form[steps[step].key]}
-            onChange={(v) => {
-              set(steps[step].key, v);
-              setStep(step + 1);
-            }}
-          />
-        )}
-
-        {isDetailsStep && (
-          <div>
-            <h2 className="font-display text-xl font-bold text-foreground mb-4">Fortell mer</h2>
-            <textarea
-              value={form.details}
-              onChange={(e) => set("details", e.target.value)}
-              placeholder="Beskriv prosjektet, utfordringen, eller ideen din…"
-              className="w-full h-40 bg-transparent border border-border p-4 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary resize-none"
-              maxLength={2000}
+          {isStepPhase && (
+            <StepSelect
+              title={steps[step].title}
+              options={steps[step].options}
+              value={form[steps[step].key]}
+              onChange={(v) => {
+                set(steps[step].key, v);
+                setStep(step + 1);
+              }}
+              locale={locale}
             />
-            <button
-              onClick={() => setStep(step + 1)}
-              className="mt-4 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all"
-            >
-              Neste
-            </button>
-          </div>
-        )}
+          )}
 
-        {isContactStep && (
-          <div>
-            <h2 className="font-display text-xl font-bold text-foreground mb-4">Kontaktinfo</h2>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Navn"
-                value={form.name}
-                onChange={(e) => set("name", e.target.value)}
-                className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
-                maxLength={100}
+          {isDetailsStep && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-4">
+                {tKey("Fortell mer", "Tell me more", locale)}
+              </h2>
+              <textarea
+                value={form.details}
+                onChange={(e) => set("details", e.target.value)}
+                placeholder={tKey("Beskriv prosjektet, utfordringen, eller ideen din…", "Describe your project, challenge, or idea…", locale)}
+                className="w-full h-40 bg-transparent border border-border p-4 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary resize-none"
+                maxLength={2000}
               />
-              <input
-                type="email"
-                placeholder="E-post"
-                value={form.email}
-                onChange={(e) => set("email", e.target.value)}
-                className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
-                maxLength={255}
-              />
-              <input
-                type="tel"
-                placeholder="Telefon (valgfritt)"
-                value={form.phone}
-                onChange={(e) => set("phone", e.target.value)}
-                className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
-                maxLength={20}
-              />
+              <button
+                onClick={() => setStep(step + 1)}
+                className="mt-4 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all"
+              >
+                {tKey("Neste", "Next", locale)}
+              </button>
             </div>
-            <button
-              onClick={handleSubmit}
-              disabled={sending || !form.email}
-              className="mt-6 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all disabled:opacity-50"
-            >
-              {sending ? "Sender…" : "Send brief"}
-            </button>
-          </div>
-        )}
+          )}
 
+          {isContactStep && (
+            <div>
+              <h2 className="font-display text-xl font-bold text-foreground mb-4">
+                {tKey("Kontaktinfo", "Contact details", locale)}
+              </h2>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder={tKey("Navn", "Name", locale)}
+                  value={form.name}
+                  onChange={(e) => set("name", e.target.value)}
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  maxLength={100}
+                />
+                <input
+                  type="email"
+                  placeholder={tKey("E-post", "Email", locale)}
+                  value={form.email}
+                  onChange={(e) => set("email", e.target.value)}
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  maxLength={255}
+                />
+                <input
+                  type="tel"
+                  placeholder={tKey("Telefon (valgfritt)", "Phone (optional)", locale)}
+                  value={form.phone}
+                  onChange={(e) => set("phone", e.target.value)}
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  maxLength={20}
+                />
+              </div>
+              <button
+                onClick={handleSubmit}
+                disabled={sending || !form.email}
+                className="mt-6 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all disabled:opacity-50"
+              >
+                {sending ? tKey("Sender…", "Sending…", locale) : tKey("Send brief", "Send brief", locale)}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="h-10 mt-6">
@@ -217,7 +244,7 @@ export default function Brief() {
               onClick={() => setStep(step - 1)}
               className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
             >
-              ← Tilbake
+              ← {tKey("Tilbake", "Back", locale)}
             </button>
           )}
         </div>
@@ -231,11 +258,13 @@ function StepSelect({
   options,
   value,
   onChange,
+  locale,
 }: {
   title: string;
-  options: { value: string; label: string }[];
+  options: BriefOption[];
   value: string;
   onChange: (v: string) => void;
+  locale: "no" | "en";
 }) {
   return (
     <div>
@@ -251,7 +280,7 @@ function StepSelect({
                 : "border-border text-foreground hover:border-foreground/40"
             }`}
           >
-            {opt.label}
+            {locale === "en" ? opt.labelEn : opt.labelNo}
           </button>
         ))}
       </div>
