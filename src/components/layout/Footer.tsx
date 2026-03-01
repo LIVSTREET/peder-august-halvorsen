@@ -5,7 +5,7 @@ export default function Footer() {
   const { locale } = useLocale();
 
   return (
-    <footer className="border-t border-border mt-24" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
+    <footer className="border-t border-border mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

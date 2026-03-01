@@ -50,43 +50,53 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-12 pb-16 md:pt-32 md:pb-32">
-      <div className="flex items-center gap-4 md:hidden mb-6">
-        <img
-          src={heroPortrait}
-          alt="Peder August Halvorsen"
-          className="w-16 h-16 object-cover grayscale rounded-full shrink-0"
-          loading="eager"
-        />
-        <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground leading-none">
-            {tKey("Alt jeg skaper", "What I create", locale)}
-            <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
-          </h1>
-          <p className="mt-1 text-base font-display font-semibold text-foreground/60 tracking-tight">
-            {PERSON_NAME}
-          </p>
+    <section className="container pt-10 pb-12 md:pt-32 md:pb-32">
+      {/* Mobile hero – heading first, no portrait competing */}
+      <div className="md:hidden">
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground leading-none">
+          {tKey("Alt jeg skaper", "What I create", locale)}
+          <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+        </h1>
+        <p className="mt-1 text-sm font-display font-semibold text-foreground/60 tracking-tight">
+          {PERSON_NAME}
+        </p>
+        <p className="mt-3 text-base text-foreground/80 max-w-xl font-body leading-relaxed">
+          {tKey("Jeg bygger fleksible plattformer og nettsteder.", "I build flexible platforms and websites.", locale)}
+          <br />
+          {tKey("Arrangør og musiker.", "Organiser and musician.", locale)}
+        </p>
+        <p className="mt-1.5 text-sm text-muted-foreground max-w-lg font-body">
+          {tKey("Jeg gir deg verktøy og retning, så du kan gjøre mer selv.", "I give you tools and direction so you can do more yourself.", locale)}
+        </p>
+        <div className="mt-5 flex flex-col gap-2">
+          <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
+            {tKey("Fortell meg hva du prøver å få til", "Tell me what you're trying to do", locale)}
+          </CTAButton>
+          <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-4 py-2 min-h-[40px] text-xs">
+            {tKey("Book uforpliktende prat", "Book a no-commitment chat", locale)}
+          </CTAButton>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+      {/* Desktop hero */}
+      <div className="hidden md:grid grid-cols-2 gap-16 items-center">
         <div>
-          <h1 className="hidden md:block font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
+          <h1 className="font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
             {tKey("Alt jeg skaper", "What I create", locale)}
             <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
           </h1>
-          <p className="hidden md:block mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+          <p className="mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             {PERSON_NAME}
           </p>
-          <p className="mt-4 md:mt-6 text-base md:text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
+          <p className="mt-6 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
             {tKey("Jeg bygger fleksible plattformer og nettsteder.", "I build flexible platforms and websites.", locale)}
             <br />
             {tKey("Arrangør og musiker.", "Organiser and musician.", locale)}
           </p>
-          <p className="mt-2 md:mt-3 text-sm md:text-base text-muted-foreground max-w-lg font-body">
+          <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
             {tKey("Jeg gir deg verktøy og retning, så du kan gjøre mer selv.", "I give you tools and direction so you can do more yourself.", locale)}
           </p>
-          <div className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+          <div className="mt-10 flex flex-row items-center gap-4">
             <CTAButton to={withLocalePath("/brief")}>
               {tKey("Fortell meg hva du prøver å få til", "Tell me what you're trying to do", locale)}
             </CTAButton>
@@ -95,7 +105,7 @@ function Hero() {
             </CTAButton>
           </div>
         </div>
-        <div className="hidden md:flex justify-end">
+        <div className="flex justify-end">
           <img
             src={heroPortrait}
             alt="Peder August Halvorsen"
@@ -113,10 +123,11 @@ function ArbeidSection() {
   const { data: projects, isLoading } = useProjects();
 
   return (
-    <section className="container pb-24">
+    <section className="container pb-16 md:pb-24">
       <SectionHeader
         title={tKey("Arbeid", "Work", locale)}
         subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
+        className="mb-6 md:mb-10"
       />
       {isLoading ? (
         <div className="py-8 text-muted-foreground text-sm">{tKey("Laster…", "Loading…", locale)}</div>
@@ -138,7 +149,7 @@ function ProjectGrid({ projects }: { projects: any[] }) {
   const rest = projects.slice(1, 7);
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 md:space-y-12">
       {featured && <FeaturedProject project={featured} />}
       {rest.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -162,8 +173,8 @@ function FeaturedProject({ project }: { project: any }) {
   const firstAsset = assets?.[0];
 
   return (
-    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group">
-      <BrowserFrame url={project.url || project.slug}>
+    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group rounded-2xl overflow-hidden shadow-lg shadow-background/50 hover:shadow-xl transition-shadow">
+      <BrowserFrame url={project.url || project.slug} className="rounded-t-2xl border-border/60">
         {firstAsset ? (
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
@@ -179,12 +190,12 @@ function FeaturedProject({ project }: { project: any }) {
           </div>
         )}
       </BrowserFrame>
-      <div className="mt-4">
+      <div className="mt-2 md:mt-3 px-1">
         <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
           {tField(project, "title", locale)}
         </h3>
         {(project.subtitle || project.subtitle_en) && (
-          <p className="mt-1 text-sm text-muted-foreground">{tField(project, "subtitle", locale)}</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">{tField(project, "subtitle", locale)}</p>
         )}
       </div>
     </Link>
@@ -197,8 +208,8 @@ function ProjectCard({ project }: { project: any }) {
   const firstAsset = assets?.[0];
 
   return (
-    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group">
-      <BrowserFrame url={project.url || project.slug}>
+    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group rounded-2xl overflow-hidden shadow-md shadow-background/50 hover:shadow-lg transition-shadow">
+      <BrowserFrame url={project.url || project.slug} className="rounded-t-2xl border-border/60">
         {firstAsset ? (
           <img
             src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
@@ -214,12 +225,14 @@ function ProjectCard({ project }: { project: any }) {
           </div>
         )}
       </BrowserFrame>
-      <h3 className="mt-3 font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-        {tField(project, "title", locale)}
-      </h3>
-      {project.role && (
-        <p className="mt-0.5 text-xs font-mono text-muted-foreground">{project.role}</p>
-      )}
+      <div className="mt-1.5 px-1 pb-2">
+        <h3 className="font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+          {tField(project, "title", locale)}
+        </h3>
+        {project.role && (
+          <p className="mt-0.5 text-xs font-mono text-muted-foreground">{project.role}</p>
+        )}
+      </div>
     </Link>
   );
 }
@@ -230,8 +243,8 @@ function BuildingNowSection() {
   const buildLogs = items?.slice(0, 5);
 
   return (
-    <section className="container pb-24">
-      <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} />
+    <section className="container pt-8 md:pt-12 pb-32 md:pb-36 border-t border-border">
+      <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} className="mt-8 md:mt-12" />
       {!buildLogs || buildLogs.length === 0 ? (
         <EmptyState
           message={tKey("Alltid i bevegelse", "Always in motion", locale)}
@@ -245,7 +258,7 @@ function BuildingNowSection() {
                 {tField(item, "title", locale)}
               </Link>
               {item.published_at && (
-                <span className="text-xs font-mono text-muted-foreground">
+                <span className="text-[11px] font-mono text-muted-foreground/50 shrink-0 ml-4">
                   {new Date(item.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "nb-NO")}
                 </span>
               )}
