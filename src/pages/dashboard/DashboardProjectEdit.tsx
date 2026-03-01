@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/select";
 import { ProjectAssetsSection } from "@/components/dashboard/ProjectAssetsSection";
 import { ProjectPreviewCard } from "@/components/dashboard/ProjectPreviewCard";
+import { BilingualField } from "@/components/dashboard/BilingualField";
+import { TranslationProgress } from "@/components/dashboard/TranslationProgress";
 import { getBaseUrl } from "@/lib/seo";
 import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 import { SaveIndicator } from "@/components/dashboard/SaveIndicator";
@@ -35,9 +37,12 @@ export default function DashboardProjectEdit() {
   const qc = useQueryClient();
   const [form, setForm] = useState({
     title: "",
+    title_en: "",
     slug: "",
     subtitle: "",
+    subtitle_en: "",
     description: "",
+    description_en: "",
     role: "",
     tech: "",
     url: "",
@@ -68,11 +73,17 @@ export default function DashboardProjectEdit() {
   const isPublished = project?.status === "published";
   const slugChanged = isPublished && form.slug !== (project?.slug ?? "");
 
+  const enFields = [form.title_en, form.subtitle_en, form.description_en];
+  const enFilled = enFields.filter((v) => v.trim() !== "").length;
+
   const hasChanges = !!project && (
     form.title !== project.title ||
+    form.title_en !== ((project as any).title_en ?? "") ||
     form.slug !== project.slug ||
     form.subtitle !== (project.subtitle ?? "") ||
+    form.subtitle_en !== ((project as any).subtitle_en ?? "") ||
     form.description !== (project.description ?? "") ||
+    form.description_en !== ((project as any).description_en ?? "") ||
     form.role !== (project.role ?? "") ||
     form.tech !== (project.tech ?? "") ||
     form.url !== (project.url ?? "") ||
@@ -87,9 +98,12 @@ export default function DashboardProjectEdit() {
         .from("projects")
         .update({
           title: payload.title,
+          title_en: payload.title_en || null,
           slug: payload.slug,
           subtitle: payload.subtitle || null,
+          subtitle_en: payload.subtitle_en || null,
           description: payload.description || null,
+          description_en: payload.description_en || null,
           role: payload.role || null,
           tech: payload.tech || null,
           url: payload.url || null,
@@ -97,7 +111,7 @@ export default function DashboardProjectEdit() {
           ...(payload.status === "published" && !project?.published_at
             ? { published_at: new Date().toISOString() }
             : {}),
-        })
+        } as any)
         .eq("id", id!)
         .select()
         .single();
@@ -117,9 +131,12 @@ export default function DashboardProjectEdit() {
     if (!project) return;
     setForm({
       title: project.title,
+      title_en: (project as any).title_en ?? "",
       slug: project.slug,
       subtitle: project.subtitle ?? "",
+      subtitle_en: (project as any).subtitle_en ?? "",
       description: project.description ?? "",
+      description_en: (project as any).description_en ?? "",
       role: project.role ?? "",
       tech: project.tech ?? "",
       url: project.url ?? "",
@@ -147,6 +164,15 @@ export default function DashboardProjectEdit() {
     }
     setSlugError(null);
     updateMutation.mutate(form);
+  }
+
+  function copyAllNoToEn() {
+    setForm((f) => ({
+      ...f,
+      title_en: f.title,
+      subtitle_en: f.subtitle,
+      description_en: f.description,
+    }));
   }
 
   return (
@@ -187,149 +213,154 @@ export default function DashboardProjectEdit() {
               : "hidden"
           }
         />
+        <TranslationProgress filled={enFilled} total={enFields.length} />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 min-w-0">
-      <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
-        <div className="space-y-2">
-          <Label htmlFor="title">Tittel</Label>
-          <Input
-            id="title"
-            value={form.title}
-            onChange={(e) => {
-              const title = e.target.value;
-              setForm((f) => ({
-                ...f,
-                title,
-                ...(!isPublished ? { slug: slugify(title) || f.slug } : {}),
-              }));
-            }}
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="slug">Slug</Label>
-            <button
-              type="button"
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setForm((f) => ({ ...f, slug: slugify(f.title) || f.slug }))}
-            >
-              Regenerer fra tittel
-            </button>
-          </div>
-          <Input
-            id="slug"
-            value={form.slug}
-            onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-            readOnly={!isPublished}
-            className={!isPublished ? "bg-muted/50" : ""}
-            required
-          />
-          {slugChanged && (
-            <p className="text-xs text-destructive">
-              Endrer du slug bryter du delinger/lenker.
-            </p>
-          )}
-          {slugError && (
-            <p className="text-xs text-destructive">{slugError}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="subtitle">Undertittel</Label>
-          <Input
-            id="subtitle"
-            value={form.subtitle}
-            onChange={(e) => setForm((f) => ({ ...f, subtitle: e.target.value }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="description">Beskrivelse</Label>
-          <Textarea
-            id="description"
-            value={form.description}
-            onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-            rows={6}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="role">Rolle</Label>
-          <Input
-            id="role"
-            value={form.role}
-            onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="tech">Tech (kommaseparert)</Label>
-          <Input
-            id="tech"
-            value={form.tech}
-            onChange={(e) => setForm((f) => ({ ...f, tech: e.target.value }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="url">URL</Label>
-          <Input
-            id="url"
-            value={form.url}
-            onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>Status</Label>
-          <Select
-            value={form.status}
-            onValueChange={(v) =>
-              setForm((f) => ({ ...f, status: v as typeof form.status }))
-            }
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {STATUS_OPTIONS.map((o) => (
-                <SelectItem key={o.value} value={o.value}>
-                  {o.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {form.status === "published" && isSlugValid(form.slug) && (
-            <p className="text-xs text-muted-foreground mt-1">
-              <a
-                href={`${getBaseUrl()}/prosjekter/${form.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
+          <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
+            <div className="flex justify-end">
+              <Button type="button" variant="outline" size="sm" onClick={copyAllNoToEn}>
+                Kopier alle norsk → engelsk
+              </Button>
+            </div>
+
+            <BilingualField
+              label="Tittel"
+              valueNo={form.title}
+              valueEn={form.title_en}
+              onChangeNo={(v) => setForm((f) => ({ ...f, title: v, ...(!isPublished ? { slug: slugify(v) || f.slug } : {}) }))}
+              onChangeEn={(v) => setForm((f) => ({ ...f, title_en: v }))}
+              required
+              showMissingEn
+              onCopyNoToEn={() => setForm((f) => ({ ...f, title_en: f.title }))}
+            />
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Label htmlFor="slug">Slug</Label>
+                <button
+                  type="button"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => setForm((f) => ({ ...f, slug: slugify(f.title) || f.slug }))}
+                >
+                  Regenerer fra tittel
+                </button>
+              </div>
+              <Input
+                id="slug"
+                value={form.slug}
+                onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+                readOnly={!isPublished}
+                className={!isPublished ? "bg-muted/50" : ""}
+                required
+              />
+              {slugChanged && (
+                <p className="text-xs text-destructive">
+                  Endrer du slug bryter du delinger/lenker.
+                </p>
+              )}
+              {slugError && (
+                <p className="text-xs text-destructive">{slugError}</p>
+              )}
+            </div>
+
+            <BilingualField
+              label="Undertittel"
+              valueNo={form.subtitle}
+              valueEn={form.subtitle_en}
+              onChangeNo={(v) => setForm((f) => ({ ...f, subtitle: v }))}
+              onChangeEn={(v) => setForm((f) => ({ ...f, subtitle_en: v }))}
+              onCopyNoToEn={() => setForm((f) => ({ ...f, subtitle_en: f.subtitle }))}
+            />
+
+            <BilingualField
+              label="Beskrivelse"
+              valueNo={form.description}
+              valueEn={form.description_en}
+              onChangeNo={(v) => setForm((f) => ({ ...f, description: v }))}
+              onChangeEn={(v) => setForm((f) => ({ ...f, description_en: v }))}
+              type="textarea"
+              rows={6}
+              onCopyNoToEn={() => setForm((f) => ({ ...f, description_en: f.description }))}
+            />
+
+            <div className="space-y-2">
+              <Label htmlFor="role">Rolle</Label>
+              <Input
+                id="role"
+                value={form.role}
+                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tech">Tech (kommaseparert)</Label>
+              <Input
+                id="tech"
+                value={form.tech}
+                onChange={(e) => setForm((f) => ({ ...f, tech: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="url">URL</Label>
+              <Input
+                id="url"
+                value={form.url}
+                onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select
+                value={form.status}
+                onValueChange={(v) =>
+                  setForm((f) => ({ ...f, status: v as typeof form.status }))
+                }
               >
-                Live →
-              </a>
-            </p>
-          )}
-        </div>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {STATUS_OPTIONS.map((o) => (
+                    <SelectItem key={o.value} value={o.value}>
+                      {o.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {form.status === "published" && isSlugValid(form.slug) && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  <a
+                    href={`${getBaseUrl()}/prosjekter/${form.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Live →
+                  </a>
+                </p>
+              )}
+            </div>
 
+            <div className="flex gap-2">
+              <Button type="submit" disabled={updateMutation.isPending}>
+                {updateMutation.isPending ? "Lagrer…" : "Lagre"}
+              </Button>
+              {form.status === "published" && isSlugValid(form.slug) && (
+                <Button type="button" variant="outline" asChild>
+                  <a
+                    href={`${getBaseUrl()}/prosjekter/${form.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Åpne live
+                  </a>
+                </Button>
+              )}
+            </div>
+          </form>
 
-        <div className="flex gap-2">
-          <Button type="submit" disabled={updateMutation.isPending}>
-            {updateMutation.isPending ? "Lagrer…" : "Lagre"}
-          </Button>
-          {form.status === "published" && isSlugValid(form.slug) && (
-            <Button type="button" variant="outline" asChild>
-              <a
-                href={`${getBaseUrl()}/prosjekter/${form.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Åpne live
-              </a>
-            </Button>
-          )}
-        </div>
-      </form>
-
-      <ProjectAssetsSection projectId={project.id} />
+          <ProjectAssetsSection projectId={project.id} />
         </div>
 
         <div className="lg:w-72 shrink-0 space-y-4">

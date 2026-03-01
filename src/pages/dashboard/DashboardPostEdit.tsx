@@ -6,7 +6,6 @@ import { slugify, isSlugValid, getSlugError } from "@/lib/slug";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -14,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { BilingualField } from "@/components/dashboard/BilingualField";
+import { TranslationProgress } from "@/components/dashboard/TranslationProgress";
 import { getBaseUrl } from "@/lib/seo";
 import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 import { SaveIndicator } from "@/components/dashboard/SaveIndicator";
@@ -31,9 +32,12 @@ export default function DashboardPostEdit() {
   const qc = useQueryClient();
   const [form, setForm] = useState({
     title: "",
+    title_en: "",
     slug: "",
     excerpt: "",
+    excerpt_en: "",
     content_md: "",
+    content_md_en: "",
     status: "draft" as "draft" | "published" | "archived",
   });
   const [tagIds, setTagIds] = useState<string[]>([]);
@@ -80,9 +84,12 @@ export default function DashboardPostEdit() {
     if (!post) return;
     setForm({
       title: post.title,
+      title_en: (post as any).title_en ?? "",
       slug: post.slug,
       excerpt: post.excerpt ?? "",
+      excerpt_en: (post as any).excerpt_en ?? "",
       content_md: post.content_md ?? "",
+      content_md_en: (post as any).content_md_en ?? "",
       status: post.status as "draft" | "published" | "archived",
     });
     setTagIds(postTags?.map((pt) => pt.tag_id) ?? []);
@@ -92,11 +99,17 @@ export default function DashboardPostEdit() {
   const isPublished = post?.status === "published";
   const slugChanged = isPublished && form.slug !== (post?.slug ?? "");
 
+  const enFields = [form.title_en, form.excerpt_en, form.content_md_en];
+  const enFilled = enFields.filter((v) => v.trim() !== "").length;
+
   const hasChanges = !!post && (
     form.title !== post.title ||
+    form.title_en !== ((post as any).title_en ?? "") ||
     form.slug !== post.slug ||
     form.excerpt !== (post.excerpt ?? "") ||
+    form.excerpt_en !== ((post as any).excerpt_en ?? "") ||
     form.content_md !== (post.content_md ?? "") ||
+    form.content_md_en !== ((post as any).content_md_en ?? "") ||
     form.status !== post.status ||
     JSON.stringify([...tagIds].sort()) !==
       JSON.stringify([...(postTags?.map((pt) => pt.tag_id) ?? [])].sort())
@@ -110,14 +123,17 @@ export default function DashboardPostEdit() {
         .from("posts")
         .update({
           title: payload.title,
+          title_en: payload.title_en || null,
           slug: payload.slug,
           excerpt: payload.excerpt || null,
+          excerpt_en: payload.excerpt_en || null,
           content_md: payload.content_md || null,
+          content_md_en: payload.content_md_en || null,
           status: payload.status,
           ...(payload.status === "published" && !post?.published_at
             ? { published_at: new Date().toISOString() }
             : {}),
-        })
+        } as any)
         .eq("id", id!)
         .select()
         .single();
@@ -195,11 +211,12 @@ export default function DashboardPostEdit() {
     syncTagsMutation.mutate(tagIds);
   }
 
-  function onTitleChange(title: string) {
+  function copyAllNoToEn() {
     setForm((f) => ({
       ...f,
-      title,
-      slug: slugify(title) || f.slug,
+      title_en: f.title,
+      excerpt_en: f.excerpt,
+      content_md_en: f.content_md,
     }));
   }
 
@@ -243,18 +260,26 @@ export default function DashboardPostEdit() {
               : "hidden"
           }
         />
+        <TranslationProgress filled={enFilled} total={enFields.length} />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
-        <div className="space-y-2">
-          <Label htmlFor="title">Tittel</Label>
-          <Input
-            id="title"
-            value={form.title}
-            onChange={(e) => onTitleChange(e.target.value)}
-            required
-          />
+      <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
+        <div className="flex justify-end">
+          <Button type="button" variant="outline" size="sm" onClick={copyAllNoToEn}>
+            Kopier alle norsk → engelsk
+          </Button>
         </div>
+
+        <BilingualField
+          label="Tittel"
+          valueNo={form.title}
+          valueEn={form.title_en}
+          onChangeNo={(v) => setForm((f) => ({ ...f, title: v, ...(!isPublished ? { slug: slugify(v) || f.slug } : {}) }))}
+          onChangeEn={(v) => setForm((f) => ({ ...f, title_en: v }))}
+          required
+          onCopyNoToEn={() => setForm((f) => ({ ...f, title_en: f.title }))}
+        />
+
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="slug">Slug</Label>
@@ -283,25 +308,29 @@ export default function DashboardPostEdit() {
             <p className="text-xs text-destructive">{slugError}</p>
           )}
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="excerpt">Utdrag</Label>
-          <Textarea
-            id="excerpt"
-            value={form.excerpt}
-            onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
-            rows={2}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="content_md">Innhold (Markdown)</Label>
-          <Textarea
-            id="content_md"
-            value={form.content_md}
-            onChange={(e) => setForm((f) => ({ ...f, content_md: e.target.value }))}
-            rows={14}
-            className="font-mono text-sm"
-          />
-        </div>
+
+        <BilingualField
+          label="Utdrag"
+          valueNo={form.excerpt}
+          valueEn={form.excerpt_en}
+          onChangeNo={(v) => setForm((f) => ({ ...f, excerpt: v }))}
+          onChangeEn={(v) => setForm((f) => ({ ...f, excerpt_en: v }))}
+          type="textarea"
+          rows={2}
+          onCopyNoToEn={() => setForm((f) => ({ ...f, excerpt_en: f.excerpt }))}
+        />
+
+        <BilingualField
+          label="Innhold (Markdown)"
+          valueNo={form.content_md}
+          valueEn={form.content_md_en}
+          onChangeNo={(v) => setForm((f) => ({ ...f, content_md: v }))}
+          onChangeEn={(v) => setForm((f) => ({ ...f, content_md_en: v }))}
+          type="textarea"
+          rows={14}
+          onCopyNoToEn={() => setForm((f) => ({ ...f, content_md_en: f.content_md }))}
+        />
+
         <div className="space-y-2">
           <Label>Status</Label>
           <Select
@@ -392,7 +421,6 @@ export default function DashboardPostEdit() {
             </Button>
           </div>
         </div>
-
 
         <div className="flex gap-2">
           <Button type="submit" disabled={updateMutation.isPending}>

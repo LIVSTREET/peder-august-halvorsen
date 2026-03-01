@@ -203,43 +203,52 @@ export type Database = {
       content_items: {
         Row: {
           body: string | null
+          body_en: string | null
           cover_asset_id: string | null
           created_at: string
           excerpt: string | null
+          excerpt_en: string | null
           id: string
           project_id: string | null
           published_at: string | null
           slug: string
           status: string
           title: string
+          title_en: string | null
           type: string
           updated_at: string
         }
         Insert: {
           body?: string | null
+          body_en?: string | null
           cover_asset_id?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           project_id?: string | null
           published_at?: string | null
           slug: string
           status?: string
           title: string
+          title_en?: string | null
           type?: string
           updated_at?: string
         }
         Update: {
           body?: string | null
+          body_en?: string | null
           cover_asset_id?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           project_id?: string | null
           published_at?: string | null
           slug?: string
           status?: string
           title?: string
+          title_en?: string | null
           type?: string
           updated_at?: string
         }
@@ -335,35 +344,44 @@ export type Database = {
       posts: {
         Row: {
           content_md: string | null
+          content_md_en: string | null
           created_at: string
           excerpt: string | null
+          excerpt_en: string | null
           id: string
           published_at: string | null
           slug: string
           status: Database["public"]["Enums"]["content_status"]
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           content_md?: string | null
+          content_md_en?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           published_at?: string | null
           slug: string
           status?: Database["public"]["Enums"]["content_status"]
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           content_md?: string | null
+          content_md_en?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           published_at?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["content_status"]
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -372,6 +390,7 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           id: string
           published_at: string | null
           role: string | null
@@ -379,14 +398,17 @@ export type Database = {
           sort_order: number
           status: Database["public"]["Enums"]["content_status"]
           subtitle: string | null
+          subtitle_en: string | null
           tech: string | null
           title: string
+          title_en: string | null
           updated_at: string
           url: string | null
         }
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           published_at?: string | null
           role?: string | null
@@ -394,14 +416,17 @@ export type Database = {
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
           subtitle?: string | null
+          subtitle_en?: string | null
           tech?: string | null
           title: string
+          title_en?: string | null
           updated_at?: string
           url?: string | null
         }
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           published_at?: string | null
           role?: string | null
@@ -409,8 +434,10 @@ export type Database = {
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
           subtitle?: string | null
+          subtitle_en?: string | null
           tech?: string | null
           title?: string
+          title_en?: string | null
           updated_at?: string
           url?: string | null
         }
