@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { LocaleProvider } from "@/contexts/LocaleContext";
 import Index from "./pages/Index";
 import Tjenester from "./pages/Tjenester";
 import Prosjekter from "./pages/Prosjekter";
@@ -38,53 +39,77 @@ import DashboardContentEdit from "./pages/dashboard/DashboardContentEdit";
 
 const queryClient = new QueryClient();
 
+function LocalizedRoutes({
+  path,
+  element,
+}: {
+  path: string;
+  element: React.ReactElement;
+}) {
+  const enPath = path === "/" ? "/en" : `/en${path}`;
+  return (
+    <>
+      <Route path={path} element={element} />
+      <Route path={enPath} element={element} />
+    </>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/tjenester" element={<Tjenester />} />
-          <Route path="/prosjekter" element={<Prosjekter />} />
-          <Route path="/prosjekter/:slug" element={<ProsjektDetalj />} />
-          <Route path="/arkiv" element={<Arkiv />} />
-          <Route path="/skriver" element={<Skriver />} />
-          <Route path="/skriver/:slug" element={<PostDetalj />} />
-          <Route path="/musikk" element={<Musikk />} />
-          <Route path="/prat" element={<Prat />} />
-          <Route path="/brief" element={<Brief />} />
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <LocaleProvider>
+            <Routes>
+              {LocalizedRoutes({ path: "/", element: <Index /> })}
+              {LocalizedRoutes({ path: "/tjenester", element: <Tjenester /> })}
+              {LocalizedRoutes({ path: "/prosjekter", element: <Prosjekter /> })}
+              {LocalizedRoutes({ path: "/prosjekter/:slug", element: <ProsjektDetalj /> })}
+              {LocalizedRoutes({ path: "/arkiv", element: <Arkiv /> })}
+              {LocalizedRoutes({ path: "/skriver", element: <Skriver /> })}
+              {LocalizedRoutes({ path: "/skriver/:slug", element: <PostDetalj /> })}
+              {LocalizedRoutes({ path: "/musikk", element: <Musikk /> })}
+              {LocalizedRoutes({ path: "/prat", element: <Prat /> })}
+              {LocalizedRoutes({ path: "/brief", element: <Brief /> })}
 
-          {/* Content */}
-          <Route path="/arbeid" element={<ContentListe type="work" title="Arbeid" description="Utvalgte arbeider og oppdateringer." />} />
-          <Route path="/arbeid/:slug" element={<ContentDetalj type="work" />} />
-          <Route path="/na-bygger-jeg" element={<ContentListe type="build" title="Nå bygger jeg" description="Det jeg jobber med akkurat nå." />} />
-          <Route path="/na-bygger-jeg/:slug" element={<ContentDetalj type="build" />} />
+              {/* Content */}
+              {LocalizedRoutes({
+                path: "/arbeid",
+                element: <ContentListe type="work" title="Arbeid" description="Utvalgte arbeider og oppdateringer." />,
+              })}
+              {LocalizedRoutes({ path: "/arbeid/:slug", element: <ContentDetalj type="work" /> })}
+              {LocalizedRoutes({
+                path: "/na-bygger-jeg",
+                element: <ContentListe type="build" title="Nå bygger jeg" description="Det jeg jobber med akkurat nå." />,
+              })}
+              {LocalizedRoutes({ path: "/na-bygger-jeg/:slug", element: <ContentDetalj type="build" /> })}
 
-          {/* Dashboard */}
-          <Route path="/dashboard/login" element={<DashboardLogin />} />
-          <Route path="/dashboard" element={<DashboardGuard><DashboardLayout /></DashboardGuard>}>
-            <Route index element={<DashboardOverview />} />
-            <Route path="projects" element={<DashboardProjects />} />
-            <Route path="projects/new" element={<DashboardProjectNew />} />
-            <Route path="projects/:id" element={<DashboardProjectEdit />} />
-            <Route path="posts" element={<DashboardPosts />} />
-            <Route path="posts/new" element={<DashboardPostNew />} />
-            <Route path="posts/:id" element={<DashboardPostEdit />} />
-            <Route path="archive" element={<DashboardArchive />} />
-            <Route path="leads" element={<DashboardLeads />} />
-            <Route path="leads/:id" element={<DashboardLeadDetail />} />
-            <Route path="content" element={<DashboardContent />} />
-            <Route path="content/new" element={<DashboardContentNew />} />
-            <Route path="content/:id" element={<DashboardContentEdit />} />
-          </Route>
+              {/* Dashboard – ingen locale */}
+              <Route path="/dashboard/login" element={<DashboardLogin />} />
+              <Route path="/dashboard" element={<DashboardGuard><DashboardLayout /></DashboardGuard>}>
+                <Route index element={<DashboardOverview />} />
+                <Route path="projects" element={<DashboardProjects />} />
+                <Route path="projects/new" element={<DashboardProjectNew />} />
+                <Route path="projects/:id" element={<DashboardProjectEdit />} />
+                <Route path="posts" element={<DashboardPosts />} />
+                <Route path="posts/new" element={<DashboardPostNew />} />
+                <Route path="posts/:id" element={<DashboardPostEdit />} />
+                <Route path="archive" element={<DashboardArchive />} />
+                <Route path="leads" element={<DashboardLeads />} />
+                <Route path="leads/:id" element={<DashboardLeadDetail />} />
+                <Route path="content" element={<DashboardContent />} />
+                <Route path="content/new" element={<DashboardContentNew />} />
+                <Route path="content/:id" element={<DashboardContentEdit />} />
+              </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </LocaleProvider>
+        </BrowserRouter>
+      </TooltipProvider>
     </HelmetProvider>
   </QueryClientProvider>
 );
