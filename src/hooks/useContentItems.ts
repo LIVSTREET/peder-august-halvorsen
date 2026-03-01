@@ -41,7 +41,7 @@ export function usePublishedContentByType(type: ContentType) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("content_items")
-        .select("id, title, slug, excerpt, cover_asset_id, published_at, project_id")
+        .select("id, title, title_en, slug, excerpt, excerpt_en, cover_asset_id, published_at, project_id")
         .eq("type", type)
         .eq("status", "published")
         .order("published_at", { ascending: false });
