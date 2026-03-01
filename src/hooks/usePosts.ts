@@ -8,6 +8,7 @@ export function usePosts() {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
+        .eq("status", "published")
         .order("published_at", { ascending: false });
       if (error) throw error;
       return data ?? [];
@@ -23,6 +24,7 @@ export function usePost(slug: string) {
         .from("posts")
         .select("*")
         .eq("slug", slug)
+        .eq("status", "published")
         .maybeSingle();
       if (error) throw error;
       return data;
