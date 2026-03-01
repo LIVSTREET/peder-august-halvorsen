@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getCanonicalUrl, getBaseUrl, getLocaleCanonical, SITE_NAME } from "@/lib/seo";
 import { getPathWithoutLocale, type Locale } from "@/lib/i18n";
@@ -5,9 +6,8 @@ import { getPathWithoutLocale, type Locale } from "@/lib/i18n";
 interface SeoHeadProps {
   title: string;
   description: string;
-  /** Full pathname (inkl. /en) slik brukeren ser den. */
-  pathname: string;
-  /** Hvis ikke satt, inferes fra pathname. */
+  /** Hvis utelatt: brukes location.pathname (anbefalt). Overstyr kun i spesialtilfeller. */
+  pathname?: string;
   locale?: Locale;
   noindex?: boolean;
   ogImage?: string | null;
@@ -18,13 +18,16 @@ interface SeoHeadProps {
 export default function SeoHead({
   title,
   description,
-  pathname,
+  pathname: pathnameProp,
   locale: localeProp,
   noindex = false,
   ogImage,
   ogTitle,
   jsonLd,
 }: SeoHeadProps) {
+  const location = useLocation();
+  const pathname = pathnameProp ?? location.pathname;
+
   const pathWithoutLocale = getPathWithoutLocale(pathname);
   const locale: Locale = localeProp ?? (pathname.startsWith("/en") ? "en" : "no");
 
