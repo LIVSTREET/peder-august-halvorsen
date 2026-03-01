@@ -394,6 +394,7 @@ export type Database = {
           id: string
           published_at: string | null
           role: string | null
+          role_en: string | null
           slug: string
           sort_order: number
           status: Database["public"]["Enums"]["content_status"]
@@ -412,6 +413,7 @@ export type Database = {
           id?: string
           published_at?: string | null
           role?: string | null
+          role_en?: string | null
           slug: string
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
@@ -430,6 +432,7 @@ export type Database = {
           id?: string
           published_at?: string | null
           role?: string | null
+          role_en?: string | null
           slug?: string
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
