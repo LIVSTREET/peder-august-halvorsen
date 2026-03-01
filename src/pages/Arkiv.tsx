@@ -1,14 +1,16 @@
 import Layout from "@/components/layout/Layout";
 import SeoHead from "@/components/SeoHead";
-import SectionHeader from "@/components/SectionHeader";
 import TagPill from "@/components/TagPill";
 import EmptyState from "@/components/EmptyState";
 import { useArchiveItems } from "@/hooks/useArchiveItems";
 import { useTags, useArchiveTags } from "@/hooks/useTags";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useLocale } from "@/contexts/LocaleContext";
+import { tKey, tField } from "@/lib/i18n";
 
 export default function Arkiv() {
+  const { locale } = useLocale();
   const { data: items } = useArchiveItems();
   const { data: tags } = useTags();
   const { data: archiveTags } = useArchiveTags();
@@ -31,17 +33,22 @@ export default function Arkiv() {
 
   return (
     <Layout>
-      <SeoHead title="Arkiv | Alt jeg skaper" description="Arkiv over notater, lenker, bilder og tanker." pathname="/arkiv" />
+      <SeoHead
+        title={tKey("Arkiv | Alt jeg skaper", "Archive | Alt jeg skaper", locale)}
+        description={tKey("Arkiv over notater, lenker, bilder og tanker.", "Archive of notes, links, images and thoughts.", locale)}
+      />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
-          Arkiv
+          {tKey("Arkiv", "Archive", locale)}
         </h1>
-        <p className="text-muted-foreground mb-8">Notater, lenker, bilder og tanker.</p>
+        <p className="text-muted-foreground mb-8">
+          {tKey("Notater, lenker, bilder og tanker.", "Notes, links, images and thoughts.", locale)}
+        </p>
 
         {availableTags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-10">
             <TagPill
-              label="Alle"
+              label={tKey("Alle", "All", locale)}
               active={activeTag === null}
               onClick={() => setActiveTag(null)}
             />
@@ -57,11 +64,16 @@ export default function Arkiv() {
         )}
 
         {!filtered || filtered.length === 0 ? (
-          <EmptyState message="Tomt her foreløpig" sub="Innhold kommer snart." />
+          <EmptyState
+            message={tKey("Tomt her foreløpig", "Nothing here yet", locale)}
+            sub={tKey("Innhold kommer snart.", "Content coming soon.", locale)}
+          />
         ) : (
           <div className="divide-y divide-border">
             {filtered.map((item) => {
               const itemTags = (itemTagMap.get(item.id) || []).map((id) => tagMap.get(id)).filter(Boolean);
+              const itemTitle = tField(item, "title", locale);
+              const itemBody = tField(item, "body_md", locale);
               return (
                 <div key={item.id} className="py-6">
                   <div className="flex items-start justify-between gap-4">
@@ -69,15 +81,15 @@ export default function Arkiv() {
                       <h3 className="font-display text-lg font-semibold text-foreground">
                         {item.external_url ? (
                           <a href={item.external_url} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                            {item.title} ↗
+                            {itemTitle} ↗
                           </a>
                         ) : (
-                          item.title
+                          itemTitle
                         )}
                       </h3>
-                      {item.body_md && (
+                      {itemBody && (
                         <div className="mt-2 prose-editorial text-sm text-foreground/70">
-                          <ReactMarkdown>{item.body_md}</ReactMarkdown>
+                          <ReactMarkdown>{itemBody}</ReactMarkdown>
                         </div>
                       )}
                       {itemTags.length > 0 && (
