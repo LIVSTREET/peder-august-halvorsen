@@ -8,6 +8,7 @@ export function useProjects() {
       const { data, error } = await supabase
         .from("projects")
         .select("*")
+        .eq("status", "published")
         .order("sort_order")
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -24,6 +25,7 @@ export function useProject(slug: string) {
         .from("projects")
         .select("*")
         .eq("slug", slug)
+        .eq("status", "published")
         .maybeSingle();
       if (error) throw error;
       return data;
