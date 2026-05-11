@@ -128,7 +128,7 @@ function Hero() {
           </div>
         </div>
         <div className="flex justify-end">
-          <div className="relative w-full max-w-[290px]">
+          <div className="relative w-full max-w-[340px]">
             <img
               src={heroPortrait}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
