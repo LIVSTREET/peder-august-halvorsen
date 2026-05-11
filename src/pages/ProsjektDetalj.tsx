@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import SeoHead from "@/components/SeoHead";
-import BrowserFrame from "@/components/BrowserFrame";
+import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import CTAButton from "@/components/CTAButton";
 import TagPill from "@/components/TagPill";
 import { useProject } from "@/hooks/useProjects";
@@ -149,16 +149,17 @@ export default function ProsjektDetalj() {
         {assets && assets.length > 0 && (
           <div className="mt-12 space-y-6">
             {assets.map((asset) => (
-              <BrowserFrame key={asset.id} url={project.url || project.slug}>
-                <img
-                  src={getAssetUrl(asset.storage_bucket, asset.storage_path)}
-                  alt={asset.alt || title}
-                  width={asset.width ?? undefined}
-                  height={asset.height ?? undefined}
-                  className="w-full"
-                  loading="lazy"
-                />
-              </BrowserFrame>
+              <ProjectCoverMedia
+                key={asset.id}
+                presentation={(project as any).presentation}
+                frameUrl={project.url || project.slug}
+                src={getAssetUrl(asset.storage_bucket, asset.storage_path)}
+                alt={asset.alt || title}
+                width={asset.width}
+                height={asset.height}
+                fallbackLabel={title}
+                variant="detail"
+              />
             ))}
           </div>
         )}
