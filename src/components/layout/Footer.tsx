@@ -37,7 +37,7 @@ export default function Footer() {
               to={withLocalePath("/brief")}
               className="inline-block whitespace-nowrap px-5 py-2.5 min-h-[44px] font-body text-sm font-medium tracking-wide uppercase border bg-primary text-primary-foreground border-primary hover:brightness-110 transition-all"
             >
-              {locale === "en" ? "Send brief" : "Send brief"}
+              {locale === "en" ? "Send brief" : "Send forespørsel"}
             </Link>
             <Link
               to={withLocalePath("/prat")}
