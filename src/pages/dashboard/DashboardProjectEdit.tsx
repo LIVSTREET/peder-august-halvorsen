@@ -24,11 +24,17 @@ import { SaveIndicator } from "@/components/dashboard/SaveIndicator";
 import { savedToast, errorToast } from "@/lib/dashboard-toast";
 import { useProjectAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
+import { PROJECT_PRESENTATIONS, normalizePresentation } from "@/lib/project-presentation";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
   { value: "published", label: "Publisert" },
   { value: "archived", label: "Arkivert" },
+] as const;
+
+const PRESENTATION_OPTIONS = [
+  { value: "landscape", label: "Landscape — desktop / nettleser" },
+  { value: "portrait", label: "Portrait — mobil / app" },
 ] as const;
 
 export default function DashboardProjectEdit() {
@@ -52,6 +58,7 @@ export default function DashboardProjectEdit() {
     role: "",
     tech: "",
     url: "",
+    presentation: "landscape" as "landscape" | "portrait",
     status: "draft" as "draft" | "published" | "archived",
   });
   const [slugError, setSlugError] = useState<string | null>(null);
@@ -105,6 +112,7 @@ export default function DashboardProjectEdit() {
     form.role !== (project.role ?? "") ||
     form.tech !== (project.tech ?? "") ||
     form.url !== (project.url ?? "") ||
+    form.presentation !== normalizePresentation((project as any).presentation) ||
     form.status !== project.status
   );
 
@@ -131,6 +139,7 @@ export default function DashboardProjectEdit() {
           role: payload.role || null,
           tech: payload.tech || null,
           url: payload.url || null,
+          presentation: payload.presentation,
           status: payload.status,
           ...(payload.status === "published" && !project?.published_at
             ? { published_at: new Date().toISOString() }
@@ -170,6 +179,7 @@ export default function DashboardProjectEdit() {
       role: project.role ?? "",
       tech: project.tech ?? "",
       url: project.url ?? "",
+      presentation: normalizePresentation((project as any).presentation),
       status: project.status as "draft" | "published" | "archived",
     });
     setSlugError(null);
@@ -378,6 +388,29 @@ export default function DashboardProjectEdit() {
               />
             </div>
             <div className="space-y-2">
+              <Label>Presentasjon</Label>
+              <Select
+                value={form.presentation}
+                onValueChange={(v) =>
+                  setForm((f) => ({ ...f, presentation: v as typeof form.presentation }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {PRESENTATION_OPTIONS.map((o) => (
+                    <SelectItem key={o.value} value={o.value}>
+                      {o.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Landscape vises i nettleserramme (16:9). Portrait vises som mobil-mockup (vertikal).
+              </p>
+            </div>
+            <div className="space-y-2">
               <Label>Status</Label>
               <Select
                 value={form.status}
@@ -440,6 +473,7 @@ export default function DashboardProjectEdit() {
             coverUrl={coverUrl}
             status={form.status}
             publicPath={`/prosjekter/${form.slug}`}
+            presentation={form.presentation}
           />
         </div>
       </div>

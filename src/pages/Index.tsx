@@ -3,7 +3,7 @@ import heroPortrait from "@/assets/hero-portrait.jpg";
 import logoPah from "@/assets/logo-pah.png";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
-import BrowserFrame from "@/components/BrowserFrame";
+import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import CTAButton from "@/components/CTAButton";
 import EmptyState from "@/components/EmptyState";
 import { useProjects } from "@/hooks/useProjects";
@@ -191,22 +191,16 @@ function FeaturedProject({ project }: { project: any }) {
 
   return (
     <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group rounded-[18px] overflow-hidden shadow-md shadow-black/10 hover:shadow-lg transition-shadow">
-      <BrowserFrame url={project.url || project.slug} className="rounded-t-2xl border-border/60">
-        {firstAsset ? (
-          <img
-            src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
-            alt={firstAsset.alt || tField(project, "title", locale)}
-            width={firstAsset.width ?? undefined}
-            height={firstAsset.height ?? undefined}
-            className="w-full aspect-video object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground font-mono text-sm">{tField(project, "title", locale)}</span>
-          </div>
-        )}
-      </BrowserFrame>
+      <ProjectCoverMedia
+        presentation={(project as any).presentation}
+        frameUrl={project.url || project.slug}
+        src={firstAsset ? getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path) : null}
+        alt={firstAsset?.alt || tField(project, "title", locale)}
+        width={firstAsset?.width}
+        height={firstAsset?.height}
+        fallbackLabel={tField(project, "title", locale)}
+        variant="featured"
+      />
       <div className="mt-1.5 md:mt-3 px-1">
         <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
           {tField(project, "title", locale)}
@@ -226,22 +220,16 @@ function ProjectCard({ project }: { project: any }) {
 
   return (
     <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group rounded-[18px] overflow-hidden shadow-sm shadow-black/10 hover:shadow-md transition-shadow">
-      <BrowserFrame url={project.url || project.slug} className="rounded-t-2xl border-border/60">
-        {firstAsset ? (
-          <img
-            src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
-            alt={firstAsset.alt || tField(project, "title", locale)}
-            width={firstAsset.width ?? undefined}
-            height={firstAsset.height ?? undefined}
-            className="w-full aspect-video object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground font-mono text-xs">{tField(project, "title", locale)}</span>
-          </div>
-        )}
-      </BrowserFrame>
+      <ProjectCoverMedia
+        presentation={(project as any).presentation}
+        frameUrl={project.url || project.slug}
+        src={firstAsset ? getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path) : null}
+        alt={firstAsset?.alt || tField(project, "title", locale)}
+        width={firstAsset?.width}
+        height={firstAsset?.height}
+        fallbackLabel={tField(project, "title", locale)}
+        variant="card"
+      />
       <div className="mt-1.5 px-1 pb-2">
         <h3 className="font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
           {tField(project, "title", locale)}

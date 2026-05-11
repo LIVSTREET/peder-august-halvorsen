@@ -3,6 +3,7 @@ import { isSlugValid } from "@/lib/slug";
 import { copiedToast } from "@/lib/dashboard-toast";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { isPortraitPresentation } from "@/lib/project-presentation";
 
 type Props = {
   title: string;
@@ -11,6 +12,7 @@ type Props = {
   coverUrl?: string | null;
   status: string;
   publicPath: string;
+  presentation?: string | null;
 };
 
 export function ProjectPreviewCard({
@@ -20,10 +22,12 @@ export function ProjectPreviewCard({
   coverUrl,
   status,
   publicPath,
+  presentation,
 }: Props) {
   const publicUrl = getBaseUrl() + publicPath;
   const slugValid = isSlugValid(slug);
   const canOpen = slugValid && status === "published";
+  const portrait = isPortraitPresentation(presentation);
 
   function handleCopy() {
     navigator.clipboard.writeText(publicUrl);
@@ -43,12 +47,23 @@ export function ProjectPreviewCard({
   return (
     <div className="border border-border rounded-md overflow-hidden">
       {coverUrl && (
-        <img
-          src={coverUrl}
-          alt={title}
-          className="w-full h-40 object-cover"
-          loading="lazy"
-        />
+        portrait ? (
+          <div className="bg-muted/30 flex justify-center py-3">
+            <img
+              src={coverUrl}
+              alt={title}
+              className="h-48 w-auto aspect-[10/19] object-contain"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <img
+            src={coverUrl}
+            alt={title}
+            className="w-full h-40 object-cover"
+            loading="lazy"
+          />
+        )
       )}
       <div className="p-4 space-y-3">
         <div className="flex items-center justify-between gap-2">

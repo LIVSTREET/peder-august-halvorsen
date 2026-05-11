@@ -392,6 +392,7 @@ export type Database = {
           description: string | null
           description_en: string | null
           id: string
+          presentation: string
           problem_text: string | null
           problem_text_en: string | null
           published_at: string | null
@@ -417,6 +418,7 @@ export type Database = {
           description?: string | null
           description_en?: string | null
           id?: string
+          presentation?: string
           problem_text?: string | null
           problem_text_en?: string | null
           published_at?: string | null
@@ -442,6 +444,7 @@ export type Database = {
           description?: string | null
           description_en?: string | null
           id?: string
+          presentation?: string
           problem_text?: string | null
           problem_text_en?: string | null
           published_at?: string | null
