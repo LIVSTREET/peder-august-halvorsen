@@ -291,3 +291,180 @@ function BuildingNowSection() {
     </section>
   );
 }
+
+function TrustSection() {
+  const { locale, withLocalePath } = useLocale();
+
+  const points = locale === "en"
+    ? [
+        { k: "Structure", v: "Clear information architecture and content model — not a pile of pages." },
+        { k: "SEO", v: "Built-in technical SEO, fast load, semantic HTML, sitemap and metadata." },
+        { k: "Easy to run", v: "Editor-friendly admin in plain language. You own your content." },
+        { k: "Ownership", v: "You own the code, the database and the domain. No lock-in." },
+      ]
+    : [
+        { k: "Struktur", v: "Tydelig informasjonsarkitektur og innholdsmodell — ikke en haug med sider." },
+        { k: "SEO", v: "Teknisk SEO, rask lasting, semantisk HTML, sitemap og metadata fra start." },
+        { k: "Enkel drift", v: "Et admin du faktisk forstår. Du eier innholdet ditt." },
+        { k: "Eierskap", v: "Du eier koden, databasen og domenet. Ingen lock-in." },
+      ];
+
+  const steps = locale === "en"
+    ? [
+        { n: "01", t: "Brief", d: "You send a short brief or we have a chat." },
+        { n: "02", t: "Structure", d: "I scope, sketch the architecture and write the copy." },
+        { n: "03", t: "Build", d: "Built as a real, modern stack — not a tower of plugins." },
+        { n: "04", t: "Launch", d: "We go live. You can update content yourself." },
+      ]
+    : [
+        { n: "01", t: "Brief", d: "Du sender en kort brief eller vi tar en prat." },
+        { n: "02", t: "Struktur", d: "Jeg setter omfang, skisserer arkitekturen og skriver tekst." },
+        { n: "03", t: "Bygging", d: "Bygges på en ekte, moderne stack — ikke et tårn av plugins." },
+        { n: "04", t: "Lansering", d: "Vi går live. Du kan oppdatere innholdet selv." },
+      ];
+
+  return (
+    <section className="container py-12 md:py-24 border-t border-border/70">
+      <SectionHeader
+        title={tKey("Slik jobber jeg", "How I work", locale)}
+        subtitle={tKey(
+          "Ferdige løsninger for små bedrifter — ikke et tårn av plugins.",
+          "Finished solutions for small businesses — not a tower of plugins.",
+          locale
+        )}
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+        <div className="md:col-span-1">
+          <img
+            src={heroPortrait}
+            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
+            className="w-40 md:w-full max-w-[220px] aspect-square object-cover grayscale"
+            loading="lazy"
+          />
+          <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
+            {tKey(
+              "Jeg er Peder August Halvorsen. Jeg bygger nettsider og digitale systemer som er trygge å drifte og enkle å bygge videre på.",
+              "I'm Peder August Halvorsen. I build websites and digital systems that are safe to run and easy to extend.",
+              locale
+            )}
+          </p>
+        </div>
+
+        <div className="md:col-span-2 space-y-10">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+            {points.map((p) => (
+              <li key={p.k}>
+                <p className="text-xs font-mono text-primary uppercase tracking-widest mb-1.5">{p.k}</p>
+                <p className="text-foreground/85 text-sm leading-relaxed">{p.v}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div>
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-4">
+              {tKey("Prosess", "Process", locale)}
+            </p>
+            <ol className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {steps.map((s) => (
+                <li key={s.n} className="border border-border/70 p-3">
+                  <p className="text-[10px] font-mono text-primary">{s.n}</p>
+                  <p className="font-display font-bold text-foreground mt-1">{s.t}</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-snug">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            <CTAButton to={withLocalePath("/tjenester")} variant="outline">
+              {tKey("Se tjenester", "See services", locale)}
+            </CTAButton>
+            <CTAButton to={withLocalePath("/brief")}>
+              {tKey("Send brief", "Send brief", locale)}
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComparisonSection() {
+  const { locale, withLocalePath } = useLocale();
+
+  const rows = locale === "en"
+    ? [
+        { k: "Structure", a: "Template — limited by what the builder allows", b: "Tailored structure built around your content" },
+        { k: "SEO", a: "Generic, depends on third-party plugins", b: "Technical SEO and semantic HTML from day one" },
+        { k: "Performance", a: "Heavy themes, slow on mobile", b: "Lightweight modern stack, fast on mobile" },
+        { k: "Admin", a: "Many menus, often confusing", b: "Simple admin in plain language" },
+        { k: "Extending", a: "More plugins → more risk", b: "Real code — easy to extend without rebuilding" },
+        { k: "Ownership", a: "Locked to a platform and subscription", b: "You own code, database and domain" },
+        { k: "Support", a: "Chat queue, generic answers", b: "Direct line to the person who built it" },
+      ]
+    : [
+        { k: "Struktur", a: "Mal — begrenset av hva byggeren tillater", b: "Skreddersydd struktur bygget rundt innholdet ditt" },
+        { k: "SEO", a: "Generisk, avhenger av tredjeparts-plugins", b: "Teknisk SEO og semantisk HTML fra dag én" },
+        { k: "Ytelse", a: "Tunge temaer, treg på mobil", b: "Lett, moderne stack — rask på mobil" },
+        { k: "Admin", a: "Mange menyer, ofte forvirrende", b: "Enkelt admin på vanlig norsk" },
+        { k: "Videreutvikling", a: "Flere plugins → mer risiko", b: "Ekte kode — enkelt å bygge videre uten å starte på nytt" },
+        { k: "Eierskap", a: "Låst til plattform og abonnement", b: "Du eier kode, database og domene" },
+        { k: "Support", a: "Chat-kø, generelle svar", b: "Direkte linje til den som har bygd det" },
+      ];
+
+  return (
+    <section className="container py-12 md:py-24 border-t border-border/70">
+      <SectionHeader
+        title={tKey("Hvorfor ikke bare en standard nettsidebygger?", "Why not just a standard site builder?", locale)}
+        subtitle={tKey(
+          "Wix, Squarespace og lignende fungerer fint til mye. Men en skikkelig studio-bygd løsning gir deg noe annet.",
+          "Wix, Squarespace and similar work for a lot of things. But a proper studio-built solution gives you something different.",
+          locale
+        )}
+      />
+
+      <div className="border border-border/70 overflow-hidden">
+        <div className="hidden md:grid grid-cols-[1fr_1fr_1fr] bg-muted/30">
+          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-muted-foreground" />
+          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-muted-foreground border-l border-border/70">
+            {tKey("Standard nettsidebygger", "Standard site builder", locale)}
+          </div>
+          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-primary border-l border-border/70">
+            Studio P.A. Halvorsen
+          </div>
+        </div>
+        <ul className="divide-y divide-border/70">
+          {rows.map((r) => (
+            <li key={r.k} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr]">
+              <div className="px-4 py-3 font-display font-semibold text-foreground text-sm md:text-base md:border-r md:border-border/70 bg-muted/20 md:bg-transparent">
+                {r.k}
+              </div>
+              <div className="px-4 py-3 text-sm text-muted-foreground md:border-r md:border-border/70">
+                <span className="md:hidden text-[10px] font-mono uppercase tracking-widest text-muted-foreground/70 block mb-1">
+                  {tKey("Standard", "Standard", locale)}
+                </span>
+                {r.a}
+              </div>
+              <div className="px-4 py-3 text-sm text-foreground/90">
+                <span className="md:hidden text-[10px] font-mono uppercase tracking-widest text-primary block mb-1">
+                  Studio P.A. Halvorsen
+                </span>
+                {r.b}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <CTAButton to={withLocalePath("/brief")}>
+          {tKey("Send brief", "Send brief", locale)}
+        </CTAButton>
+        <CTAButton to={withLocalePath("/prat")} variant="outline">
+          {tKey("Book en prat", "Book a chat", locale)}
+        </CTAButton>
+      </div>
+    </section>
+  );
+}
