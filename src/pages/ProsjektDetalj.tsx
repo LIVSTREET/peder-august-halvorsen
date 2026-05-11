@@ -47,6 +47,10 @@ export default function ProsjektDetalj() {
   const title = tField(project, "title", locale);
   const subtitle = tField(project, "subtitle", locale);
   const description = tField(project, "description", locale);
+  const problemText = tField(project as any, "problem_text", locale);
+  const solutionText = tField(project as any, "solution_text", locale);
+  const resultText = tField(project as any, "result_text", locale);
+  const hasCaseStudy = !!(problemText || solutionText || resultText);
 
   const ogAsset = assets?.find((a) => ["og", "screenshot", "image"].includes(a.kind));
   const ogImageUrl = ogAsset ? getAssetUrl(ogAsset.storage_bucket, ogAsset.storage_path) : null;
@@ -110,7 +114,33 @@ export default function ProsjektDetalj() {
           </div>
         )}
 
-        {description && (
+        {hasCaseStudy && (
+          <section aria-label="Case study" className="mt-12 space-y-5">
+            {problemText && (
+              <CaseBlock
+                eyebrow={tKey("Problem", "Problem", locale)}
+                heading={tKey("Utfordringen", "The challenge", locale)}
+                text={problemText}
+              />
+            )}
+            {solutionText && (
+              <CaseBlock
+                eyebrow={tKey("Løsning", "Solution", locale)}
+                heading={tKey("Hva vi bygde", "What we built", locale)}
+                text={solutionText}
+              />
+            )}
+            {resultText && (
+              <CaseBlock
+                eyebrow={tKey("Resultat", "Result", locale)}
+                heading={tKey("Hva ble bedre", "The outcome", locale)}
+                text={resultText}
+              />
+            )}
+          </section>
+        )}
+
+        {!hasCaseStudy && description && (
           <div className="mt-10 text-foreground/80 leading-relaxed whitespace-pre-line">
             {description}
           </div>
@@ -165,5 +195,22 @@ export default function ProsjektDetalj() {
         </div>
       </article>
     </Layout>
+  );
+}
+
+function CaseBlock({ eyebrow, heading, text }: { eyebrow: string; heading: string; text: string }) {
+  return (
+    <section className="border border-border/60 bg-card/40 p-6 md:p-8 rounded-sm">
+      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary/80">
+        [ {eyebrow} ]
+      </p>
+      <h2 className="mt-2 font-display text-xl md:text-2xl font-bold tracking-tight text-foreground">
+        {heading}
+      </h2>
+      <div className="mt-4 h-px bg-border/60" />
+      <p className="mt-4 text-foreground/85 leading-relaxed whitespace-pre-line">
+        {text}
+      </p>
+    </section>
   );
 }
