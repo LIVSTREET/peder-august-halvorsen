@@ -3,6 +3,13 @@ export const SITE_TAGLINE_NO = "Moderne digitalt håndverk";
 export const SITE_TAGLINE_EN = "Modern digital craft";
 export const PERSON_NAME = "Peder August Halvorsen";
 export const CONTACT_EMAIL = "mail@studiopah.no";
+/** Optional. Sett til "+47XXXXXXXX" for å aktivere klikkbar tel:-lenke. */
+export const CONTACT_PHONE = "";
+/** Visningsformat for telefonnummer (f.eks. "+47 123 45 678"). */
+export const CONTACT_PHONE_DISPLAY = "";
+/** Lover svartid på offentlige sider. */
+export const RESPONSE_TIME_NO = "Svar innen 24 timer på hverdager";
+export const RESPONSE_TIME_EN = "Reply within 24 hours on weekdays";
 
 export function getBaseUrl(): string {
   if (import.meta.env.VITE_SITE_URL) return import.meta.env.VITE_SITE_URL;

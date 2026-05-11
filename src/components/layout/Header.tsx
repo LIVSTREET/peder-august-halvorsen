@@ -2,19 +2,25 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 
-const links: { to: string; labelNo: string; labelEn: string }[] = [
-  { to: "/", labelNo: "Hjem", labelEn: "Home" },
+type NavLink = { to: string; labelNo: string; labelEn: string };
+
+const primaryLinks: NavLink[] = [
   { to: "/tjenester", labelNo: "Tjenester", labelEn: "Services" },
   { to: "/prosjekter", labelNo: "Arbeid", labelEn: "Work" },
+  { to: "/brief", labelNo: "Brief", labelEn: "Brief" },
+  { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
+];
+
+const moreLinks: NavLink[] = [
   { to: "/skriver", labelNo: "Skriver", labelEn: "Writing" },
   { to: "/arkiv", labelNo: "Arkiv", labelEn: "Archive" },
   { to: "/musikk", labelNo: "Musikk", labelEn: "Music" },
-  { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
 ];
 
 export default function Header() {
   const { pathname } = useLocation();
   const { locale, withLocalePath, switchLocaleUrl } = useLocale();
+  const [moreOpen, setMoreOpen] = React.useState(false);
 
   const isActive = (to: string) => {
     const localized = withLocalePath(to);
@@ -24,11 +30,12 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border" style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
       <div className="container flex items-center justify-between h-14">
-        <Link to={withLocalePath("/")} className="font-display font-bold text-lg text-foreground tracking-tight">
-          PAH<span className="text-primary">.</span>
+        <Link to={withLocalePath("/")} className="font-display font-bold text-foreground tracking-tight" aria-label="Studio P.A. Halvorsen">
+          <span className="hidden sm:inline text-base md:text-lg">Studio P.A. Halvorsen<span className="text-primary">.</span></span>
+          <span className="sm:hidden text-lg">Studio PAH<span className="text-primary">.</span></span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
-          {links.map((l) => (
+          {primaryLinks.map((l) => (
             <Link
               key={l.to}
               to={withLocalePath(l.to)}
@@ -39,6 +46,42 @@ export default function Header() {
               {locale === "en" ? l.labelEn : l.labelNo}
             </Link>
           ))}
+          <div
+            className="relative"
+            onMouseEnter={() => setMoreOpen(true)}
+            onMouseLeave={() => setMoreOpen(false)}
+          >
+            <button
+              type="button"
+              className={`text-sm font-body transition-colors ${
+                moreLinks.some((l) => isActive(l.to))
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-haspopup="true"
+              aria-expanded={moreOpen}
+              onClick={() => setMoreOpen((o) => !o)}
+            >
+              {locale === "en" ? "More" : "Mer"}
+            </button>
+            {moreOpen && (
+              <div className="absolute right-0 top-full pt-2">
+                <div className="min-w-[140px] bg-background border border-border shadow-md py-1">
+                  {moreLinks.map((l) => (
+                    <Link
+                      key={l.to}
+                      to={withLocalePath(l.to)}
+                      className={`block px-3 py-2 text-sm font-body transition-colors ${
+                        isActive(l.to) ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {locale === "en" ? l.labelEn : l.labelNo}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
           <Link
             to={switchLocaleUrl()}
             className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors ml-2"
@@ -58,6 +101,7 @@ function MobileNav() {
   const [open, setOpen] = React.useState(false);
 
   const isActive = (to: string) => pathname === withLocalePath(to);
+  const allLinks = [...primaryLinks, ...moreLinks];
 
   return (
     <div className="md:hidden flex items-center gap-2">
@@ -79,7 +123,7 @@ function MobileNav() {
       {open && (
         <div className="absolute top-14 left-0 right-0 bg-background border-b border-border py-2" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <nav className="container flex flex-col">
-            {links.map((l) => (
+            {allLinks.map((l) => (
               <Link
                 key={l.to}
                 to={withLocalePath(l.to)}
