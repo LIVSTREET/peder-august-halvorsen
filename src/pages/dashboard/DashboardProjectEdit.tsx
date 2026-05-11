@@ -82,7 +82,6 @@ export default function DashboardProjectEdit() {
   const enFields = [
     form.title_en,
     form.subtitle_en,
-    form.description_en,
     form.problem_text_en,
     form.solution_text_en,
     form.result_text_en,
@@ -202,7 +201,6 @@ export default function DashboardProjectEdit() {
       ...f,
       title_en: f.title,
       subtitle_en: f.subtitle,
-      description_en: f.description,
       problem_text_en: f.problem_text,
       solution_text_en: f.solution_text,
       result_text_en: f.result_text,
@@ -306,17 +304,6 @@ export default function DashboardProjectEdit() {
               onChangeNo={(v) => setForm((f) => ({ ...f, subtitle: v }))}
               onChangeEn={(v) => setForm((f) => ({ ...f, subtitle_en: v }))}
               onCopyNoToEn={() => setForm((f) => ({ ...f, subtitle_en: f.subtitle }))}
-            />
-
-            <BilingualField
-              label="Beskrivelse"
-              valueNo={form.description}
-              valueEn={form.description_en}
-              onChangeNo={(v) => setForm((f) => ({ ...f, description: v }))}
-              onChangeEn={(v) => setForm((f) => ({ ...f, description_en: v }))}
-              type="textarea"
-              rows={6}
-              onCopyNoToEn={() => setForm((f) => ({ ...f, description_en: f.description }))}
             />
 
             <div className="space-y-5 pt-4 border-t border-border/60">
