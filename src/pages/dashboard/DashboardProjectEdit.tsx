@@ -63,6 +63,7 @@ export default function DashboardProjectEdit() {
     url: "",
     presentation: "landscape" as "landscape" | "portrait",
     status: "draft" as "draft" | "published" | "archived",
+    ai_context: "",
   });
   const [slugError, setSlugError] = useState<string | null>(null);
   const [aiBusy, setAiBusy] = useState<string | null>(null);
@@ -122,7 +123,8 @@ export default function DashboardProjectEdit() {
     form.tech !== (project.tech ?? "") ||
     form.url !== (project.url ?? "") ||
     form.presentation !== normalizePresentation((project as any).presentation) ||
-    form.status !== project.status
+    form.status !== project.status ||
+    form.ai_context !== ((project as any).ai_context ?? "")
   );
 
   const { blocker, confirmLeave, stay } = useUnsavedGuard(hasChanges);
@@ -151,6 +153,7 @@ export default function DashboardProjectEdit() {
           url: payload.url || null,
           presentation: payload.presentation,
           status: payload.status,
+          ai_context: payload.ai_context || null,
           ...(payload.status === "published" && !project?.published_at
             ? { published_at: new Date().toISOString() }
             : {}),
@@ -192,6 +195,7 @@ export default function DashboardProjectEdit() {
       url: project.url ?? "",
       presentation: normalizePresentation((project as any).presentation),
       status: project.status as "draft" | "published" | "archived",
+      ai_context: (project as any).ai_context ?? "",
     });
     setSlugError(null);
   }, [project]);
@@ -250,6 +254,7 @@ export default function DashboardProjectEdit() {
         role_en: form.role_en,
         tech: form.tech,
         url: form.url,
+        ai_context: form.ai_context,
       };
       const { data, error } = await supabase.functions.invoke("project-ai", {
         body: { action, project: projectPayload },
@@ -506,6 +511,22 @@ export default function DashboardProjectEdit() {
                 value={form.url}
                 onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
               />
+            </div>
+            <div className="space-y-2 pt-4 border-t border-border/60">
+              <Label htmlFor="ai_context" className="font-display uppercase tracking-wide">
+                AI-grunnlag / interne notater
+              </Label>
+              <Textarea
+                id="ai_context"
+                rows={6}
+                value={form.ai_context}
+                onChange={(e) => setForm((f) => ({ ...f, ai_context: e.target.value }))}
+                placeholder="Rå fakta, mål, resultat, kundeinfo, hva vi faktisk gjorde…"
+              />
+              <p className="text-xs text-muted-foreground">
+                Skriv rå fakta, mål, resultat, kundeinfo og hva vi faktisk gjorde.
+                Dette brukes kun for å generere bedre tekster — vises aldri offentlig.
+              </p>
             </div>
             <div className="space-y-2">
               <Label>Presentasjon</Label>
