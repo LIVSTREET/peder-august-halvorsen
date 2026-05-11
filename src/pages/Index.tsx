@@ -8,6 +8,8 @@ import EmptyState from "@/components/EmptyState";
 import { useProjects } from "@/hooks/useProjects";
 import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
@@ -44,6 +46,7 @@ export default function Index() {
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <Hero />
       <TrustSection />
+      <BeforeAfterSection />
       <ArbeidSection />
       <ComparisonSection />
       <BuildingNowSection />
