@@ -325,16 +325,16 @@ function TrustSection() {
 
   const points = locale === "en"
     ? [
-        { k: "Structure", v: "Clear information architecture and content model — not a pile of pages." },
-        { k: "SEO", v: "Built-in technical SEO, fast load, semantic HTML, sitemap and metadata." },
-        { k: "Easy to run", v: "Editor-friendly admin in plain language. You own your content." },
-        { k: "Ownership", v: "You own the code, the database and the domain. No lock-in." },
+        { k: "Structure", v: "Clear architecture — not a pile of pages." },
+        { k: "SEO", v: "Technical SEO and fast load, baked in." },
+        { k: "Easy to run", v: "An admin you actually understand." },
+        { k: "Ownership", v: "You own the code, data and domain." },
       ]
     : [
-        { k: "Struktur", v: "Tydelig informasjonsarkitektur og innholdsmodell — ikke en haug med sider." },
-        { k: "SEO", v: "Teknisk SEO, rask lasting, semantisk HTML, sitemap og metadata fra start." },
-        { k: "Enkel drift", v: "Et admin du faktisk forstår. Du eier innholdet ditt." },
-        { k: "Eierskap", v: "Du eier koden, databasen og domenet. Ingen lock-in." },
+        { k: "Struktur", v: "Tydelig arkitektur — ikke en haug med sider." },
+        { k: "SEO", v: "Teknisk SEO og rask lasting fra start." },
+        { k: "Enkel drift", v: "Et admin du faktisk forstår." },
+        { k: "Eierskap", v: "Du eier koden, dataen og domenet." },
       ];
 
   const steps = locale === "en"
@@ -376,7 +376,7 @@ function TrustSection() {
                 <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">
                   {p.k}
                 </p>
-                <p className="text-foreground/90 text-xl md:text-2xl leading-snug font-body max-w-md">
+                <p className="text-foreground/90 text-xl md:text-2xl leading-snug font-body whitespace-nowrap">
                   {p.v}
                 </p>
                 {!isLast && (
