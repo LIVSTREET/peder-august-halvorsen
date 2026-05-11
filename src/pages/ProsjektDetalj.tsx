@@ -148,19 +148,40 @@ export default function ProsjektDetalj() {
 
         {assets && assets.length > 0 && (
           <div className="mt-12 space-y-6">
-            {assets.map((asset) => (
-              <ProjectCoverMedia
-                key={asset.id}
-                presentation={(project as any).presentation}
-                frameUrl={project.url || project.slug}
-                src={getAssetUrl(asset.storage_bucket, asset.storage_path)}
-                alt={asset.alt || title}
-                width={asset.width}
-                height={asset.height}
-                fallbackLabel={title}
-                variant="detail"
-              />
-            ))}
+            <ProjectCoverMedia
+              key={assets[0].id}
+              presentation={(project as any).presentation}
+              frameUrl={project.url || project.slug}
+              src={getAssetUrl(assets[0].storage_bucket, assets[0].storage_path)}
+              alt={assets[0].alt || title}
+              width={assets[0].width}
+              height={assets[0].height}
+              fallbackLabel={title}
+              variant="detail"
+            />
+            {assets.length > 1 && (
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
+                {assets.slice(1).map((asset) => {
+                  const url = getAssetUrl(asset.storage_bucket, asset.storage_path);
+                  return (
+                    <a
+                      key={asset.id}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block overflow-hidden border border-border/60 bg-card/40 group"
+                    >
+                      <img
+                        src={url}
+                        alt={asset.alt || title}
+                        loading="lazy"
+                        className="w-full h-full object-cover aspect-[4/3] transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
