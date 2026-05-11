@@ -61,7 +61,7 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-6 pb-8 md:pt-32 md:pb-32">
+    <section className="container pt-6 pb-8 md:pt-20 md:pb-32">
       {/* Mobile hero */}
       <div className="md:hidden">
         <h1 className="font-display text-3xl font-extrabold tracking-tighter text-foreground leading-[1.05]">
@@ -98,14 +98,14 @@ function Hero() {
       {/* Desktop hero */}
       <div className="hidden md:grid grid-cols-[1.4fr_1fr] gap-20 items-center">
         <div>
-          <h1 className="leading-none -mt-8 -mb-4">
+          <h1 className="leading-none -mt-16 -mb-12 -ml-16">
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="w-full max-w-[640px] h-auto -ml-12"
+              className="w-full max-w-[820px] h-auto"
             />
           </h1>
-          <p className="mt-2 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+          <p className="text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
           </p>
           <p className="mt-6 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
