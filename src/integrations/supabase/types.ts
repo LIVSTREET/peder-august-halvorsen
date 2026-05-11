@@ -392,10 +392,16 @@ export type Database = {
           description: string | null
           description_en: string | null
           id: string
+          problem_text: string | null
+          problem_text_en: string | null
           published_at: string | null
+          result_text: string | null
+          result_text_en: string | null
           role: string | null
           role_en: string | null
           slug: string
+          solution_text: string | null
+          solution_text_en: string | null
           sort_order: number
           status: Database["public"]["Enums"]["content_status"]
           subtitle: string | null
@@ -411,10 +417,16 @@ export type Database = {
           description?: string | null
           description_en?: string | null
           id?: string
+          problem_text?: string | null
+          problem_text_en?: string | null
           published_at?: string | null
+          result_text?: string | null
+          result_text_en?: string | null
           role?: string | null
           role_en?: string | null
           slug: string
+          solution_text?: string | null
+          solution_text_en?: string | null
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
           subtitle?: string | null
@@ -430,10 +442,16 @@ export type Database = {
           description?: string | null
           description_en?: string | null
           id?: string
+          problem_text?: string | null
+          problem_text_en?: string | null
           published_at?: string | null
+          result_text?: string | null
+          result_text_en?: string | null
           role?: string | null
           role_en?: string | null
           slug?: string
+          solution_text?: string | null
+          solution_text_en?: string | null
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
           subtitle?: string | null
