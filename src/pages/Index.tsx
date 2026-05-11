@@ -71,17 +71,10 @@ function Hero() {
         <p className="mt-0.5 text-sm font-display font-semibold text-foreground/50 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </p>
-        <p className="mt-2 text-[15px] text-foreground/75 max-w-xl font-body leading-snug">
+        <p className="mt-3 text-sm text-foreground/75 max-w-xl font-body leading-snug">
           {tKey(
-            "Jeg bygger profesjonelle nettsider og digitale systemer for små bedrifter.",
-            "I build professional websites and digital systems for small businesses.",
-            locale
-          )}
-        </p>
-        <p className="mt-1 text-sm text-muted-foreground/70 max-w-lg font-body leading-snug">
-          {tKey(
-            "Nettside, SEO, tekst, skjema, admin og teknisk oppsett — ferdig satt opp og enkelt å drifte.",
-            "Website, SEO, copy, forms, admin and technical setup — fully built and easy to run.",
+            "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
+            "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
             locale
           )}
         </p>
@@ -108,17 +101,10 @@ function Hero() {
           <p className="text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
           </p>
-          <p className="mt-6 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
+          <p className="mt-8 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
             {tKey(
-              "Jeg bygger profesjonelle nettsider og digitale systemer for små bedrifter.",
-              "I build professional websites and digital systems for small businesses.",
-              locale
-            )}
-          </p>
-          <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
-            {tKey(
-              "Nettside, SEO, tekst, skjema, admin, varsler og teknisk oppsett — ferdig satt opp og enkelt å drifte.",
-              "Website, SEO, copy, forms, admin, notifications and technical setup — fully built and easy to run.",
+              "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
+              "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
               locale
             )}
           </p>
