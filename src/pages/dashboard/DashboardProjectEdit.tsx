@@ -43,6 +43,12 @@ export default function DashboardProjectEdit() {
     subtitle_en: "",
     description: "",
     description_en: "",
+    problem_text: "",
+    problem_text_en: "",
+    solution_text: "",
+    solution_text_en: "",
+    result_text: "",
+    result_text_en: "",
     role: "",
     tech: "",
     url: "",
@@ -73,7 +79,14 @@ export default function DashboardProjectEdit() {
   const isPublished = project?.status === "published";
   const slugChanged = isPublished && form.slug !== (project?.slug ?? "");
 
-  const enFields = [form.title_en, form.subtitle_en, form.description_en];
+  const enFields = [
+    form.title_en,
+    form.subtitle_en,
+    form.description_en,
+    form.problem_text_en,
+    form.solution_text_en,
+    form.result_text_en,
+  ];
   const enFilled = enFields.filter((v) => v.trim() !== "").length;
 
   const hasChanges = !!project && (
@@ -84,6 +97,12 @@ export default function DashboardProjectEdit() {
     form.subtitle_en !== ((project as any).subtitle_en ?? "") ||
     form.description !== (project.description ?? "") ||
     form.description_en !== ((project as any).description_en ?? "") ||
+    form.problem_text !== ((project as any).problem_text ?? "") ||
+    form.problem_text_en !== ((project as any).problem_text_en ?? "") ||
+    form.solution_text !== ((project as any).solution_text ?? "") ||
+    form.solution_text_en !== ((project as any).solution_text_en ?? "") ||
+    form.result_text !== ((project as any).result_text ?? "") ||
+    form.result_text_en !== ((project as any).result_text_en ?? "") ||
     form.role !== (project.role ?? "") ||
     form.tech !== (project.tech ?? "") ||
     form.url !== (project.url ?? "") ||
@@ -104,6 +123,12 @@ export default function DashboardProjectEdit() {
           subtitle_en: payload.subtitle_en || null,
           description: payload.description || null,
           description_en: payload.description_en || null,
+          problem_text: payload.problem_text || null,
+          problem_text_en: payload.problem_text_en || null,
+          solution_text: payload.solution_text || null,
+          solution_text_en: payload.solution_text_en || null,
+          result_text: payload.result_text || null,
+          result_text_en: payload.result_text_en || null,
           role: payload.role || null,
           tech: payload.tech || null,
           url: payload.url || null,
@@ -137,6 +162,12 @@ export default function DashboardProjectEdit() {
       subtitle_en: (project as any).subtitle_en ?? "",
       description: project.description ?? "",
       description_en: (project as any).description_en ?? "",
+      problem_text: (project as any).problem_text ?? "",
+      problem_text_en: (project as any).problem_text_en ?? "",
+      solution_text: (project as any).solution_text ?? "",
+      solution_text_en: (project as any).solution_text_en ?? "",
+      result_text: (project as any).result_text ?? "",
+      result_text_en: (project as any).result_text_en ?? "",
       role: project.role ?? "",
       tech: project.tech ?? "",
       url: project.url ?? "",
@@ -172,6 +203,9 @@ export default function DashboardProjectEdit() {
       title_en: f.title,
       subtitle_en: f.subtitle,
       description_en: f.description,
+      problem_text_en: f.problem_text,
+      solution_text_en: f.solution_text,
+      result_text_en: f.result_text,
     }));
   }
 
@@ -284,6 +318,53 @@ export default function DashboardProjectEdit() {
               rows={6}
               onCopyNoToEn={() => setForm((f) => ({ ...f, description_en: f.description }))}
             />
+
+            <div className="space-y-5 pt-4 border-t border-border/60">
+              <div>
+                <p className="font-display text-sm font-bold text-foreground uppercase tracking-wide">
+                  Case study
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Strukturert presentasjon. Vises som egen seksjon på prosjektsiden.
+                </p>
+              </div>
+
+              <BilingualField
+                label="Problem"
+                valueNo={form.problem_text}
+                valueEn={form.problem_text_en}
+                onChangeNo={(v) => setForm((f) => ({ ...f, problem_text: v }))}
+                onChangeEn={(v) => setForm((f) => ({ ...f, problem_text_en: v }))}
+                type="textarea"
+                rows={4}
+                placeholder="Hva var utfordringen før prosjektet?"
+                onCopyNoToEn={() => setForm((f) => ({ ...f, problem_text_en: f.problem_text }))}
+              />
+
+              <BilingualField
+                label="Løsning"
+                valueNo={form.solution_text}
+                valueEn={form.solution_text_en}
+                onChangeNo={(v) => setForm((f) => ({ ...f, solution_text: v }))}
+                onChangeEn={(v) => setForm((f) => ({ ...f, solution_text_en: v }))}
+                type="textarea"
+                rows={4}
+                placeholder="Hva ble bygget eller forbedret?"
+                onCopyNoToEn={() => setForm((f) => ({ ...f, solution_text_en: f.solution_text }))}
+              />
+
+              <BilingualField
+                label="Resultat"
+                valueNo={form.result_text}
+                valueEn={form.result_text_en}
+                onChangeNo={(v) => setForm((f) => ({ ...f, result_text: v }))}
+                onChangeEn={(v) => setForm((f) => ({ ...f, result_text_en: v }))}
+                type="textarea"
+                rows={4}
+                placeholder="Hva ble bedre etterpå?"
+                onCopyNoToEn={() => setForm((f) => ({ ...f, result_text_en: f.result_text }))}
+              />
+            </div>
 
             <div className="space-y-2">
               <Label htmlFor="role">Rolle</Label>
