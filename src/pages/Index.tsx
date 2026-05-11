@@ -292,6 +292,34 @@ function BuildingNowSection() {
   );
 }
 
+function TrustStrip() {
+  const { locale } = useLocale();
+  const items = locale === "en"
+    ? ["Websites", "SEO", "Admin systems", "AI", "Automation"]
+    : ["Nettsider", "SEO", "Adminsystem", "AI", "Automatisering"];
+  const tagline = locale === "en"
+    ? "Built for local businesses and modern founders."
+    : "Bygget for lokale bedrifter og moderne gründere.";
+
+  return (
+    <section className="border-y border-border/60 bg-background/40">
+      <div className="container py-5 md:py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
+        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-mono text-foreground/80">
+          {items.map((label, i) => (
+            <li key={label} className="flex items-center gap-3">
+              <span>{label}</span>
+              {i < items.length - 1 && <span className="text-primary/70">•</span>}
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs md:text-sm font-body italic text-muted-foreground">
+          {tagline}
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function TrustSection() {
   const { locale, withLocalePath } = useLocale();
 
