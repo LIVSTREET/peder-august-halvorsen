@@ -110,27 +110,32 @@ function buildPrompt(action: Action, project: Record<string, string>): {
   }
 }
 
-const RETURN_TOOL = {
-  type: "function" as const,
-  function: {
-    name: "return_suggestions",
-    description:
-      "Return suggested values for project fields. Only include fields you are confident about. Omit fields you cannot fill honestly.",
-    parameters: {
-      type: "object",
-      properties: {
-        fields: {
-          type: "object",
-          description:
-            "Map of field name → suggested string value. Allowed keys: title, title_en, subtitle, subtitle_en, description, description_en, problem_text, problem_text_en, solution_text, solution_text_en, result_text, result_text_en, role, role_en.",
-          additionalProperties: { type: "string" },
-        },
-      },
-      required: ["fields"],
-      additionalProperties: false,
-    },
-  },
-};
+const JSON_INSTRUCTION = [
+  "",
+  "Return ONLY a JSON object with this exact shape (no prose, no markdown, no code fences):",
+  '{ "fields": { "<field_name>": "<suggested string value>", ... } }',
+  "Allowed field keys: title, title_en, subtitle, subtitle_en, description, description_en, problem_text, problem_text_en, solution_text, solution_text_en, result_text, result_text_en, role, role_en.",
+  "Omit any field you cannot fill honestly. If you cannot suggest anything, return { \"fields\": {} }.",
+].join("\n");
+
+function extractJsonObject(text: string): unknown {
+  if (!text) return null;
+  const trimmed = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  try {
+    return JSON.parse(trimmed);
+  } catch {
+    const start = trimmed.indexOf("{");
+    const end = trimmed.lastIndexOf("}");
+    if (start >= 0 && end > start) {
+      try {
+        return JSON.parse(trimmed.slice(start, end + 1));
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -201,6 +206,9 @@ Deno.serve(async (req) => {
     }
 
     const { system, user } = buildPrompt(action, project);
+    const fullSystem = system + "\n" + JSON_INSTRUCTION;
+
+    console.log("project-ai action:", action);
 
     const aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -211,14 +219,10 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { role: "system", content: system },
+          { role: "system", content: fullSystem },
           { role: "user", content: user },
         ],
-        tools: [RETURN_TOOL],
-        tool_choice: {
-          type: "function",
-          function: { name: "return_suggestions" },
-        },
+        response_format: { type: "json_object" },
       }),
     });
 
@@ -235,15 +239,20 @@ Deno.serve(async (req) => {
     }
 
     const aiJson = await aiResp.json();
-    const toolCall = aiJson?.choices?.[0]?.message?.tool_calls?.[0];
-    const argsStr = toolCall?.function?.arguments;
-    let parsedArgs: { fields?: Record<string, unknown> } = {};
-    try {
-      parsedArgs = argsStr ? JSON.parse(argsStr) : {};
-    } catch (e) {
-      console.error("Failed to parse tool args:", e, argsStr);
+    const message = aiJson?.choices?.[0]?.message;
+    const content: string | undefined =
+      typeof message?.content === "string"
+        ? message.content
+        : Array.isArray(message?.content)
+          ? message.content.map((p: any) => (typeof p?.text === "string" ? p.text : "")).join("")
+          : undefined;
+    console.log("project-ai ai message present:", !!message, "content length:", content?.length ?? 0);
+    const parsed = extractJsonObject(content ?? "");
+    if (!parsed || typeof parsed !== "object") {
+      console.error("Failed to parse AI JSON. Raw content:", content);
       return jsonResponse({ error: "ai_invalid_response" }, 502);
     }
+    const parsedArgs = parsed as { fields?: Record<string, unknown> };
 
     const cleanFields: Record<string, string> = {};
     const rawFields = parsedArgs.fields ?? {};
