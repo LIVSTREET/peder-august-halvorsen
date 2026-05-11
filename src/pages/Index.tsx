@@ -95,9 +95,9 @@ function Hero() {
       </div>
 
       {/* Desktop hero */}
-      <div className="hidden md:grid grid-cols-2 gap-16 items-center">
+      <div className="hidden md:grid grid-cols-[1.4fr_1fr] gap-20 items-center">
         <div>
-          <h1 className="font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
+          <h1 className="font-display text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
             {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
             <span className="text-primary">.</span>
           </h1>
@@ -131,7 +131,7 @@ function Hero() {
           <img
             src={heroPortrait}
             alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-            className="aspect-square object-cover w-full max-w-xs grayscale"
+            className="object-cover w-full max-w-[260px] aspect-[3/4]"
             loading="eager"
           />
         </div>
