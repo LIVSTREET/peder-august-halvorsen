@@ -303,8 +303,8 @@ function TrustStrip() {
 
   return (
     <section className="border-y border-border/60 bg-background/40">
-      <div className="container py-5 md:py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
-        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-mono text-foreground/80">
+      <div className="container py-5 md:py-6 flex flex-col items-center text-center gap-2">
+        <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm font-mono text-foreground/80">
           {items.map((label, i) => (
             <li key={label} className="flex items-center gap-3">
               <span>{label}</span>
