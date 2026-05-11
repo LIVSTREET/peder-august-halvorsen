@@ -1,5 +1,8 @@
-export const SITE_NAME = "Alt jeg skaper";
+export const SITE_NAME = "Studio P.A. Halvorsen";
+export const SITE_TAGLINE_NO = "Moderne digitalt håndverk";
+export const SITE_TAGLINE_EN = "Modern digital craft";
 export const PERSON_NAME = "Peder August Halvorsen";
+export const CONTACT_EMAIL = "mail@studiopah.no";
 
 export function getBaseUrl(): string {
   if (import.meta.env.VITE_SITE_URL) return import.meta.env.VITE_SITE_URL;
