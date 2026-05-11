@@ -3,7 +3,6 @@ import heroPortrait from "@/assets/hero-portrait.jpg";
 import logoPah from "@/assets/logo-pah.png";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
-import BrowserFrame from "@/components/BrowserFrame";
 import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import CTAButton from "@/components/CTAButton";
 import EmptyState from "@/components/EmptyState";
