@@ -512,6 +512,22 @@ export default function DashboardProjectEdit() {
                 onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
               />
             </div>
+            <div className="space-y-2 pt-4 border-t border-border/60">
+              <Label htmlFor="ai_context" className="font-display uppercase tracking-wide">
+                AI-grunnlag / interne notater
+              </Label>
+              <Textarea
+                id="ai_context"
+                rows={6}
+                value={form.ai_context}
+                onChange={(e) => setForm((f) => ({ ...f, ai_context: e.target.value }))}
+                placeholder="Rå fakta, mål, resultat, kundeinfo, hva vi faktisk gjorde…"
+              />
+              <p className="text-xs text-muted-foreground">
+                Skriv rå fakta, mål, resultat, kundeinfo og hva vi faktisk gjorde.
+                Dette brukes kun for å generere bedre tekster — vises aldri offentlig.
+              </p>
+            </div>
             <div className="space-y-2">
               <Label>Presentasjon</Label>
               <Select
