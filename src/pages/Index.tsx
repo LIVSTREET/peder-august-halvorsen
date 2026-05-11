@@ -109,6 +109,27 @@ function Hero() {
               locale
             )}
           </p>
+          <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-2 max-w-lg text-sm font-mono text-foreground/75">
+            {(locale === "en"
+              ? [
+                  "Fast, SEO-ready build",
+                  "Editor-friendly admin",
+                  "Forms, AI & automation",
+                  "You own code & domain",
+                ]
+              : [
+                  "Rask, SEO-klar build",
+                  "Admin du faktisk forstår",
+                  "Skjema, AI & automatisering",
+                  "Du eier kode og domene",
+                ]
+            ).map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="text-primary mt-[2px]">→</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
           <div className="mt-10 flex flex-row items-center gap-4">
             <CTAButton to={withLocalePath("/brief")}>
               {tKey("Send forespørsel", "Send brief", locale)}
@@ -117,6 +138,13 @@ function Hero() {
               {tKey("Book en prat", "Book a chat", locale)}
             </CTAButton>
           </div>
+          <p className="mt-4 text-xs font-mono text-muted-foreground">
+            {tKey(
+              "Svar innen 24 t · Uforpliktende · Basert i Kragerø, jobber i hele Norge",
+              "Reply within 24h · No obligation · Based in Kragerø, working across Norway",
+              locale
+            )}
+          </p>
         </div>
         <div className="flex justify-end">
           <div className="relative w-full max-w-[340px]">
