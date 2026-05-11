@@ -363,13 +363,30 @@ function TrustSection() {
       />
 
       <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
-          {points.map((p) => (
-            <li key={p.k}>
-              <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">{p.k}</p>
-              <p className="text-foreground/90 text-lg md:text-xl leading-relaxed font-body">{p.v}</p>
-            </li>
-          ))}
+        <ul className="space-y-10 md:space-y-14">
+          {points.map((p, i) => {
+            const isLast = i === points.length - 1;
+            return (
+              <li
+                key={p.k}
+                className="relative"
+                style={{ paddingLeft: `${i * 6}%` }}
+              >
+                <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">
+                  {p.k}
+                </p>
+                <p className="text-foreground/90 text-lg md:text-xl leading-relaxed font-body max-w-xl">
+                  {p.v}
+                </p>
+                {!isLast && (
+                  <span
+                    aria-hidden="true"
+                    className="block mt-8 md:mt-10 h-px w-24 bg-border/70 origin-left rotate-[8deg] ml-2"
+                  />
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div>
