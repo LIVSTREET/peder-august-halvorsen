@@ -293,7 +293,6 @@ function BuildingNowSection() {
 }
 
 function TrustSection() {
-
   const { locale, withLocalePath } = useLocale();
 
   const points = locale === "en"
