@@ -362,11 +362,11 @@ function TrustSection() {
         )}
       />
 
-      <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
-        <ul className="space-y-6 md:space-y-8">
+      <div className="space-y-16 md:space-y-20">
+        <ul className="space-y-6 md:space-y-8 max-w-6xl mx-auto">
           {points.map((p, i) => {
             const isLast = i === points.length - 1;
-            const offset = (i / Math.max(points.length - 1, 1)) * 70;
+            const offset = (i / Math.max(points.length - 1, 1)) * 78;
             return (
               <li
                 key={p.k}
@@ -376,13 +376,13 @@ function TrustSection() {
                 <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">
                   {p.k}
                 </p>
-                <p className="text-foreground/90 text-lg md:text-xl leading-relaxed font-body max-w-xl">
+                <p className="text-foreground/90 text-xl md:text-2xl leading-snug font-body max-w-md">
                   {p.v}
                 </p>
                 {!isLast && (
                   <span
                     aria-hidden="true"
-                    className="block mt-5 md:mt-6 h-px w-16 bg-border/60 origin-left rotate-[22deg] ml-1"
+                    className="block mt-5 md:mt-6 h-px w-24 md:w-32 bg-border/60 origin-left rotate-[14deg] ml-1"
                   />
                 )}
               </li>
@@ -390,7 +390,7 @@ function TrustSection() {
           })}
         </ul>
 
-        <div>
+        <div className="max-w-4xl mx-auto">
           <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">
             {tKey("Prosess", "Process", locale)}
           </p>
