@@ -388,6 +388,7 @@ export type Database = {
       }
       projects: {
         Row: {
+          ai_context: string | null
           created_at: string
           description: string | null
           description_en: string | null
@@ -414,6 +415,7 @@ export type Database = {
           url: string | null
         }
         Insert: {
+          ai_context?: string | null
           created_at?: string
           description?: string | null
           description_en?: string | null
@@ -440,6 +442,7 @@ export type Database = {
           url?: string | null
         }
         Update: {
+          ai_context?: string | null
           created_at?: string
           description?: string | null
           description_en?: string | null
