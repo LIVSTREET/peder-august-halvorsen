@@ -8,6 +8,8 @@ import EmptyState from "@/components/EmptyState";
 import { useProjects } from "@/hooks/useProjects";
 import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
@@ -44,6 +46,7 @@ export default function Index() {
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <Hero />
       <TrustSection />
+      <BeforeAfterSection />
       <ArbeidSection />
       <ComparisonSection />
       <BuildingNowSection />
@@ -466,5 +469,93 @@ function ComparisonSection() {
         </CTAButton>
       </div>
     </section>
+  );
+}
+
+function useKursKrageroAssets() {
+  return useQuery({
+    queryKey: ["before-after", "kurs-kragero"],
+    queryFn: async () => {
+      const { data: project, error: pErr } = await supabase
+        .from("projects")
+        .select("id")
+        .eq("slug", "kurs-kragero")
+        .maybeSingle();
+      if (pErr) throw pErr;
+      if (!project) return [];
+      const { data, error } = await supabase
+        .from("assets")
+        .select("*")
+        .eq("owner_type", "project")
+        .eq("owner_id", project.id)
+        .is("deleted_at", null)
+        .order("sort_order");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+}
+
+function BeforeAfterSection() {
+  const { locale } = useLocale();
+  const { data: assets } = useKursKrageroAssets();
+  if (!assets || assets.length < 2) return null;
+
+  const pairs: Array<{ before: any; after: any }> = [];
+  for (let i = 0; i + 1 < assets.length && pairs.length < 3; i += 2) {
+    pairs.push({ before: assets[i], after: assets[i + 1] });
+  }
+
+  return (
+    <section className="container py-12 md:py-24 border-t border-border/70">
+      <SectionHeader
+        title={tKey("Før og etter", "Before and after", locale)}
+        subtitle={tKey(
+          "Et eksempel: Kurs Kragerø — fra gammel side til ny.",
+          "An example: Kurs Kragerø — from old site to new.",
+          locale
+        )}
+      />
+      <div className="space-y-10 md:space-y-14">
+        {pairs.map((pair, idx) => (
+          <div key={idx} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <BeforeAfterCard asset={pair.before} label={tKey("Før", "Before", locale)} variant="before" />
+            <BeforeAfterCard asset={pair.after} label={tKey("Etter", "After", locale)} variant="after" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BeforeAfterCard({ asset, label, variant }: { asset: any; label: string; variant: "before" | "after" }) {
+  return (
+    <figure className="space-y-2">
+      <div className="flex items-center gap-2">
+        <span
+          className={
+            "text-[10px] font-mono uppercase tracking-widest px-2 py-1 border " +
+            (variant === "after"
+              ? "text-primary border-primary/40"
+              : "text-muted-foreground border-border/70")
+          }
+        >
+          {label}
+        </span>
+      </div>
+      <div className="overflow-hidden border border-border/70 bg-muted/20">
+        <img
+          src={getAssetUrl(asset.storage_bucket, asset.storage_path)}
+          alt={asset.alt || label}
+          width={asset.width ?? undefined}
+          height={asset.height ?? undefined}
+          className={
+            "w-full aspect-video object-cover " +
+            (variant === "before" ? "grayscale opacity-90" : "")
+          }
+          loading="lazy"
+        />
+      </div>
+    </figure>
   );
 }
