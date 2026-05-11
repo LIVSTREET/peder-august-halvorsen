@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import SeoHead from "@/components/SeoHead";
-import BrowserFrame from "@/components/BrowserFrame";
+import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import EmptyState from "@/components/EmptyState";
 import { useProjects } from "@/hooks/useProjects";
 import { useAssets } from "@/hooks/useAssets";
@@ -53,23 +53,17 @@ function ProjectListItem({ project }: { project: any }) {
   const role = tField(project, "role", locale);
 
   return (
-    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group">
-      <BrowserFrame url={project.url || project.slug}>
-        {firstAsset ? (
-          <img
-            src={getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path)}
-            alt={firstAsset.alt || title}
-            width={firstAsset.width ?? undefined}
-            height={firstAsset.height ?? undefined}
-            className="w-full aspect-video object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground font-mono text-sm">{title}</span>
-          </div>
-        )}
-      </BrowserFrame>
+    <Link to={withLocalePath(`/prosjekter/${project.slug}`)} className="block group flex flex-col h-full">
+      <ProjectCoverMedia
+        presentation={(project as any).presentation}
+        frameUrl={project.url || project.slug}
+        src={firstAsset ? getAssetUrl(firstAsset.storage_bucket, firstAsset.storage_path) : null}
+        alt={firstAsset?.alt || title}
+        width={firstAsset?.width}
+        height={firstAsset?.height}
+        fallbackLabel={title}
+        variant="card"
+      />
       <div className="mt-4">
         <h2 className="font-display text-lg font-bold text-foreground group-hover:text-primary transition-colors">
           {title}
