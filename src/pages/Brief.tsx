@@ -232,7 +232,7 @@ export default function Brief() {
                 disabled={sending || !form.email}
                 className="mt-6 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all disabled:opacity-50"
               >
-                {sending ? tKey("Sender…", "Sending…", locale) : tKey("Send brief", "Send brief", locale)}
+                {sending ? tKey("Sender…", "Sending…", locale) : tKey("Send forespørsel", "Send brief", locale)}
               </button>
             </div>
           )}

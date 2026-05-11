@@ -80,7 +80,7 @@ function Hero() {
         </p>
         <div className="mt-4 flex flex-col gap-1.5">
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Send brief", "Send brief", locale)}
+            {tKey("Send forespørsel", "Send brief", locale)}
           </CTAButton>
           <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-3 py-1.5 min-h-[36px] text-[11px] border-foreground/15 text-foreground/50">
             {tKey("Book en prat", "Book a chat", locale)}
@@ -110,7 +110,7 @@ function Hero() {
           </p>
           <div className="mt-10 flex flex-row items-center gap-4">
             <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send brief", "Send brief", locale)}
+              {tKey("Send forespørsel", "Send brief", locale)}
             </CTAButton>
             <CTAButton to={withLocalePath("/prat")} variant="outline">
               {tKey("Book en prat", "Book a chat", locale)}
@@ -380,7 +380,7 @@ function TrustSection() {
               {tKey("Se tjenester", "See services", locale)}
             </CTAButton>
             <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send brief", "Send brief", locale)}
+              {tKey("Send forespørsel", "Send brief", locale)}
             </CTAButton>
           </div>
         </div>
@@ -458,7 +458,7 @@ function ComparisonSection() {
 
       <div className="mt-8 flex flex-wrap gap-3">
         <CTAButton to={withLocalePath("/brief")}>
-          {tKey("Send brief", "Send brief", locale)}
+          {tKey("Send forespørsel", "Send brief", locale)}
         </CTAButton>
         <CTAButton to={withLocalePath("/prat")} variant="outline">
           {tKey("Book en prat", "Book a chat", locale)}
