@@ -308,17 +308,6 @@ export default function DashboardProjectEdit() {
               onCopyNoToEn={() => setForm((f) => ({ ...f, subtitle_en: f.subtitle }))}
             />
 
-            <BilingualField
-              label="Beskrivelse"
-              valueNo={form.description}
-              valueEn={form.description_en}
-              onChangeNo={(v) => setForm((f) => ({ ...f, description: v }))}
-              onChangeEn={(v) => setForm((f) => ({ ...f, description_en: v }))}
-              type="textarea"
-              rows={6}
-              onCopyNoToEn={() => setForm((f) => ({ ...f, description_en: f.description }))}
-            />
-
             <div className="space-y-5 pt-4 border-t border-border/60">
               <div>
                 <p className="font-display text-sm font-bold text-foreground uppercase tracking-wide">
