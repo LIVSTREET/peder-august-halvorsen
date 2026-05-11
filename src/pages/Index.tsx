@@ -366,11 +366,12 @@ function TrustSection() {
         <ul className="space-y-6 md:space-y-8">
           {points.map((p, i) => {
             const isLast = i === points.length - 1;
+            const offset = (i / Math.max(points.length - 1, 1)) * 70;
             return (
               <li
                 key={p.k}
                 className="relative"
-                style={{ paddingLeft: `${i * 12}%` }}
+                style={{ paddingLeft: `${offset}%` }}
               >
                 <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">
                   {p.k}
@@ -381,7 +382,7 @@ function TrustSection() {
                 {!isLast && (
                   <span
                     aria-hidden="true"
-                    className="block mt-4 md:mt-5 h-px w-12 bg-border/70 origin-left rotate-[28deg] ml-2"
+                    className="block mt-5 md:mt-6 h-px w-16 bg-border/60 origin-left rotate-[22deg] ml-1"
                   />
                 )}
               </li>
