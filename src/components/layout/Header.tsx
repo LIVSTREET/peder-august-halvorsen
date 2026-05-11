@@ -99,34 +99,6 @@ export default function Header() {
         </nav>
         <MobileNav />
       </div>
-      <div className="hidden md:block border-t border-border/60 bg-foreground/[0.03]">
-        <div className="container flex items-center justify-between h-8 text-xs font-mono text-foreground/70">
-          <ul className="flex items-center gap-x-5">
-            {(locale === "en"
-              ? [
-                  "Fast, SEO-ready build",
-                  "Editor-friendly admin",
-                  "Forms, AI & automation",
-                  "You own code & domain",
-                ]
-              : [
-                  "Rask, SEO-klar build",
-                  "Admin du faktisk forstår",
-                  "Skjema, AI & automatisering",
-                  "Du eier kode og domene",
-                ]
-            ).map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="text-primary">→</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <span className="text-muted-foreground">
-            {locale === "en" ? "Based in Oslo" : "Basert i Oslo"}
-          </span>
-        </div>
-      </div>
     </header>
   );
 }

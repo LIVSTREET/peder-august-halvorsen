@@ -62,7 +62,7 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-6 pb-8 md:pt-20 md:pb-32">
+    <section className="container pt-6 pb-8 md:pt-8 md:pb-16">
       {/* Mobile hero */}
       <div className="md:hidden">
         <h1 className="font-display text-3xl font-extrabold tracking-tighter text-foreground leading-[1.05]">
