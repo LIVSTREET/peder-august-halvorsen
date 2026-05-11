@@ -362,37 +362,21 @@ function TrustSection() {
         )}
       />
 
-      <div className="space-y-10 md:space-y-12">
-        <ul className="space-y-3 md:space-y-4 max-w-6xl mx-auto">
-          {points.map((p, i) => {
-            const isLast = i === points.length - 1;
-            const offset = (i / Math.max(points.length - 1, 1)) * 78;
-            return (
-              <li
-                key={p.k}
-                className="relative"
-                style={{ paddingLeft: `${offset}%` }}
-              >
-                <p className="leading-snug font-body whitespace-nowrap">
-                  <span className="text-[10px] md:text-xs font-mono text-primary uppercase tracking-widest mr-3 align-middle">
-                    {p.k}
-                  </span>
-                  <span className="text-foreground/90 text-base md:text-lg align-middle">
-                    {p.v}
-                  </span>
-                </p>
-                {!isLast && (
-                  <span
-                    aria-hidden="true"
-                    className="block mt-2 md:mt-2.5 h-px w-16 md:w-20 bg-border/50 origin-left rotate-[10deg] ml-1"
-                  />
-                )}
-              </li>
-            );
-          })}
+      <div className="max-w-4xl mx-auto space-y-10 md:space-y-12">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 md:gap-y-8">
+          {points.map((p) => (
+            <li key={p.k} className="flex flex-col gap-2">
+              <span className="text-[10px] md:text-[11px] font-mono text-primary uppercase tracking-widest">
+                {p.k}
+              </span>
+              <p className="font-display text-foreground text-lg md:text-xl leading-snug">
+                {p.v}
+              </p>
+            </li>
+          ))}
         </ul>
 
-        <div className="max-w-4xl mx-auto">
+        <div>
           <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-4">
             {tKey("Prosess", "Process", locale)}
           </p>
@@ -407,13 +391,18 @@ function TrustSection() {
           </ol>
         </div>
 
-        <div className="flex flex-wrap gap-3 pt-2">
-          <CTAButton to={withLocalePath("/tjenester")} variant="outline">
-            {tKey("Se tjenester", "See services", locale)}
-          </CTAButton>
-          <CTAButton to={withLocalePath("/brief")}>
-            {tKey("Send forespørsel", "Send request", locale)}
-          </CTAButton>
+        <div className="border-t border-border/60 pt-6 md:pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p className="font-display text-lg md:text-xl text-foreground">
+            {tKey("Klar for å bygge noe solid?", "Ready to build something solid?", locale)}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <CTAButton to={withLocalePath("/brief")}>
+              {tKey("Send forespørsel", "Send request", locale)}
+            </CTAButton>
+            <CTAButton to={withLocalePath("/prat")} variant="outline">
+              {tKey("Book en prat", "Book a chat", locale)}
+            </CTAButton>
+          </div>
         </div>
       </div>
     </section>
