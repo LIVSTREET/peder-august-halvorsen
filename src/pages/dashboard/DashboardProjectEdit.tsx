@@ -25,6 +25,8 @@ import { savedToast, errorToast } from "@/lib/dashboard-toast";
 import { useProjectAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { PROJECT_PRESENTATIONS, normalizePresentation } from "@/lib/project-presentation";
+import { AISuggestionDialog, type AISuggestion } from "@/components/dashboard/AISuggestionDialog";
+import { Sparkles, Loader2 } from "lucide-react";
 
 const STATUS_OPTIONS = [
   { value: "draft", label: "Utkast" },
@@ -56,12 +58,16 @@ export default function DashboardProjectEdit() {
     result_text: "",
     result_text_en: "",
     role: "",
+    role_en: "",
     tech: "",
     url: "",
     presentation: "landscape" as "landscape" | "portrait",
     status: "draft" as "draft" | "published" | "archived",
   });
   const [slugError, setSlugError] = useState<string | null>(null);
+  const [aiBusy, setAiBusy] = useState<string | null>(null);
+  const [aiSuggestion, setAiSuggestion] = useState<AISuggestion | null>(null);
+  const [aiDialogOpen, setAiDialogOpen] = useState(false);
 
   const { data: project, isLoading } = useQuery({
     queryKey: ["dashboard", "project", id],
@@ -89,9 +95,11 @@ export default function DashboardProjectEdit() {
   const enFields = [
     form.title_en,
     form.subtitle_en,
+    form.description_en,
     form.problem_text_en,
     form.solution_text_en,
     form.result_text_en,
+    form.role_en,
   ];
   const enFilled = enFields.filter((v) => v.trim() !== "").length;
 
@@ -110,6 +118,7 @@ export default function DashboardProjectEdit() {
     form.result_text !== ((project as any).result_text ?? "") ||
     form.result_text_en !== ((project as any).result_text_en ?? "") ||
     form.role !== (project.role ?? "") ||
+    form.role_en !== ((project as any).role_en ?? "") ||
     form.tech !== (project.tech ?? "") ||
     form.url !== (project.url ?? "") ||
     form.presentation !== normalizePresentation((project as any).presentation) ||
@@ -137,6 +146,7 @@ export default function DashboardProjectEdit() {
           result_text: payload.result_text || null,
           result_text_en: payload.result_text_en || null,
           role: payload.role || null,
+          role_en: payload.role_en || null,
           tech: payload.tech || null,
           url: payload.url || null,
           presentation: payload.presentation,
@@ -177,6 +187,7 @@ export default function DashboardProjectEdit() {
       result_text: (project as any).result_text ?? "",
       result_text_en: (project as any).result_text_en ?? "",
       role: project.role ?? "",
+      role_en: (project as any).role_en ?? "",
       tech: project.tech ?? "",
       url: project.url ?? "",
       presentation: normalizePresentation((project as any).presentation),
@@ -211,10 +222,69 @@ export default function DashboardProjectEdit() {
       ...f,
       title_en: f.title,
       subtitle_en: f.subtitle,
+      description_en: f.description,
       problem_text_en: f.problem_text,
       solution_text_en: f.solution_text,
       result_text_en: f.result_text,
+      role_en: f.role,
     }));
+  }
+
+  async function runAi(action: "translate_en" | "improve_no" | "seo_case" | "fill_missing") {
+    setAiBusy(action);
+    try {
+      const projectPayload = {
+        title: form.title,
+        title_en: form.title_en,
+        subtitle: form.subtitle,
+        subtitle_en: form.subtitle_en,
+        description: form.description,
+        description_en: form.description_en,
+        problem_text: form.problem_text,
+        problem_text_en: form.problem_text_en,
+        solution_text: form.solution_text,
+        solution_text_en: form.solution_text_en,
+        result_text: form.result_text,
+        result_text_en: form.result_text_en,
+        role: form.role,
+        role_en: form.role_en,
+        tech: form.tech,
+        url: form.url,
+      };
+      const { data, error } = await supabase.functions.invoke("project-ai", {
+        body: { action, project: projectPayload },
+      });
+      if (error) {
+        const ctx: any = (error as any).context;
+        let payload: any = null;
+        try {
+          if (ctx && typeof ctx.json === "function") payload = await ctx.json();
+        } catch { /* ignore */ }
+        const code = payload?.error;
+        if (code === "ai_not_configured") {
+          errorToast("AI er ikke konfigurert ennå.");
+        } else if (code === "forbidden" || code === "unauthorized") {
+          errorToast("Du mangler tilgang.");
+        } else if (code === "rate_limited") {
+          errorToast("For mange forespørsler. Prøv igjen om litt.");
+        } else if (code === "ai_credits_exhausted") {
+          errorToast("AI-kreditter er brukt opp. Fyll på i Lovable Workspace.");
+        } else {
+          errorToast("Kunne ikke hente AI-forslag.");
+        }
+        return;
+      }
+      setAiSuggestion({ action, fields: data?.fields ?? {} });
+      setAiDialogOpen(true);
+    } catch (e) {
+      errorToast("Kunne ikke hente AI-forslag.");
+    } finally {
+      setAiBusy(null);
+    }
+  }
+
+  function applyAiFields(fields: Record<string, string>) {
+    setForm((f) => ({ ...f, ...fields }));
   }
 
   return (
@@ -261,10 +331,48 @@ export default function DashboardProjectEdit() {
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 min-w-0">
           <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
-            <div className="flex justify-end">
-              <Button type="button" variant="outline" size="sm" onClick={copyAllNoToEn}>
-                Kopier alle norsk → engelsk
-              </Button>
+            <div className="border border-border/70 rounded-md p-3 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-wide">
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                AI-verktøy
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <AiButton
+                  busy={aiBusy === "translate_en"}
+                  disabled={!!aiBusy}
+                  onClick={() => runAi("translate_en")}
+                >
+                  Generer engelsk
+                </AiButton>
+                <AiButton
+                  busy={aiBusy === "improve_no"}
+                  disabled={!!aiBusy}
+                  onClick={() => runAi("improve_no")}
+                >
+                  Forbedre norsk
+                </AiButton>
+                <AiButton
+                  busy={aiBusy === "seo_case"}
+                  disabled={!!aiBusy}
+                  onClick={() => runAi("seo_case")}
+                >
+                  Generer SEO-case
+                </AiButton>
+                <AiButton
+                  busy={aiBusy === "fill_missing"}
+                  disabled={!!aiBusy}
+                  onClick={() => runAi("fill_missing")}
+                >
+                  Generer alt manglende
+                </AiButton>
+                <Button type="button" variant="ghost" size="sm" onClick={copyAllNoToEn}>
+                  Kopier alle norsk → engelsk
+                </Button>
+              </div>
+              <p className="text-[11px] text-muted-foreground">
+                Forslag vises i dialog før noe endres. Ingenting lagres før du
+                trykker «Lagre».
+              </p>
             </div>
 
             <BilingualField
@@ -316,6 +424,18 @@ export default function DashboardProjectEdit() {
               onCopyNoToEn={() => setForm((f) => ({ ...f, subtitle_en: f.subtitle }))}
             />
 
+            <BilingualField
+              label="Beskrivelse"
+              valueNo={form.description}
+              valueEn={form.description_en}
+              onChangeNo={(v) => setForm((f) => ({ ...f, description: v }))}
+              onChangeEn={(v) => setForm((f) => ({ ...f, description_en: v }))}
+              type="textarea"
+              rows={4}
+              noPlaceholder="Kort beskrivelse av prosjektet."
+              onCopyNoToEn={() => setForm((f) => ({ ...f, description_en: f.description }))}
+            />
+
             <div className="space-y-5 pt-4 border-t border-border/60">
               <div>
                 <p className="font-display text-sm font-bold text-foreground uppercase tracking-wide">
@@ -363,14 +483,14 @@ export default function DashboardProjectEdit() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="role">Rolle</Label>
-              <Input
-                id="role"
-                value={form.role}
-                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-              />
-            </div>
+            <BilingualField
+              label="Rolle"
+              valueNo={form.role}
+              valueEn={form.role_en}
+              onChangeNo={(v) => setForm((f) => ({ ...f, role: v }))}
+              onChangeEn={(v) => setForm((f) => ({ ...f, role_en: v }))}
+              onCopyNoToEn={() => setForm((f) => ({ ...f, role_en: f.role }))}
+            />
             <div className="space-y-2">
               <Label htmlFor="tech">Tech (kommaseparert)</Label>
               <Input
@@ -477,6 +597,58 @@ export default function DashboardProjectEdit() {
           />
         </div>
       </div>
+
+      <AISuggestionDialog
+        open={aiDialogOpen}
+        onOpenChange={setAiDialogOpen}
+        suggestion={aiSuggestion}
+        currentValues={{
+          title: form.title,
+          title_en: form.title_en,
+          subtitle: form.subtitle,
+          subtitle_en: form.subtitle_en,
+          description: form.description,
+          description_en: form.description_en,
+          problem_text: form.problem_text,
+          problem_text_en: form.problem_text_en,
+          solution_text: form.solution_text,
+          solution_text_en: form.solution_text_en,
+          result_text: form.result_text,
+          result_text_en: form.result_text_en,
+          role: form.role,
+          role_en: form.role_en,
+        }}
+        onApply={applyAiFields}
+      />
     </div>
+  );
+}
+
+function AiButton({
+  busy,
+  children,
+  disabled,
+  onClick,
+}: {
+  busy: boolean;
+  children: React.ReactNode;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {busy ? (
+        <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" />
+      ) : (
+        <Sparkles className="h-3.5 w-3.5 mr-1 text-primary" />
+      )}
+      {children}
+    </Button>
   );
 }
