@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import heroPortrait from "@/assets/hero-portrait.jpg";
+import logoPah from "@/assets/logo-pah.png";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import BrowserFrame from "@/components/BrowserFrame";
@@ -97,9 +98,12 @@ function Hero() {
       {/* Desktop hero */}
       <div className="hidden md:grid grid-cols-[1.4fr_1fr] gap-20 items-center">
         <div>
-          <h1 className="font-display text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
-            {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
-            <span className="text-primary">.</span>
+          <h1 className="leading-none">
+            <img
+              src={logoPah}
+              alt="Studio P.A. Halvorsen"
+              className="w-full max-w-[560px] h-auto -ml-4"
+            />
           </h1>
           <p className="mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
