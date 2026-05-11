@@ -14,7 +14,7 @@ export default function Footer() {
   const primary = [
     { to: "/tjenester", labelNo: "Tjenester", labelEn: "Services" },
     { to: "/prosjekter", labelNo: "Arbeid", labelEn: "Work" },
-    { to: "/brief", labelNo: "Brief", labelEn: "Brief" },
+    { to: "/brief", labelNo: "Forespørsel", labelEn: "Request" },
     { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
   ];
 
@@ -28,8 +28,8 @@ export default function Footer() {
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               {locale === "en"
-                ? "Send a short brief or book a no-commitment chat."
-                : "Send en kort brief eller book en uforpliktende prat."}
+                ? "Send a short project request or book a no-commitment chat."
+                : "Send en kort forespørsel eller book en uforpliktende prat."}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -37,7 +37,7 @@ export default function Footer() {
               to={withLocalePath("/brief")}
               className="inline-block whitespace-nowrap px-5 py-2.5 min-h-[44px] font-body text-sm font-medium tracking-wide uppercase border bg-primary text-primary-foreground border-primary hover:brightness-110 transition-all"
             >
-              {locale === "en" ? "Send brief" : "Send forespørsel"}
+              {locale === "en" ? "Send request" : "Send forespørsel"}
             </Link>
             <Link
               to={withLocalePath("/prat")}

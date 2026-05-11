@@ -110,7 +110,7 @@ export default function Brief() {
       <Layout>
         <SeoHead
           title={tKey("Takk! | Studio P.A. Halvorsen", "Thanks! | Studio P.A. Halvorsen", locale)}
-          description={tKey("Briefen din er sendt.", "Your brief has been submitted.", locale)}
+          description={tKey("Forespørselen din er sendt.", "Your request has been submitted.", locale)}
           pathname="/brief"
           noindex
         />
@@ -119,7 +119,7 @@ export default function Brief() {
             {tKey("Takk!", "Thanks!", locale)}
           </h1>
           <p className="text-muted-foreground mb-8">
-            {tKey("Briefen din er sendt. Her er et sammendrag:", "Your brief has been submitted. Here's a summary:", locale)}
+            {tKey("Forespørselen din er sendt. Her er et sammendrag:", "Your request has been submitted. Here's a summary:", locale)}
           </p>
           <div className="space-y-3 text-sm">
             {form.goal && <SummaryRow label={tKey("Mål", "Goal", locale)} value={findLabel(goals, form.goal)} />}
@@ -150,13 +150,13 @@ export default function Brief() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Send brief | Studio P.A. Halvorsen", "Send brief | Studio P.A. Halvorsen", locale)}
+        title={tKey("Send forespørsel | Studio P.A. Halvorsen", "Send a request | Studio P.A. Halvorsen", locale)}
         description={tKey("Fortell meg hva du prøver å få til – jeg hjelper deg videre.", "Tell me what you're trying to achieve – I'll help you forward.", locale)}
         pathname="/brief"
         noindex
       />
       <section className="container pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] max-w-xl mx-auto">
-        <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">Brief</h1>
+        <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground mb-2">Forespørsel</h1>
         <p className="text-muted-foreground text-sm mb-10">
           {tKey("Steg", "Step", locale)} {step + 1} {tKey("av", "of", locale)} {steps.length + 2}
         </p>
@@ -232,7 +232,7 @@ export default function Brief() {
                 disabled={sending || !form.email}
                 className="mt-6 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wide border border-primary hover:brightness-110 transition-all disabled:opacity-50"
               >
-                {sending ? tKey("Sender…", "Sending…", locale) : tKey("Send forespørsel", "Send brief", locale)}
+                {sending ? tKey("Sender…", "Sending…", locale) : tKey("Send forespørsel", "Send request", locale)}
               </button>
             </div>
           )}
