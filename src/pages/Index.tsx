@@ -352,7 +352,7 @@ function TrustSection() {
       ];
 
   return (
-    <section className="container py-12 md:py-24 border-t border-border/70">
+    <section className="container py-10 md:py-16 border-t border-border/70">
       <SectionHeader
         title={tKey("Slik jobber jeg", "How I work", locale)}
         subtitle={tKey(
@@ -362,8 +362,8 @@ function TrustSection() {
         )}
       />
 
-      <div className="space-y-16 md:space-y-20">
-        <ul className="space-y-6 md:space-y-8 max-w-6xl mx-auto">
+      <div className="space-y-10 md:space-y-12">
+        <ul className="space-y-3 md:space-y-4 max-w-6xl mx-auto">
           {points.map((p, i) => {
             const isLast = i === points.length - 1;
             const offset = (i / Math.max(points.length - 1, 1)) * 78;
@@ -373,16 +373,18 @@ function TrustSection() {
                 className="relative"
                 style={{ paddingLeft: `${offset}%` }}
               >
-                <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">
-                  {p.k}
-                </p>
-                <p className="text-foreground/90 text-xl md:text-2xl leading-snug font-body whitespace-nowrap">
-                  {p.v}
+                <p className="leading-snug font-body whitespace-nowrap">
+                  <span className="text-[10px] md:text-xs font-mono text-primary uppercase tracking-widest mr-3 align-middle">
+                    {p.k}
+                  </span>
+                  <span className="text-foreground/90 text-base md:text-lg align-middle">
+                    {p.v}
+                  </span>
                 </p>
                 {!isLast && (
                   <span
                     aria-hidden="true"
-                    className="block mt-5 md:mt-6 h-px w-24 md:w-32 bg-border/60 origin-left rotate-[14deg] ml-1"
+                    className="block mt-2 md:mt-2.5 h-px w-16 md:w-20 bg-border/50 origin-left rotate-[10deg] ml-1"
                   />
                 )}
               </li>
@@ -391,15 +393,15 @@ function TrustSection() {
         </ul>
 
         <div className="max-w-4xl mx-auto">
-          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-4">
             {tKey("Prosess", "Process", locale)}
           </p>
-          <ol className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+          <ol className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {steps.map((s) => (
-              <li key={s.n} className="border border-border/70 p-5">
+              <li key={s.n} className="border border-border/70 p-3">
                 <p className="text-xs font-mono text-primary">{s.n}</p>
-                <p className="font-display font-bold text-foreground text-lg mt-2">{s.t}</p>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.d}</p>
+                <p className="font-display font-bold text-foreground text-sm md:text-base mt-1.5">{s.t}</p>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-snug">{s.d}</p>
               </li>
             ))}
           </ol>
