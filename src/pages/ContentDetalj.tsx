@@ -58,7 +58,7 @@ export default function ContentDetalj({ type }: Props) {
   return (
     <Layout>
       <SeoHead
-        title={`${title} | ${typeLabel} | Alt jeg skaper`}
+        title={`${title} | ${typeLabel} | Studio P.A. Halvorsen`}
         description={metaDesc}
         pathname={withLocalePath(`${route.path}/${item.slug}`)}
       />

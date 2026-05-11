@@ -5,9 +5,9 @@ import { useLocale } from "@/contexts/LocaleContext";
 const links: { to: string; labelNo: string; labelEn: string }[] = [
   { to: "/", labelNo: "Hjem", labelEn: "Home" },
   { to: "/tjenester", labelNo: "Tjenester", labelEn: "Services" },
-  { to: "/prosjekter", labelNo: "Prosjekter", labelEn: "Projects" },
-  { to: "/arkiv", labelNo: "Arkiv", labelEn: "Archive" },
+  { to: "/prosjekter", labelNo: "Arbeid", labelEn: "Work" },
   { to: "/skriver", labelNo: "Skriver", labelEn: "Writing" },
+  { to: "/arkiv", labelNo: "Arkiv", labelEn: "Archive" },
   { to: "/musikk", labelNo: "Musikk", labelEn: "Music" },
   { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
 ];

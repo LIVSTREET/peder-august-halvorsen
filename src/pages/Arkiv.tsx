@@ -34,7 +34,7 @@ export default function Arkiv() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Arkiv | Alt jeg skaper", "Archive | Alt jeg skaper", locale)}
+        title={tKey("Arkiv | Studio P.A. Halvorsen", "Archive | Studio P.A. Halvorsen", locale)}
         description={tKey("Arkiv over notater, lenker, bilder og tanker.", "Archive of notes, links, images and thoughts.", locale)}
       />
       <section className="container pt-16 pb-24">

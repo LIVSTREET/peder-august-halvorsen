@@ -41,7 +41,7 @@ export default function DashboardOverview() {
       <div>
         <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Oversikt</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Rask status på innhold og leads.
+          Rask status på innhold og henvendelser.
         </p>
       </div>
 
@@ -55,7 +55,7 @@ export default function DashboardOverview() {
             <CountBlock label="Prosjekter" value={counts.projects} />
             <CountBlock label="Innlegg" value={counts.posts} />
             <CountBlock label="Arkiv" value={counts.archive} />
-            <CountBlock label="Leads" value={counts.leads} />
+            <CountBlock label="Henvendelser" value={counts.leads} />
           </div>
         ) : null}
       </section>

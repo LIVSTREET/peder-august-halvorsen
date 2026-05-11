@@ -1,5 +1,6 @@
 import { SiteCredit } from "@/components/SiteCredit";
 import { useLocale } from "@/contexts/LocaleContext";
+import { CONTACT_EMAIL, SITE_NAME } from "@/lib/seo";
 
 export default function Footer() {
   const { locale } = useLocale();
@@ -10,17 +11,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <p className="font-display font-bold text-lg text-foreground">
-              PAH<span className="text-primary">.</span>
+              {SITE_NAME}<span className="text-primary">.</span>
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              {locale === "en" ? "Building flexible platforms and websites." : "Bygger fleksible plattformer og nettsteder."}
+              {locale === "en"
+                ? "Modern digital craft. Websites and digital systems for small businesses."
+                : "Moderne digitalt håndverk. Nettsider og digitale systemer for små bedrifter."}
             </p>
           </div>
           <div>
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-3">
               {locale === "en" ? "Contact" : "Kontakt"}
             </p>
-            <p className="text-sm text-foreground">kontaktpeder@gmail.com</p>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-foreground hover:text-primary transition-colors">
+              {CONTACT_EMAIL}
+            </a>
           </div>
           <div className="flex flex-col justify-end">
             <p className="text-xs text-muted-foreground/50 italic leading-relaxed">

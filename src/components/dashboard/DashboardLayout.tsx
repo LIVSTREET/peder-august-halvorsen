@@ -11,7 +11,7 @@ const nav = [
   { to: "/dashboard/posts", end: false, label: "Skriver" },
   { to: "/dashboard/content", end: false, label: "Innhold" },
   { to: "/dashboard/archive", end: false, label: "Arkiv" },
-  { to: "/dashboard/leads", end: false, label: "Leads" },
+  { to: "/dashboard/leads", end: false, label: "Henvendelser" },
 ];
 
 export default function DashboardLayout() {

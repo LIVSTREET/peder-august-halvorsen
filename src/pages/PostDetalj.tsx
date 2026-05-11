@@ -76,7 +76,7 @@ export default function PostDetalj() {
   return (
     <Layout>
       <SeoHead
-        title={`${title} | ${tKey("Skriver", "Writing", locale)} | ${tKey("Alt jeg skaper", "What I create", locale)}`}
+        title={`${title} | ${tKey("Skriver", "Writing", locale)} | Studio P.A. Halvorsen`}
         description={description}
         pathname={`/skriver/${post.slug}`}
         ogImage={ogImageUrl}
