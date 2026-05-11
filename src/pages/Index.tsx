@@ -98,14 +98,14 @@ function Hero() {
       {/* Desktop hero */}
       <div className="hidden md:grid grid-cols-[1.4fr_1fr] gap-20 items-center">
         <div>
-          <h1 className="leading-none">
+          <h1 className="leading-none -mt-4 -mb-2">
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="w-full max-w-[560px] h-auto -ml-4"
+              className="w-full max-w-[440px] h-auto -ml-8"
             />
           </h1>
-          <p className="mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
+          <p className="mt-2 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
             {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
           </p>
           <p className="mt-6 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
