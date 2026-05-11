@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
+import logoMark from "@/assets/logo-mark.png";
 
 type NavLink = { to: string; labelNo: string; labelEn: string };
 
@@ -30,9 +31,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border" style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
       <div className="container flex items-center justify-between h-14">
-        <Link to={withLocalePath("/")} className="font-display font-bold text-foreground tracking-tight" aria-label="Studio P.A. Halvorsen">
-          <span className="hidden sm:inline text-base md:text-lg">Studio P.A. Halvorsen<span className="text-primary">.</span></span>
-          <span className="sm:hidden text-lg">Studio PAH<span className="text-primary">.</span></span>
+        <Link to={withLocalePath("/")} className="flex items-center" aria-label="Studio P.A. Halvorsen">
+          <img src={logoMark} alt="Studio P.A. Halvorsen" className="h-8 md:h-9 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {primaryLinks.map((l) => (
