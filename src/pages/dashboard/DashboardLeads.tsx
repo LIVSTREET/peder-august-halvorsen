@@ -40,7 +40,7 @@ export default function DashboardLeads() {
     <div className="space-y-6">
       <div>
         <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Henvendelser</h1>
-        <p className="text-muted-foreground text-sm hidden sm:block">Brief-innsendelser. Status og hurtighandlinger.</p>
+        <p className="text-muted-foreground text-sm hidden sm:block">Forespørsel-innsendelser. Status og hurtighandlinger.</p>
       </div>
 
       <div className="flex gap-2">
@@ -62,13 +62,13 @@ export default function DashboardLeads() {
       ) : filtered.length === 0 ? (
         <div className="py-12 text-center space-y-3">
           <p className="font-display text-lg text-muted-foreground">Ingen leads enda</p>
-          <p className="text-sm text-muted-foreground/60">Del lenken under for å samle inn brief fra besøkende.</p>
+          <p className="text-sm text-muted-foreground/60">Del lenken under for å samle inn forespørsler fra besøkende.</p>
           <p className="text-xs font-mono text-muted-foreground break-all">{getBaseUrl()}/brief</p>
           <Button
             variant="outline"
             size="sm"
             onClick={() =>
-              navigator.clipboard.writeText(`${getBaseUrl()}/brief`).then(() => copiedToast("Brief-lenke i utklippstavlen"))
+              navigator.clipboard.writeText(`${getBaseUrl()}/brief`).then(() => copiedToast("Lenke til forespørselsskjema kopiert"))
             }
           >
             Kopier lenke

@@ -81,7 +81,7 @@ function Hero() {
         </p>
         <div className="mt-4 flex flex-col gap-1.5">
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Send forespørsel", "Send brief", locale)}
+            {tKey("Send forespørsel", "Send request", locale)}
           </CTAButton>
           <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-3 py-1.5 min-h-[36px] text-[11px] border-foreground/15 text-foreground/50">
             {tKey("Book en prat", "Book a chat", locale)}
@@ -111,7 +111,7 @@ function Hero() {
           </p>
           <div className="mt-10 flex flex-row items-center gap-4">
             <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send brief", locale)}
+              {tKey("Send forespørsel", "Send request", locale)}
             </CTAButton>
             <CTAButton to={withLocalePath("/prat")} variant="outline">
               {tKey("Book en prat", "Book a chat", locale)}
@@ -339,13 +339,13 @@ function TrustSection() {
 
   const steps = locale === "en"
     ? [
-        { n: "01", t: "Brief", d: "You send a short brief or we have a chat." },
+        { n: "01", t: "Request", d: "You send a short request or we have a chat." },
         { n: "02", t: "Structure", d: "I scope, sketch the architecture and write the copy." },
         { n: "03", t: "Build", d: "Built as a real, modern stack — not a tower of plugins." },
         { n: "04", t: "Launch", d: "We go live. You can update content yourself." },
       ]
     : [
-        { n: "01", t: "Brief", d: "Du sender en kort brief eller vi tar en prat." },
+        { n: "01", t: "Forespørsel", d: "Du sender en kort forespørsel eller vi tar en prat." },
         { n: "02", t: "Struktur", d: "Jeg setter omfang, skisserer arkitekturen og skriver tekst." },
         { n: "03", t: "Bygging", d: "Bygges på en ekte, moderne stack — ikke et tårn av plugins." },
         { n: "04", t: "Lansering", d: "Vi går live. Du kan oppdatere innholdet selv." },
@@ -392,7 +392,7 @@ function TrustSection() {
             {tKey("Se tjenester", "See services", locale)}
           </CTAButton>
           <CTAButton to={withLocalePath("/brief")}>
-            {tKey("Send forespørsel", "Send brief", locale)}
+            {tKey("Send forespørsel", "Send request", locale)}
           </CTAButton>
         </div>
       </div>
@@ -469,7 +469,7 @@ function ComparisonSection() {
 
       <div className="mt-8 flex flex-wrap gap-3">
         <CTAButton to={withLocalePath("/brief")}>
-          {tKey("Send forespørsel", "Send brief", locale)}
+          {tKey("Send forespørsel", "Send request", locale)}
         </CTAButton>
         <CTAButton to={withLocalePath("/prat")} variant="outline">
           {tKey("Book en prat", "Book a chat", locale)}

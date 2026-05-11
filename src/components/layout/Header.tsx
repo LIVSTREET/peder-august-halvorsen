@@ -8,7 +8,7 @@ type NavLink = { to: string; labelNo: string; labelEn: string };
 const primaryLinks: NavLink[] = [
   { to: "/tjenester", labelNo: "Tjenester", labelEn: "Services" },
   { to: "/prosjekter", labelNo: "Arbeid", labelEn: "Work" },
-  { to: "/brief", labelNo: "Brief", labelEn: "Brief" },
+  { to: "/brief", labelNo: "Forespørsel", labelEn: "Request" },
   { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
 ];
 

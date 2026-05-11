@@ -105,14 +105,14 @@ export default function Tjenester() {
 
   const faqs = locale === "en"
     ? [
-        { q: "What does a website cost?", a: "Most small business sites land between 15,000 and 50,000 NOK depending on scope. You get a fixed price after the brief." },
-        { q: "How long does it take?", a: "A typical small business site takes 2–4 weeks from approved brief to launch." },
+        { q: "What does a website cost?", a: "Most small business sites land between 15,000 and 50,000 NOK depending on scope. You get a fixed price after the request." },
+        { q: "How long does it take?", a: "A typical small business site takes 2–4 weeks from approved scope to launch." },
         { q: "Can I update the site myself?", a: "Yes. You get a simple admin panel in plain language and full ownership of content and code." },
         { q: "Do you do SEO?", a: "Technical SEO, semantic HTML, sitemap, metadata and performance are built in from day one." },
       ]
     : [
-        { q: "Hva koster en nettside?", a: "De fleste nettsider for små bedrifter ligger mellom 15 000 og 50 000 kr avhengig av omfang. Du får fast pris etter briefen." },
-        { q: "Hvor lang tid tar det?", a: "En typisk nettside for små bedrifter tar 2–4 uker fra godkjent brief til lansering." },
+        { q: "Hva koster en nettside?", a: "De fleste nettsider for små bedrifter ligger mellom 15 000 og 50 000 kr avhengig av omfang. Du får fast pris etter at vi har mottatt forespørselen." },
+        { q: "Hvor lang tid tar det?", a: "En typisk nettside for små bedrifter tar 2–4 uker fra godkjent omfang til lansering." },
         { q: "Kan jeg oppdatere siden selv?", a: "Ja. Du får et enkelt admin-panel på vanlig norsk og fullt eierskap til innhold og kode." },
         { q: "Driver du med SEO?", a: "Teknisk SEO, semantisk HTML, sitemap, metadata og ytelse er bygget inn fra dag én." },
       ];
@@ -207,7 +207,7 @@ function ServiceSection({ service }: { service: (typeof services)[0] }) {
       </div>
       <div className="mt-8">
         <CTAButton to={withLocalePath("/brief")} variant="outline">
-          {tKey("Start en brief →", "Start a brief →", locale)}
+          {tKey("Start en forespørsel →", "Start a request →", locale)}
         </CTAButton>
       </div>
     </div>

@@ -78,14 +78,14 @@ export default function Prat() {
             </p>
             <p className="text-muted-foreground text-sm mb-5">
               {tKey(
-                "Send en kort brief — fire raske spørsmål. Da har vi noe konkret å snakke om.",
-                "Send a short brief — four quick questions. Then we have something concrete to discuss.",
+                "Send en kort forespørsel — fire raske spørsmål. Da har vi noe konkret å snakke om.",
+                "Send a short request — four quick questions. Then we have something concrete to discuss.",
                 locale
               )}
             </p>
             <div className="flex flex-wrap gap-3">
               <CTAButton to={withLocalePath("/brief")}>
-                {tKey("Start en brief", "Start a brief", locale)}
+                {tKey("Start en forespørsel", "Start a request", locale)}
               </CTAButton>
               <a
                 href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(tKey("Hei – jeg lurer på…", "Hi – I'm wondering about…", locale))}`}

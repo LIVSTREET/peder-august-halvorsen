@@ -35,7 +35,7 @@ function buildSummary(lead: {
   created_at?: string | null;
 }) {
   const lines = [
-    `Brief fra ${lead.name ?? "—"} (${lead.email ?? "—"})`,
+    `Forespørsel fra ${lead.name ?? "—"} (${lead.email ?? "—"})`,
     `Mål: ${GOALS[lead.goal ?? ""] ?? lead.goal ?? "—"}`,
     `Fase: ${STAGES[lead.stage ?? ""] ?? lead.stage ?? "—"}`,
     `Prioritet: ${PRIORITIES[lead.priority ?? ""] ?? lead.priority ?? "—"}`,
@@ -47,9 +47,9 @@ function buildSummary(lead: {
 }
 
 function buildMailto(lead: { name?: string | null; email?: string | null }) {
-  const subject = encodeURIComponent(`Brief: ${lead.name ?? "Ny lead"}`);
+  const subject = encodeURIComponent(`Forespørsel: ${lead.name ?? "Ny lead"}`);
   const body = encodeURIComponent(
-    `Hei,\n\nTakk for at du sendte inn brief. Jeg vil gjerne ta en prat.\n\nMvh`
+    `Hei,\n\nTakk for at du sendte inn en forespørsel. Jeg vil gjerne ta en prat.\n\nMvh`
   );
   return lead.email
     ? `mailto:${lead.email}?subject=${subject}&body=${body}`
@@ -99,7 +99,7 @@ export default function DashboardLeadDetail() {
       </div>
 
       <h1 className="font-display text-2xl font-bold text-foreground">
-        Brief: {lead.name ?? lead.email ?? lead.id}
+        Forespørsel: {lead.name ?? lead.email ?? lead.id}
       </h1>
 
       <div className="flex gap-2 items-center">
