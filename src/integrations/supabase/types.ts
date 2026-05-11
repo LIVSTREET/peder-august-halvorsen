@@ -267,6 +267,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "content_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       events: {
@@ -493,7 +500,87 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      projects_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          description_en: string | null
+          id: string | null
+          presentation: string | null
+          problem_text: string | null
+          problem_text_en: string | null
+          published_at: string | null
+          result_text: string | null
+          result_text_en: string | null
+          role: string | null
+          role_en: string | null
+          slug: string | null
+          solution_text: string | null
+          solution_text_en: string | null
+          sort_order: number | null
+          status: Database["public"]["Enums"]["content_status"] | null
+          subtitle: string | null
+          subtitle_en: string | null
+          tech: string | null
+          title: string | null
+          title_en: string | null
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          description_en?: string | null
+          id?: string | null
+          presentation?: string | null
+          problem_text?: string | null
+          problem_text_en?: string | null
+          published_at?: string | null
+          result_text?: string | null
+          result_text_en?: string | null
+          role?: string | null
+          role_en?: string | null
+          slug?: string | null
+          solution_text?: string | null
+          solution_text_en?: string | null
+          sort_order?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          subtitle?: string | null
+          subtitle_en?: string | null
+          tech?: string | null
+          title?: string | null
+          title_en?: string | null
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          description_en?: string | null
+          id?: string | null
+          presentation?: string | null
+          problem_text?: string | null
+          problem_text_en?: string | null
+          published_at?: string | null
+          result_text?: string | null
+          result_text_en?: string | null
+          role?: string | null
+          role_en?: string | null
+          slug?: string | null
+          solution_text?: string | null
+          solution_text_en?: string | null
+          sort_order?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          subtitle?: string | null
+          subtitle_en?: string | null
+          tech?: string | null
+          title?: string | null
+          title_en?: string | null
+          updated_at?: string | null
+          url?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       is_owner: { Args: never; Returns: boolean }
