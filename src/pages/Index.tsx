@@ -128,12 +128,16 @@ function Hero() {
           </div>
         </div>
         <div className="flex justify-end">
-          <img
-            src={heroPortrait}
-            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-            className="object-cover w-full max-w-[260px] aspect-[3/4]"
-            loading="eager"
-          />
+          <div className="relative w-full max-w-[290px]">
+            <img
+              src={heroPortrait}
+              alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
+              className="object-cover w-full aspect-[3/4] [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
+              loading="eager"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-background/10" />
+          </div>
         </div>
       </div>
     </section>
