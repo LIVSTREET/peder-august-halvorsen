@@ -82,7 +82,6 @@ export default function DashboardProjectEdit() {
   const enFields = [
     form.title_en,
     form.subtitle_en,
-    form.description_en,
     form.problem_text_en,
     form.solution_text_en,
     form.result_text_en,
@@ -202,7 +201,6 @@ export default function DashboardProjectEdit() {
       ...f,
       title_en: f.title,
       subtitle_en: f.subtitle,
-      description_en: f.description,
       problem_text_en: f.problem_text,
       solution_text_en: f.solution_text,
       result_text_en: f.result_text,
