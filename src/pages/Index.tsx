@@ -43,7 +43,9 @@ export default function Index() {
     <Layout>
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <Hero />
+      <TrustSection />
       <ArbeidSection />
+      <ComparisonSection />
       <BuildingNowSection />
     </Layout>
   );
