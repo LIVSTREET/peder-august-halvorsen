@@ -33,7 +33,7 @@ export default function Header() {
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
-          className="flex items-center"
+          className="flex items-center -ml-4 md:-ml-8"
           aria-label="Studio P.A. Halvorsen"
         >
           <img
