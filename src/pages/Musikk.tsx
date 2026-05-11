@@ -32,7 +32,7 @@ export default function Musikk() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Musikk | Alt jeg skaper", "Music | Alt jeg skaper", locale)}
+        title={tKey("Musikk | Studio P.A. Halvorsen", "Music | Studio P.A. Halvorsen", locale)}
         description={tKey("Booking, session, bakgrunnsmusikk – musikk og arrangement.", "Booking, session, background music – music and events.", locale)}
       />
       <section className="container pt-16 pb-24">

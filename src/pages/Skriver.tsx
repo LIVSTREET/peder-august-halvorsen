@@ -17,7 +17,7 @@ export default function Skriver() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Skriver | Alt jeg skaper", "Writing | Alt jeg skaper", locale)}
+        title={tKey("Skriver | Studio P.A. Halvorsen", "Writing | Studio P.A. Halvorsen", locale)}
         description={tKey("Innlegg og tanker om det jeg bygger og lager.", "Posts and thoughts about what I build and create.", locale)}
       />
       <section className="container pt-16 pb-24 max-w-2xl mx-auto">

@@ -39,7 +39,7 @@ export default function DashboardLeads() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Leads</h1>
+        <h1 className="font-display text-xl md:text-2xl font-bold text-foreground">Henvendelser</h1>
         <p className="text-muted-foreground text-sm hidden sm:block">Brief-innsendelser. Status og hurtighandlinger.</p>
       </div>
 

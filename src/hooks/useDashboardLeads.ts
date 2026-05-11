@@ -36,7 +36,7 @@ export function useUpdateLead() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, status, tags }: { id: string; status?: LeadStatus; tags?: string[] }) => {
-      const payload: Record<string, unknown> = {};
+      const payload: { status?: LeadStatus; tags?: string[] } = {};
       if (status !== undefined) payload.status = status;
       if (tags !== undefined) payload.tags = tags;
 

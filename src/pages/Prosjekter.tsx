@@ -16,13 +16,13 @@ export default function Prosjekter() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Prosjekter | Alt jeg skaper", "Projects | What I create", locale)}
+        title={tKey("Arbeid | Studio P.A. Halvorsen", "Work | Studio P.A. Halvorsen", locale)}
         description={tKey("Utvalgte prosjekter – nettsider og plattformer jeg har bygget.", "Selected projects – websites and platforms I've built.", locale)}
         pathname="/prosjekter"
       />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-16">
-          {tKey("Prosjekter", "Projects", locale)}
+          {tKey("Arbeid", "Work", locale)}
         </h1>
 
         {isLoading ? (

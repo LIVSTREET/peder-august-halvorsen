@@ -109,7 +109,7 @@ export default function Brief() {
     return (
       <Layout>
         <SeoHead
-          title={tKey("Takk! | Alt jeg skaper", "Thanks! | Alt jeg skaper", locale)}
+          title={tKey("Takk! | Studio P.A. Halvorsen", "Thanks! | Studio P.A. Halvorsen", locale)}
           description={tKey("Briefen din er sendt.", "Your brief has been submitted.", locale)}
           pathname="/brief"
           noindex
@@ -133,7 +133,7 @@ export default function Brief() {
           <div className="mt-10 border-t border-border pt-8">
             <p className="text-foreground text-sm">
               {tKey("Jeg tar kontakt innen 1–2 virkedager. Hvis det haster,", "I'll get back within 1–2 working days. If it's urgent,", locale)}{" "}
-              <a href="mailto:kontaktpeder@gmail.com" className="text-primary hover:underline underline-offset-4">
+              <a href="mailto:mail@studiopah.no" className="text-primary hover:underline underline-offset-4">
                 {tKey("send mail", "send email", locale)}
               </a>.
             </p>
@@ -150,7 +150,7 @@ export default function Brief() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Fortell meg hva du prøver å få til | Alt jeg skaper", "Tell me what you're trying to achieve | Alt jeg skaper", locale)}
+        title={tKey("Send brief | Studio P.A. Halvorsen", "Send brief | Studio P.A. Halvorsen", locale)}
         description={tKey("Fortell meg hva du prøver å få til – jeg hjelper deg videre.", "Tell me what you're trying to achieve – I'll help you forward.", locale)}
         pathname="/brief"
         noindex

@@ -9,36 +9,39 @@ import { useProjects } from "@/hooks/useProjects";
 import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
-import { getBaseUrl, PERSON_NAME } from "@/lib/seo";
+import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 import { tKey, tField } from "@/lib/i18n";
 
-const personSchema = {
+const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: PERSON_NAME,
-  jobTitle: "Builder / Musiker / Arrangør",
+  "@type": "Organization",
+  name: SITE_NAME,
+  founder: PERSON_NAME,
   url: typeof window !== "undefined" ? getBaseUrl() : "",
+  email: "mail@studiopah.no",
 };
 
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Alt jeg skaper",
+  name: SITE_NAME,
   url: typeof window !== "undefined" ? getBaseUrl() : "",
 };
 
 export default function Index() {
   const { locale } = useLocale();
-  const title = locale === "en" ? "What I create | Peder August Halvorsen" : "Alt jeg skaper | Peder August Halvorsen";
+  const title = locale === "en"
+    ? "Studio P.A. Halvorsen — Modern digital craft"
+    : "Studio P.A. Halvorsen — Moderne digitalt håndverk";
   const description = locale === "en"
-    ? "I build flexible platforms and websites. Organiser and musician. Peder August Halvorsen – What I create."
-    : "Jeg bygger fleksible plattformer og nettsteder. Arrangør og musiker. Peder August Halvorsen – Alt jeg skaper.";
+    ? "Studio P.A. Halvorsen builds professional websites and digital systems for small businesses."
+    : "Studio P.A. Halvorsen bygger profesjonelle nettsider og digitale systemer for små bedrifter.";
 
   return (
     <Layout>
-      <SeoHead title={title} description={description} jsonLd={[personSchema, webSiteSchema]} />
+      <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <Hero />
       <ArbeidSection />
       <BuildingNowSection />
@@ -54,26 +57,32 @@ function Hero() {
       {/* Mobile hero */}
       <div className="md:hidden">
         <h1 className="font-display text-3xl font-extrabold tracking-tighter text-foreground leading-[1.05]">
-          {tKey("Alt jeg skaper", "What I create", locale)}
-          <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+          {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
+          <span className="text-primary">.</span>
         </h1>
         <p className="mt-0.5 text-sm font-display font-semibold text-foreground/50 tracking-tight">
-          {PERSON_NAME}
+          {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </p>
         <p className="mt-2 text-[15px] text-foreground/75 max-w-xl font-body leading-snug">
-          {tKey("Jeg bygger fleksible plattformer og nettsteder.", "I build flexible platforms and websites.", locale)}
-          <br />
-          {tKey("Arrangør og musiker.", "Organiser and musician.", locale)}
+          {tKey(
+            "Jeg bygger profesjonelle nettsider og digitale systemer for små bedrifter.",
+            "I build professional websites and digital systems for small businesses.",
+            locale
+          )}
         </p>
         <p className="mt-1 text-sm text-muted-foreground/70 max-w-lg font-body leading-snug">
-          {tKey("Jeg gir deg verktøy og retning, så du kan gjøre mer selv.", "I give you tools and direction so you can do more yourself.", locale)}
+          {tKey(
+            "Nettside, SEO, tekst, skjema, admin og teknisk oppsett — ferdig satt opp og enkelt å drifte.",
+            "Website, SEO, copy, forms, admin and technical setup — fully built and easy to run.",
+            locale
+          )}
         </p>
         <div className="mt-4 flex flex-col gap-1.5">
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Fortell meg hva du prøver å få til", "Tell me what you're trying to do", locale)}
+            {tKey("Send brief", "Send brief", locale)}
           </CTAButton>
           <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-3 py-1.5 min-h-[36px] text-[11px] border-foreground/15 text-foreground/50">
-            {tKey("Book uforpliktende prat", "Book a no-commitment chat", locale)}
+            {tKey("Book en prat", "Book a chat", locale)}
           </CTAButton>
         </div>
       </div>
@@ -82,33 +91,39 @@ function Hero() {
       <div className="hidden md:grid grid-cols-2 gap-16 items-center">
         <div>
           <h1 className="font-display text-7xl font-extrabold tracking-tight text-foreground leading-none whitespace-nowrap">
-            {tKey("Alt jeg skaper", "What I create", locale)}
-            <Link to="/dashboard/login" className="text-primary hover:brightness-110 transition-colors">.</Link>
+            {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
+            <span className="text-primary">.</span>
           </h1>
           <p className="mt-4 text-2xl font-display font-semibold text-foreground/60 tracking-tight">
-            {PERSON_NAME}
+            {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
           </p>
           <p className="mt-6 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
-            {tKey("Jeg bygger fleksible plattformer og nettsteder.", "I build flexible platforms and websites.", locale)}
-            <br />
-            {tKey("Arrangør og musiker.", "Organiser and musician.", locale)}
+            {tKey(
+              "Jeg bygger profesjonelle nettsider og digitale systemer for små bedrifter.",
+              "I build professional websites and digital systems for small businesses.",
+              locale
+            )}
           </p>
           <p className="mt-3 text-base text-muted-foreground max-w-lg font-body">
-            {tKey("Jeg gir deg verktøy og retning, så du kan gjøre mer selv.", "I give you tools and direction so you can do more yourself.", locale)}
+            {tKey(
+              "Nettside, SEO, tekst, skjema, admin, varsler og teknisk oppsett — ferdig satt opp og enkelt å drifte.",
+              "Website, SEO, copy, forms, admin, notifications and technical setup — fully built and easy to run.",
+              locale
+            )}
           </p>
           <div className="mt-10 flex flex-row items-center gap-4">
             <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Fortell meg hva du prøver å få til", "Tell me what you're trying to do", locale)}
+              {tKey("Send brief", "Send brief", locale)}
             </CTAButton>
             <CTAButton to={withLocalePath("/prat")} variant="outline">
-              {tKey("Book uforpliktende prat", "Book a no-commitment chat", locale)}
+              {tKey("Book en prat", "Book a chat", locale)}
             </CTAButton>
           </div>
         </div>
         <div className="flex justify-end">
           <img
             src={heroPortrait}
-            alt="Peder August Halvorsen"
+            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
             className="aspect-square object-cover w-full max-w-xs grayscale"
             loading="eager"
           />

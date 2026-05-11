@@ -66,7 +66,7 @@ export default function ProsjektDetalj() {
   return (
     <Layout>
       <SeoHead
-        title={`${title} | ${tKey("Prosjekter", "Projects", locale)} | Alt jeg skaper`}
+        title={`${title} | ${tKey("Arbeid", "Work", locale)} | Studio P.A. Halvorsen`}
         description={metaDescription}
         ogImage={ogImageUrl}
         jsonLd={webPageSchema}

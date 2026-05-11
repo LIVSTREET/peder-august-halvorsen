@@ -10,9 +10,8 @@ export default function Prat() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Prat | Alt jeg skaper", "Chat | Alt jeg skaper", locale)}
+        title={tKey("Book en prat | Studio P.A. Halvorsen", "Book a chat | Studio P.A. Halvorsen", locale)}
         description={tKey("Book en uforpliktende prat om prosjektet ditt.", "Book a no-commitment chat about your project.", locale)}
-        noindex
       />
       <section className="container pt-16 pb-24 max-w-2xl mx-auto">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
@@ -48,7 +47,7 @@ export default function Prat() {
                 <span className="font-mono text-muted-foreground w-16">
                   {tKey("E-post", "Email", locale)}
                 </span>
-                <span className="text-foreground">hei@altjegskaper.no</span>
+                <span className="text-foreground">mail@studiopah.no</span>
               </div>
             </div>
           </div>

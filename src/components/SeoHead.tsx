@@ -54,7 +54,7 @@ export default function SeoHead({
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonical} />
-      <meta property="og:title" content={ogTitle ?? title.replace(/\s*\|\s*Alt jeg skaper$/, "")} />
+        <meta property="og:title" content={ogTitle ?? title.replace(/\s*\|\s*Studio P\.A\. Halvorsen$/, "")} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
       <meta name="twitter:card" content="summary_large_image" />

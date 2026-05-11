@@ -93,7 +93,7 @@ export default function Tjenester() {
   return (
     <Layout>
       <SeoHead
-        title={tKey("Tjenester | Alt jeg skaper", "Services | What I create", locale)}
+        title={tKey("Tjenester | Studio P.A. Halvorsen", "Services | Studio P.A. Halvorsen", locale)}
         description={tKey(
           "Nettsider, plattformer, booking og musikk, sparring. Se hva jeg tilbyr.",
           "Websites, platforms, booking and music, sparring. See what I offer.",

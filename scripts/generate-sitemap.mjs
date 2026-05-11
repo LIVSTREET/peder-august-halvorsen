@@ -6,7 +6,7 @@ import { dirname, join } from "path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
 
-const SITE_URL = process.env.VITE_SITE_URL || "https://altjegskaper.no";
+const SITE_URL = process.env.VITE_SITE_URL || "https://studiopah.no";
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 

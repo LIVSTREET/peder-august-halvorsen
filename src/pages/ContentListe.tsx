@@ -39,7 +39,7 @@ export default function ContentListe({ type }: Props) {
 
   return (
     <Layout>
-      <SeoHead title={`${titleText} | Alt jeg skaper`} description={descText} pathname={withLocalePath(route.list)} />
+      <SeoHead title={`${titleText} | Studio P.A. Halvorsen`} description={descText} pathname={withLocalePath(route.list)} />
       <div className="container pt-16 pb-24 max-w-3xl mx-auto">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">{titleText}</h1>
         <p className="mt-3 text-muted-foreground">{descText}</p>
