@@ -33,19 +33,14 @@ export default function Header() {
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
-          className="flex items-center gap-3 py-2"
+          className="flex items-center"
           aria-label="Studio P.A. Halvorsen"
         >
           <img
             src={logoMark}
-            alt=""
-            aria-hidden="true"
-            className="h-14 md:h-20 w-auto -my-2 shrink-0"
+            alt="Studio P.A. Halvorsen"
+            className="h-20 md:h-28 w-auto -my-6 shrink-0"
           />
-          <span className="font-display font-bold text-foreground tracking-tight leading-[1.05] text-sm md:text-base">
-            <span className="block">Studio</span>
-            <span className="block">P.A. Halvorsen<span className="text-primary">.</span></span>
-          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {primaryLinks.map((l) => (
