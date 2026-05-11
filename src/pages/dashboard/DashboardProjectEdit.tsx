@@ -337,7 +337,7 @@ export default function DashboardProjectEdit() {
                 onChangeEn={(v) => setForm((f) => ({ ...f, problem_text_en: v }))}
                 type="textarea"
                 rows={4}
-                placeholder="Hva var utfordringen før prosjektet?"
+                noPlaceholder="Hva var utfordringen før prosjektet?"
                 onCopyNoToEn={() => setForm((f) => ({ ...f, problem_text_en: f.problem_text }))}
               />
 
@@ -349,7 +349,7 @@ export default function DashboardProjectEdit() {
                 onChangeEn={(v) => setForm((f) => ({ ...f, solution_text_en: v }))}
                 type="textarea"
                 rows={4}
-                placeholder="Hva ble bygget eller forbedret?"
+                noPlaceholder="Hva ble bygget eller forbedret?"
                 onCopyNoToEn={() => setForm((f) => ({ ...f, solution_text_en: f.solution_text }))}
               />
 
@@ -361,7 +361,7 @@ export default function DashboardProjectEdit() {
                 onChangeEn={(v) => setForm((f) => ({ ...f, result_text_en: v }))}
                 type="textarea"
                 rows={4}
-                placeholder="Hva ble bedre etterpå?"
+                noPlaceholder="Hva ble bedre etterpå?"
                 onCopyNoToEn={() => setForm((f) => ({ ...f, result_text_en: f.result_text }))}
               />
             </div>
