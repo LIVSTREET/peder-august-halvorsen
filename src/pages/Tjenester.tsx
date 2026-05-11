@@ -4,6 +4,7 @@ import SectionHeader from "@/components/SectionHeader";
 import CTAButton from "@/components/CTAButton";
 import { useLocale } from "@/contexts/LocaleContext";
 import { tKey } from "@/lib/i18n";
+import { SITE_NAME, getBaseUrl } from "@/lib/seo";
 
 const services: Array<{
   titleNo: string;
@@ -90,15 +91,52 @@ const services: Array<{
 export default function Tjenester() {
   const { locale, withLocalePath } = useLocale();
 
+  const baseUrl = getBaseUrl();
+
+  const serviceSchemas = services.map((s) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: locale === "en" ? s.titleEn : s.titleNo,
+    serviceType: locale === "en" ? s.titleEn : s.titleNo,
+    provider: { "@type": "Organization", name: SITE_NAME, url: baseUrl },
+    areaServed: "NO",
+    description: (locale === "en" ? s.whatEn : s.whatNo).join(". "),
+  }));
+
+  const faqs = locale === "en"
+    ? [
+        { q: "What does a website cost?", a: "Most small business sites land between 15,000 and 50,000 NOK depending on scope. You get a fixed price after the brief." },
+        { q: "How long does it take?", a: "A typical small business site takes 2–4 weeks from approved brief to launch." },
+        { q: "Can I update the site myself?", a: "Yes. You get a simple admin panel in plain language and full ownership of content and code." },
+        { q: "Do you do SEO?", a: "Technical SEO, semantic HTML, sitemap, metadata and performance are built in from day one." },
+      ]
+    : [
+        { q: "Hva koster en nettside?", a: "De fleste nettsider for små bedrifter ligger mellom 15 000 og 50 000 kr avhengig av omfang. Du får fast pris etter briefen." },
+        { q: "Hvor lang tid tar det?", a: "En typisk nettside for små bedrifter tar 2–4 uker fra godkjent brief til lansering." },
+        { q: "Kan jeg oppdatere siden selv?", a: "Ja. Du får et enkelt admin-panel på vanlig norsk og fullt eierskap til innhold og kode." },
+        { q: "Driver du med SEO?", a: "Teknisk SEO, semantisk HTML, sitemap, metadata og ytelse er bygget inn fra dag én." },
+      ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <Layout>
       <SeoHead
         title={tKey("Tjenester | Studio P.A. Halvorsen", "Services | Studio P.A. Halvorsen", locale)}
         description={tKey(
-          "Nettsider, plattformer, booking og musikk, sparring. Se hva jeg tilbyr.",
-          "Websites, platforms, booking and music, sparring. See what I offer.",
+          "Nettsider, plattformer og digitale systemer for små bedrifter i Norge. Fast pris, enkel drift, fullt eierskap.",
+          "Websites, platforms and digital systems for small businesses in Norway. Fixed price, easy to run, full ownership.",
           locale
         )}
+        jsonLd={[...serviceSchemas, faqSchema]}
       />
       <section className="container pt-16 pb-24">
         <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
@@ -116,6 +154,20 @@ export default function Tjenester() {
           {services.map((s, i) => (
             <ServiceSection key={i} service={s} />
           ))}
+        </div>
+
+        <div className="mt-24 border-t border-border pt-16">
+          <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8">
+            {tKey("Vanlige spørsmål", "Frequently asked", locale)}
+          </h2>
+          <ul className="divide-y divide-border">
+            {faqs.map((f) => (
+              <li key={f.q} className="py-5">
+                <p className="font-display font-semibold text-foreground mb-1.5">{f.q}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </Layout>
