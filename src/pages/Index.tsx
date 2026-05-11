@@ -362,56 +362,38 @@ function TrustSection() {
         )}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
-        <div className="md:col-span-1">
-          <img
-            src={heroPortrait}
-            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-            className="w-40 md:w-full max-w-[220px] aspect-square object-cover grayscale"
-            loading="lazy"
-          />
-          <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
-            {tKey(
-              "Jeg er Peder August Halvorsen. Jeg bygger nettsider og digitale systemer som er trygge å drifte og enkle å bygge videre på.",
-              "I'm Peder August Halvorsen. I build websites and digital systems that are safe to run and easy to extend.",
-              locale
-            )}
-          </p>
-        </div>
+      <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+          {points.map((p) => (
+            <li key={p.k}>
+              <p className="text-xs font-mono text-primary uppercase tracking-widest mb-3">{p.k}</p>
+              <p className="text-foreground/90 text-lg md:text-xl leading-relaxed font-body">{p.v}</p>
+            </li>
+          ))}
+        </ul>
 
-        <div className="md:col-span-2 space-y-10">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-            {points.map((p) => (
-              <li key={p.k}>
-                <p className="text-xs font-mono text-primary uppercase tracking-widest mb-1.5">{p.k}</p>
-                <p className="text-foreground/85 text-sm leading-relaxed">{p.v}</p>
+        <div>
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">
+            {tKey("Prosess", "Process", locale)}
+          </p>
+          <ol className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+            {steps.map((s) => (
+              <li key={s.n} className="border border-border/70 p-5">
+                <p className="text-xs font-mono text-primary">{s.n}</p>
+                <p className="font-display font-bold text-foreground text-lg mt-2">{s.t}</p>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.d}</p>
               </li>
             ))}
-          </ul>
+          </ol>
+        </div>
 
-          <div>
-            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-4">
-              {tKey("Prosess", "Process", locale)}
-            </p>
-            <ol className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {steps.map((s) => (
-                <li key={s.n} className="border border-border/70 p-3">
-                  <p className="text-[10px] font-mono text-primary">{s.n}</p>
-                  <p className="font-display font-bold text-foreground mt-1">{s.t}</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-snug">{s.d}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="flex flex-wrap gap-3 pt-2">
-            <CTAButton to={withLocalePath("/tjenester")} variant="outline">
-              {tKey("Se tjenester", "See services", locale)}
-            </CTAButton>
-            <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send brief", locale)}
-            </CTAButton>
-          </div>
+        <div className="flex flex-wrap gap-3 pt-2">
+          <CTAButton to={withLocalePath("/tjenester")} variant="outline">
+            {tKey("Se tjenester", "See services", locale)}
+          </CTAButton>
+          <CTAButton to={withLocalePath("/brief")}>
+            {tKey("Send forespørsel", "Send brief", locale)}
+          </CTAButton>
         </div>
       </div>
     </section>
