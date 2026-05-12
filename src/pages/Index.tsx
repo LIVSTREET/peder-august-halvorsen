@@ -63,17 +63,17 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-10 pb-14 md:pt-8 md:pb-16">
+    <section className="container pt-4 pb-10 md:pt-8 md:pb-16">
       {/* Mobile hero */}
       <div className="md:hidden">
-        <Reveal as="p" className="text-[10px] font-mono uppercase tracking-[0.22em] text-primary/80 mb-4">
+        <Reveal as="p" className="text-[10px] font-mono uppercase tracking-[0.22em] text-primary/80 mb-2">
           {tKey("Studio · Norge", "Studio · Norway", locale)}
         </Reveal>
         <Reveal delay={80}>
           <h1 className="sr-only">Studio P.A. Halvorsen</h1>
           <MobileHeroStack />
         </Reveal>
-        <Reveal delay={160} as="p" className="mt-8 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
+        <Reveal delay={160} as="p" className="mt-4 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </Reveal>
         <Reveal delay={240}>
