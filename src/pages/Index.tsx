@@ -6,6 +6,7 @@ import SectionHeader from "@/components/SectionHeader";
 import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import CTAButton from "@/components/CTAButton";
 import EmptyState from "@/components/EmptyState";
+import Reveal from "@/components/Reveal";
 import { useProjects } from "@/hooks/useProjects";
 import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
@@ -62,31 +63,47 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-6 pb-8 md:pt-8 md:pb-16">
+    <section className="container pt-10 pb-14 md:pt-8 md:pb-16">
       {/* Mobile hero */}
       <div className="md:hidden">
-        <h1 className="font-display text-3xl font-extrabold tracking-tighter text-foreground leading-[1.05]">
-          {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
-          <span className="text-primary">.</span>
-        </h1>
-        <p className="mt-0.5 text-sm font-display font-semibold text-foreground/50 tracking-tight">
+        <Reveal as="p" className="text-[10px] font-mono uppercase tracking-[0.22em] text-primary/80 mb-4">
+          {tKey("Studio · Norge", "Studio · Norway", locale)}
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="font-display text-[2.6rem] font-extrabold tracking-tighter text-foreground leading-[1.02]">
+            {tKey("Studio P.A.", "Studio P.A.", locale)}
+            <br />
+            <span className="text-foreground/90">Halvorsen</span>
+            <span className="text-primary">.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={160} as="p" className="mt-3 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
-        </p>
-        <p className="mt-3 text-sm text-foreground/75 max-w-xl font-body leading-snug">
+        </Reveal>
+        <Reveal delay={240}>
+          <div className="mt-6 h-px bg-border/60" />
+        </Reveal>
+        <Reveal delay={300} as="p" className="mt-6 text-[15px] text-foreground/80 font-body leading-relaxed">
           {tKey(
             "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
             "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
             locale
           )}
-        </p>
-        <div className="mt-4 flex flex-col gap-1.5">
-          <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Send forespørsel", "Send request", locale)}
-          </CTAButton>
-          <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-3 py-1.5 min-h-[36px] text-[11px] border-foreground/15 text-foreground/50">
-            {tKey("Book en prat", "Book a chat", locale)}
-          </CTAButton>
-        </div>
+        </Reveal>
+        <Reveal delay={380}>
+          <div className="mt-7 flex flex-col gap-2.5">
+            <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
+              {tKey("Send forespørsel", "Send request", locale)}
+            </CTAButton>
+            <CTAButton
+              to={withLocalePath("/prat")}
+              variant="outline"
+              className="w-full text-center"
+            >
+              {tKey("Book en prat", "Book a chat", locale)}
+            </CTAButton>
+          </div>
+        </Reveal>
       </div>
 
       {/* Desktop hero */}
@@ -140,12 +157,14 @@ function ArbeidSection() {
   const { data: projects, isLoading } = useProjects();
 
   return (
-    <section className="container pb-12 md:pb-24">
-      <SectionHeader
-        title={tKey("Arbeid", "Work", locale)}
-        subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
-        className="mb-6 md:mb-10"
-      />
+    <section className="container pt-14 pb-16 md:pt-0 md:pb-24">
+      <Reveal>
+        <SectionHeader
+          title={tKey("Arbeid", "Work", locale)}
+          subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
+          className="mb-8 md:mb-10"
+        />
+      </Reveal>
       {isLoading ? (
         <div className="py-8 text-muted-foreground text-sm">{tKey("Laster…", "Loading…", locale)}</div>
       ) : !projects || projects.length === 0 ? (
@@ -154,7 +173,9 @@ function ArbeidSection() {
           sub={tKey("Bygger nå — kommer snart.", "Building now — coming soon.", locale)}
         />
       ) : (
-        <ProjectGrid projects={projects} />
+        <Reveal>
+          <ProjectGrid projects={projects} />
+        </Reveal>
       )}
     </section>
   );
@@ -169,9 +190,11 @@ function ProjectGrid({ projects }: { projects: any[] }) {
     <div className="space-y-8 md:space-y-12">
       {featured && <FeaturedProject project={featured} />}
       {rest.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rest.map((p) => (
-            <ProjectCard key={p.id} project={p} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {rest.map((p, i) => (
+            <Reveal key={p.id} delay={i * 80}>
+              <ProjectCard project={p} />
+            </Reveal>
           ))}
         </div>
       )}
@@ -248,8 +271,10 @@ function BuildingNowSection() {
   const buildLogs = items?.slice(0, 5);
 
   return (
-    <section className="container pt-6 md:pt-12 pb-16 md:pb-36 border-t border-border/70">
-      <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} className="mt-6 md:mt-12" />
+    <section className="container pt-14 md:pt-12 pb-20 md:pb-36 border-t border-border/70">
+      <Reveal>
+        <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} className="mt-6 md:mt-12 mb-8 md:mb-10" />
+      </Reveal>
       {!buildLogs || buildLogs.length === 0 ? (
         <EmptyState
           message={tKey("Alltid i bevegelse", "Always in motion", locale)}
@@ -257,8 +282,8 @@ function BuildingNowSection() {
         />
       ) : (
         <ul className="divide-y divide-border">
-          {buildLogs.map((item: any) => (
-            <li key={item.id} className="py-3 flex items-baseline justify-between">
+          {buildLogs.map((item: any, i: number) => (
+            <Reveal as="li" key={item.id} delay={i * 60} className="py-4 flex items-baseline justify-between gap-4">
               <Link to={withLocalePath(`/na-bygger-jeg/${item.slug}`)} className="text-foreground font-body hover:text-primary transition-colors">
                 {tField(item, "title", locale)}
               </Link>
@@ -267,7 +292,7 @@ function BuildingNowSection() {
                   {new Date(item.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "nb-NO")}
                 </span>
               )}
-            </li>
+            </Reveal>
           ))}
         </ul>
       )}
@@ -340,7 +365,8 @@ function TrustSection() {
       ];
 
   return (
-    <section className="container py-10 md:py-16 border-t border-border/70">
+    <section className="container py-16 md:py-16 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Slik jobber jeg", "How I work", locale)}
         subtitle={tKey(
@@ -349,18 +375,19 @@ function TrustSection() {
           locale
         )}
       />
+      </Reveal>
 
-      <div className="max-w-4xl mx-auto space-y-10 md:space-y-12">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 md:gap-y-8">
-          {points.map((p) => (
-            <li key={p.k} className="flex flex-col gap-2">
+      <div className="max-w-4xl mx-auto space-y-12 md:space-y-12">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 md:gap-y-8">
+          {points.map((p, i) => (
+            <Reveal as="li" key={p.k} delay={i * 70} className="flex flex-col gap-2">
               <span className="text-[10px] md:text-[11px] font-mono text-primary uppercase tracking-widest">
                 {p.k}
               </span>
               <p className="font-display text-foreground text-lg md:text-xl leading-snug">
                 {p.v}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ul>
 
@@ -369,12 +396,12 @@ function TrustSection() {
             {tKey("Prosess", "Process", locale)}
           </p>
           <ol className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {steps.map((s) => (
-              <li key={s.n} className="border border-border/70 p-3">
+            {steps.map((s, i) => (
+              <Reveal as="li" key={s.n} delay={i * 70} className="border border-border/70 p-4">
                 <p className="text-xs font-mono text-primary">{s.n}</p>
                 <p className="font-display font-bold text-foreground text-sm md:text-base mt-1.5">{s.t}</p>
                 <p className="text-xs text-muted-foreground mt-1.5 leading-snug">{s.d}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
@@ -421,7 +448,8 @@ function ComparisonSection() {
       ];
 
   return (
-    <section className="container py-12 md:py-24 border-t border-border/70">
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Hvorfor ikke bare en standard nettsidebygger?", "Why not just a standard site builder?", locale)}
         subtitle={tKey(
@@ -430,6 +458,7 @@ function ComparisonSection() {
           locale
         )}
       />
+      </Reveal>
 
       <div className="border border-border/70 overflow-hidden">
         <div className="hidden md:grid grid-cols-[1fr_1fr_1fr] bg-muted/30">
@@ -492,7 +521,8 @@ function BeforeAfterSection() {
   ];
 
   return (
-    <section className="container py-12 md:py-24 border-t border-border/70">
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Før og etter", "Before and after", locale)}
         subtitle={tKey(
@@ -501,9 +531,10 @@ function BeforeAfterSection() {
           locale
         )}
       />
-      <div className="space-y-10 md:space-y-14">
+      </Reveal>
+      <div className="space-y-12 md:space-y-14">
         {pairs.map((pair, idx) => (
-          <div key={idx}>
+          <Reveal key={idx} delay={idx * 100}>
             {pair.caption && (
               <p className="mb-3 text-xs font-mono uppercase tracking-widest text-muted-foreground">
                 {pair.caption}
@@ -513,7 +544,7 @@ function BeforeAfterSection() {
               <BeforeAfterCard src={pair.before} label={tKey("Før", "Before", locale)} variant="before" />
               <BeforeAfterCard src={pair.after} label={tKey("Etter", "After", locale)} variant="after" />
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
