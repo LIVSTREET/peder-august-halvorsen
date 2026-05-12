@@ -73,7 +73,7 @@ function Hero() {
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="w-[140%] max-w-none h-auto -ml-[20%]"
+              className="w-[140%] max-w-none h-auto -ml-[20%] object-fill"
             />
           </h1>
         </Reveal>
