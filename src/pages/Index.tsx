@@ -6,6 +6,7 @@ import SectionHeader from "@/components/SectionHeader";
 import ProjectCoverMedia from "@/components/ProjectCoverMedia";
 import CTAButton from "@/components/CTAButton";
 import EmptyState from "@/components/EmptyState";
+import Reveal from "@/components/Reveal";
 import { useProjects } from "@/hooks/useProjects";
 import { usePublishedContentByType } from "@/hooks/useContentItems";
 import { useAssets } from "@/hooks/useAssets";
