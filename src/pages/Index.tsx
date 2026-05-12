@@ -166,20 +166,38 @@ function MobileHeroStack() {
   };
 
   const layerBase =
-    "absolute inset-0 flex items-center justify-center transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
+    "absolute inset-0 flex items-center justify-center transition-[transform,opacity,filter] duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
 
-  // Front: centered, no rotation. Back: shifted left, rotated inward toward center.
-  const frontStyle: React.CSSProperties = {
-    transform: "translateX(0%) rotateY(0deg) scale(1)",
+  // Logo styles: front-left with slight inward tilt, back-left when portrait is front.
+  const logoFront: React.CSSProperties = {
+    transform: "translateX(-4%) rotateY(-8deg) scale(1)",
     opacity: 1,
+    filter: "none",
     zIndex: 20,
-    willChange: "transform, opacity",
+    willChange: "transform, opacity, filter",
   };
-  const backStyle: React.CSSProperties = {
-    transform: "translateX(-22%) rotateY(22deg) scale(0.78)",
-    opacity: 0.55,
+  const logoBack: React.CSSProperties = {
+    transform: "translateX(-22%) rotateY(28deg) scale(0.88)",
+    opacity: 0.28,
+    filter: "blur(1.5px) brightness(0.55)",
     zIndex: 10,
-    willChange: "transform, opacity",
+    willChange: "transform, opacity, filter",
+  };
+
+  // Portrait styles: back-right deep in scene at start, front-right when active.
+  const portraitFront: React.CSSProperties = {
+    transform: "translateX(6%) rotateY(8deg) scale(1)",
+    opacity: 1,
+    filter: "none",
+    zIndex: 20,
+    willChange: "transform, opacity, filter",
+  };
+  const portraitBack: React.CSSProperties = {
+    transform: "translateX(22%) translateY(2%) rotateY(-28deg) scale(0.92)",
+    opacity: 0.35,
+    filter: "blur(1.5px) brightness(0.55) saturate(0.85)",
+    zIndex: 10,
+    willChange: "transform, opacity, filter",
   };
 
   const swap = () => setFront((f) => (f === "logo" ? "portrait" : "logo"));
@@ -195,32 +213,37 @@ function MobileHeroStack() {
         {/* Logo layer */}
         <div
           className={layerBase}
-          style={front === "logo" ? frontStyle : backStyle}
+          style={front === "logo" ? logoFront : logoBack}
           onClick={() => front !== "logo" && swap()}
           aria-hidden={front !== "logo"}
         >
           <img
             src={logoPah}
             alt="Studio P.A. Halvorsen"
-            className="w-[180%] max-w-none h-auto -translate-y-[6%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]"
+            className="w-[170%] max-w-none h-auto -translate-y-[6%] drop-shadow-[0_24px_50px_rgba(0,0,0,0.65)]"
           />
         </div>
         {/* Portrait layer */}
         <div
           className={layerBase}
-          style={front === "portrait" ? frontStyle : backStyle}
+          style={front === "portrait" ? portraitFront : portraitBack}
           onClick={() => front !== "portrait" && swap()}
           aria-hidden={front !== "portrait"}
         >
-          <div className="relative w-[62%] aspect-[3/4] drop-shadow-[0_24px_48px_rgba(0,0,0,0.6)]">
+          <div className="relative h-full aspect-[3/4] drop-shadow-[0_30px_60px_rgba(0,0,0,0.75)]">
             <img
               src={heroPortrait}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="object-cover w-full h-full [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
+              className="object-cover w-full h-full [filter:brightness(0.85)_saturate(0.9)_contrast(1.05)]"
               loading="eager"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
-            <div className="pointer-events-none absolute inset-0 bg-background/10" />
+            {/* Cinematic depth: dark gradient rising from the bottom */}
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,hsl(var(--background))_0%,hsl(var(--background)/0.85)_25%,transparent_70%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(var(--background)/0.55)_100%)]" />
+            {/* Extra dim while sitting in back */}
+            {front !== "portrait" && (
+              <div className="pointer-events-none absolute inset-0 bg-background/40" />
+            )}
           </div>
         </div>
       </div>
