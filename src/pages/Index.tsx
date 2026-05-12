@@ -54,7 +54,6 @@ export default function Index() {
       <BeforeAfterSection />
       <ArbeidSection />
       <ComparisonSection />
-      <BuildingNowSection />
     </Layout>
   );
 }
