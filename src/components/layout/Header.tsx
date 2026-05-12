@@ -49,7 +49,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border transition-transform duration-300 ${
+      className={`sticky top-0 z-50 bg-transparent transition-transform duration-300 ${
         hidden ? "-translate-y-full md:translate-y-0" : "translate-y-0"
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}
