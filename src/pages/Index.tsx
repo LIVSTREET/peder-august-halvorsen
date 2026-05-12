@@ -148,6 +148,86 @@ function Hero() {
   );
 }
 
+function MobileHeroStack() {
+  const [front, setFront] = useState<"logo" | "portrait">("logo");
+  const startX = useRef(0);
+  const startY = useRef(0);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+    startY.current = e.touches[0].clientY;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - startX.current;
+    const dy = e.changedTouches[0].clientY - startY.current;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      setFront((f) => (f === "logo" ? "portrait" : "logo"));
+    }
+  };
+
+  const layerBase =
+    "absolute inset-0 flex items-center justify-center transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
+
+  // Front: centered, no rotation. Back: shifted left, rotated inward toward center.
+  const frontStyle: React.CSSProperties = {
+    transform: "translateX(0%) rotateY(0deg) scale(1)",
+    opacity: 1,
+    zIndex: 20,
+    willChange: "transform, opacity",
+  };
+  const backStyle: React.CSSProperties = {
+    transform: "translateX(-22%) rotateY(22deg) scale(0.78)",
+    opacity: 0.55,
+    zIndex: 10,
+    willChange: "transform, opacity",
+  };
+
+  const swap = () => setFront((f) => (f === "logo" ? "portrait" : "logo"));
+
+  return (
+    <div
+      className="relative left-1/2 -translate-x-1/2 w-screen -mt-2 -mb-4 select-none"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      style={{ touchAction: "pan-y", perspective: "1200px" }}
+    >
+      <div className="relative mx-auto w-full aspect-[16/7] overflow-visible">
+        {/* Logo layer */}
+        <div
+          className={layerBase}
+          style={front === "logo" ? frontStyle : backStyle}
+          onClick={() => front !== "logo" && swap()}
+          aria-hidden={front !== "logo"}
+        >
+          <img
+            src={logoPah}
+            alt="Studio P.A. Halvorsen"
+            className="w-[180%] max-w-none h-auto -translate-y-[6%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]"
+          />
+        </div>
+        {/* Portrait layer */}
+        <div
+          className={layerBase}
+          style={front === "portrait" ? frontStyle : backStyle}
+          onClick={() => front !== "portrait" && swap()}
+          aria-hidden={front !== "portrait"}
+        >
+          <div className="relative w-[62%] aspect-[3/4] drop-shadow-[0_24px_48px_rgba(0,0,0,0.6)]">
+            <img
+              src={heroPortrait}
+              alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
+              className="object-cover w-full h-full [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
+              loading="eager"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-background/10" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ArbeidSection() {
   const { locale, withLocalePath } = useLocale();
   const { data: projects, isLoading } = useProjects();
