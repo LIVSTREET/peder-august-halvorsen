@@ -63,31 +63,47 @@ function Hero() {
   const { locale, withLocalePath } = useLocale();
 
   return (
-    <section className="container pt-6 pb-8 md:pt-8 md:pb-16">
+    <section className="container pt-10 pb-14 md:pt-8 md:pb-16">
       {/* Mobile hero */}
       <div className="md:hidden">
-        <h1 className="font-display text-3xl font-extrabold tracking-tighter text-foreground leading-[1.05]">
-          {tKey("Studio P.A. Halvorsen", "Studio P.A. Halvorsen", locale)}
-          <span className="text-primary">.</span>
-        </h1>
-        <p className="mt-0.5 text-sm font-display font-semibold text-foreground/50 tracking-tight">
+        <Reveal as="p" className="text-[10px] font-mono uppercase tracking-[0.22em] text-primary/80 mb-4">
+          {tKey("Studio · Norge", "Studio · Norway", locale)}
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="font-display text-[2.6rem] font-extrabold tracking-tighter text-foreground leading-[1.02]">
+            {tKey("Studio P.A.", "Studio P.A.", locale)}
+            <br />
+            <span className="text-foreground/90">Halvorsen</span>
+            <span className="text-primary">.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={160} as="p" className="mt-3 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
-        </p>
-        <p className="mt-3 text-sm text-foreground/75 max-w-xl font-body leading-snug">
+        </Reveal>
+        <Reveal delay={240}>
+          <div className="mt-6 h-px bg-border/60" />
+        </Reveal>
+        <Reveal delay={300} as="p" className="mt-6 text-[15px] text-foreground/80 font-body leading-relaxed">
           {tKey(
             "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
             "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
             locale
           )}
-        </p>
-        <div className="mt-4 flex flex-col gap-1.5">
-          <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Send forespørsel", "Send request", locale)}
-          </CTAButton>
-          <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center px-3 py-1.5 min-h-[36px] text-[11px] border-foreground/15 text-foreground/50">
-            {tKey("Book en prat", "Book a chat", locale)}
-          </CTAButton>
-        </div>
+        </Reveal>
+        <Reveal delay={380}>
+          <div className="mt-7 flex flex-col gap-2.5">
+            <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
+              {tKey("Send forespørsel", "Send request", locale)}
+            </CTAButton>
+            <CTAButton
+              to={withLocalePath("/prat")}
+              variant="outline"
+              className="w-full text-center"
+            >
+              {tKey("Book en prat", "Book a chat", locale)}
+            </CTAButton>
+          </div>
+        </Reveal>
       </div>
 
       {/* Desktop hero */}
@@ -155,7 +171,9 @@ function ArbeidSection() {
           sub={tKey("Bygger nå — kommer snart.", "Building now — coming soon.", locale)}
         />
       ) : (
-        <ProjectGrid projects={projects} />
+        <Reveal>
+          <ProjectGrid projects={projects} />
+        </Reveal>
       )}
     </section>
   );
