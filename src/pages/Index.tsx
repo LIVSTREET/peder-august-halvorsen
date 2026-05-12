@@ -262,7 +262,7 @@ function MobileHeroStack() {
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="absolute left-1/2 top-1/2 w-[260%] max-w-none h-auto -translate-x-[58%] -translate-y-[43%]"
+              className="absolute left-1/2 top-1/2 w-[220%] max-w-none h-auto -translate-x-[55%] -translate-y-[43%]"
             />
           </div>
         </div>
