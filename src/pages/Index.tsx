@@ -178,7 +178,7 @@ function MobileHeroStack() {
           top: "8%",
           right: "14%",
           width: "72%",
-          transform: "rotateY(6deg) scale(1)",
+          transform: "scale(1)",
           opacity: 1,
           filter: "none",
           zIndex: 20,
@@ -187,7 +187,7 @@ function MobileHeroStack() {
           top: "0%",
           right: "2%",
           width: "44%",
-          transform: "rotateY(-22deg) scale(1)",
+          transform: "scale(1)",
           opacity: 0.55,
           filter: "blur(1.5px) brightness(0.6) saturate(0.85)",
           zIndex: 10,
@@ -203,7 +203,7 @@ function MobileHeroStack() {
           bottom: "0%",
           top: "auto",
           width: "100%",
-          transform: "rotateY(-4deg) scale(1)",
+          transform: "scale(1)",
           opacity: 1,
           filter: "none",
           zIndex: 20,
@@ -214,7 +214,7 @@ function MobileHeroStack() {
           top: "6%",
           bottom: "auto",
           width: "44%",
-          transform: "rotateY(22deg) scale(1)",
+          transform: "scale(1)",
           opacity: 0.35,
           filter: "blur(1.5px) brightness(0.6)",
           zIndex: 10,
@@ -228,7 +228,7 @@ function MobileHeroStack() {
       style={{ touchAction: "pan-y", perspective: "1200px" }}
     >
       {/* Stage: portrait-orientation so face sits clearly above logo */}
-      <div className="relative mx-auto w-full aspect-[5/6] overflow-hidden">
+      <div className="relative mx-auto w-full aspect-[4/5] overflow-hidden">
         {/* Portrait layer */}
         <div
           className={`absolute ${transition}`}
