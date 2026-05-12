@@ -70,15 +70,8 @@ function Hero() {
           {tKey("Studio · Norge", "Studio · Norway", locale)}
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="leading-none relative left-1/2 -translate-x-1/2 w-screen -mt-2 -mb-4">
-            <div className="relative mx-auto w-full aspect-[16/6] overflow-hidden">
-              <img
-                src={logoPah}
-                alt="Studio P.A. Halvorsen"
-                className="absolute left-1/2 top-1/2 w-[180%] max-w-none h-auto -translate-x-[46%] -translate-y-[42%]"
-              />
-            </div>
-          </h1>
+          <h1 className="sr-only">Studio P.A. Halvorsen</h1>
+          <MobileHeroStack />
         </Reveal>
         <Reveal delay={160} as="p" className="text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
