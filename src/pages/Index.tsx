@@ -157,12 +157,14 @@ function ArbeidSection() {
   const { data: projects, isLoading } = useProjects();
 
   return (
-    <section className="container pb-12 md:pb-24">
-      <SectionHeader
-        title={tKey("Arbeid", "Work", locale)}
-        subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
-        className="mb-6 md:mb-10"
-      />
+    <section className="container pt-14 pb-16 md:pt-0 md:pb-24">
+      <Reveal>
+        <SectionHeader
+          title={tKey("Arbeid", "Work", locale)}
+          subtitle={tKey("Utvalgte prosjekter", "Selected projects", locale)}
+          className="mb-8 md:mb-10"
+        />
+      </Reveal>
       {isLoading ? (
         <div className="py-8 text-muted-foreground text-sm">{tKey("Laster…", "Loading…", locale)}</div>
       ) : !projects || projects.length === 0 ? (
@@ -269,8 +271,10 @@ function BuildingNowSection() {
   const buildLogs = items?.slice(0, 5);
 
   return (
-    <section className="container pt-6 md:pt-12 pb-16 md:pb-36 border-t border-border/70">
-      <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} className="mt-6 md:mt-12" />
+    <section className="container pt-14 md:pt-12 pb-20 md:pb-36 border-t border-border/70">
+      <Reveal>
+        <SectionHeader title={tKey("Nå bygger jeg", "Currently building", locale)} className="mt-6 md:mt-12 mb-8 md:mb-10" />
+      </Reveal>
       {!buildLogs || buildLogs.length === 0 ? (
         <EmptyState
           message={tKey("Alltid i bevegelse", "Always in motion", locale)}
@@ -278,8 +282,8 @@ function BuildingNowSection() {
         />
       ) : (
         <ul className="divide-y divide-border">
-          {buildLogs.map((item: any) => (
-            <li key={item.id} className="py-3 flex items-baseline justify-between">
+          {buildLogs.map((item: any, i: number) => (
+            <Reveal as="li" key={item.id} delay={i * 60} className="py-4 flex items-baseline justify-between gap-4">
               <Link to={withLocalePath(`/na-bygger-jeg/${item.slug}`)} className="text-foreground font-body hover:text-primary transition-colors">
                 {tField(item, "title", locale)}
               </Link>
@@ -288,7 +292,7 @@ function BuildingNowSection() {
                   {new Date(item.published_at).toLocaleDateString(locale === "en" ? "en-GB" : "nb-NO")}
                 </span>
               )}
-            </li>
+            </Reveal>
           ))}
         </ul>
       )}
