@@ -69,15 +69,15 @@ function Hero() {
           {tKey("Studio · Norge", "Studio · Norway", locale)}
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="leading-none relative left-1/2 -translate-x-1/2 w-screen max-w-none -my-4">
+          <h1 className="leading-none relative left-1/2 -translate-x-1/2 w-screen max-w-none -mt-6 -mb-16 flex justify-center">
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="w-[140%] max-w-none h-auto -ml-[20%] object-fill"
+              className="w-[140%] max-w-none h-auto"
             />
           </h1>
         </Reveal>
-        <Reveal delay={160} as="p" className="mt-3 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
+        <Reveal delay={160} as="p" className="text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </Reveal>
         <Reveal delay={240}>
