@@ -73,7 +73,7 @@ function Hero() {
           <h1 className="sr-only">Studio P.A. Halvorsen</h1>
           <MobileHeroStack />
         </Reveal>
-        <Reveal delay={160} as="p" className="text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
+        <Reveal delay={160} as="p" className="mt-8 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </Reveal>
         <Reveal delay={240}>
@@ -165,85 +165,104 @@ function MobileHeroStack() {
     }
   };
 
-  const layerBase =
-    "absolute inset-0 flex items-center justify-center transition-[transform,opacity,filter] duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
-
-  // Logo styles: front-left with slight inward tilt, back-left when portrait is front.
-  const logoFront: React.CSSProperties = {
-    transform: "translateX(-4%) rotateY(-8deg) scale(1)",
-    opacity: 1,
-    filter: "none",
-    zIndex: 20,
-    willChange: "transform, opacity, filter",
-  };
-  const logoBack: React.CSSProperties = {
-    transform: "translateX(-22%) rotateY(28deg) scale(0.88)",
-    opacity: 0.28,
-    filter: "blur(1.5px) brightness(0.55)",
-    zIndex: 10,
-    willChange: "transform, opacity, filter",
-  };
-
-  // Portrait styles: back-right deep in scene at start, front-right when active.
-  const portraitFront: React.CSSProperties = {
-    transform: "translateX(6%) rotateY(8deg) scale(1)",
-    opacity: 1,
-    filter: "none",
-    zIndex: 20,
-    willChange: "transform, opacity, filter",
-  };
-  const portraitBack: React.CSSProperties = {
-    transform: "translateX(22%) translateY(2%) rotateY(-28deg) scale(0.92)",
-    opacity: 0.35,
-    filter: "blur(1.5px) brightness(0.55) saturate(0.85)",
-    zIndex: 10,
-    willChange: "transform, opacity, filter",
-  };
+  const transition =
+    "transition-[transform,opacity,filter,top,left,right,width] duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
 
   const swap = () => setFront((f) => (f === "logo" ? "portrait" : "logo"));
 
+  // PORTRAIT slot — when in back: small, upper-right, tilted inward, dimmed.
+  // When in front: large, centered, clear.
+  const portraitWrapStyle: React.CSSProperties =
+    front === "portrait"
+      ? {
+          top: "8%",
+          right: "14%",
+          width: "72%",
+          transform: "rotateY(6deg) scale(1)",
+          opacity: 1,
+          filter: "none",
+          zIndex: 20,
+        }
+      : {
+          top: "0%",
+          right: "2%",
+          width: "44%",
+          transform: "rotateY(-22deg) scale(1)",
+          opacity: 0.55,
+          filter: "blur(1.5px) brightness(0.6) saturate(0.85)",
+          zIndex: 10,
+        };
+
+  // LOGO slot — when in front: full width near bottom, clear.
+  // When in back: small, upper-left, tilted inward, dimmed.
+  const logoWrapStyle: React.CSSProperties =
+    front === "logo"
+      ? {
+          left: "0%",
+          right: "0%",
+          bottom: "0%",
+          top: "auto",
+          width: "100%",
+          transform: "rotateY(-4deg) scale(1)",
+          opacity: 1,
+          filter: "none",
+          zIndex: 20,
+        }
+      : {
+          left: "2%",
+          right: "auto",
+          top: "6%",
+          bottom: "auto",
+          width: "44%",
+          transform: "rotateY(22deg) scale(1)",
+          opacity: 0.35,
+          filter: "blur(1.5px) brightness(0.6)",
+          zIndex: 10,
+        };
+
   return (
     <div
-      className="relative left-1/2 -translate-x-1/2 w-screen -mt-2 -mb-4 select-none"
+      className="relative left-1/2 -translate-x-1/2 w-screen select-none"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       style={{ touchAction: "pan-y", perspective: "1200px" }}
     >
-      <div className="relative mx-auto w-full aspect-[16/7] overflow-visible">
-        {/* Logo layer */}
-        <div
-          className={layerBase}
-          style={front === "logo" ? logoFront : logoBack}
-          onClick={() => front !== "logo" && swap()}
-          aria-hidden={front !== "logo"}
-        >
-          <img
-            src={logoPah}
-            alt="Studio P.A. Halvorsen"
-            className="w-[170%] max-w-none h-auto -translate-y-[6%] drop-shadow-[0_24px_50px_rgba(0,0,0,0.65)]"
-          />
-        </div>
+      {/* Stage: portrait-orientation so face sits clearly above logo */}
+      <div className="relative mx-auto w-full aspect-[5/6] overflow-hidden">
         {/* Portrait layer */}
         <div
-          className={layerBase}
-          style={front === "portrait" ? portraitFront : portraitBack}
+          className={`absolute ${transition}`}
+          style={{ ...portraitWrapStyle, willChange: "transform, opacity, filter" }}
           onClick={() => front !== "portrait" && swap()}
           aria-hidden={front !== "portrait"}
         >
-          <div className="relative h-full aspect-[3/4] drop-shadow-[0_30px_60px_rgba(0,0,0,0.75)]">
+          <div className="relative w-full aspect-[3/4] drop-shadow-[0_24px_48px_rgba(0,0,0,0.7)]">
             <img
               src={heroPortrait}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="object-cover w-full h-full [filter:brightness(0.85)_saturate(0.9)_contrast(1.05)]"
+              className="object-cover w-full h-full [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
               loading="eager"
             />
-            {/* Cinematic depth: dark gradient rising from the bottom */}
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,hsl(var(--background))_0%,hsl(var(--background)/0.85)_25%,transparent_70%)]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(var(--background)/0.55)_100%)]" />
-            {/* Extra dim while sitting in back */}
-            {front !== "portrait" && (
-              <div className="pointer-events-none absolute inset-0 bg-background/40" />
-            )}
+            {/* Cinematic depth: dark gradient rising from bottom */}
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,hsl(var(--background))_0%,hsl(var(--background)/0.7)_25%,transparent_70%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
+          </div>
+        </div>
+
+        {/* Logo layer */}
+        <div
+          className={`absolute ${transition}`}
+          style={{ ...logoWrapStyle, willChange: "transform, opacity, filter" }}
+          onClick={() => front !== "logo" && swap()}
+          aria-hidden={front !== "logo"}
+        >
+          {/* Crop window — keep aspect ratio so the wordmark is fully visible on screen */}
+          <div className="relative w-full aspect-[16/6] overflow-hidden drop-shadow-[0_24px_50px_rgba(0,0,0,0.6)]">
+            <img
+              src={logoPah}
+              alt="Studio P.A. Halvorsen"
+              className="absolute left-1/2 top-1/2 w-[180%] max-w-none h-auto -translate-x-[46%] -translate-y-[42%]"
+            />
           </div>
         </div>
       </div>
