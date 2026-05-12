@@ -22,6 +22,25 @@ export default function Header() {
   const { pathname } = useLocation();
   const { locale, withLocalePath, switchLocaleUrl } = useLocale();
   const [moreOpen, setMoreOpen] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
+
+  React.useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const diff = y - lastY;
+      if (y < 80) {
+        setHidden(false);
+      } else if (diff > 6) {
+        setHidden(true);
+      } else if (diff < -6) {
+        setHidden(false);
+      }
+      lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const isActive = (to: string) => {
     const localized = withLocalePath(to);
@@ -29,7 +48,12 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border" style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
+    <header
+      className={`sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border transition-transform duration-300 ${
+        hidden ? "-translate-y-full md:translate-y-0" : "translate-y-0"
+      }`}
+      style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}
+    >
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
