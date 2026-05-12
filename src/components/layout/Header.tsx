@@ -57,13 +57,13 @@ export default function Header() {
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
-          className="flex items-center -ml-4 md:-ml-8"
+          className="flex items-center -ml-8 md:-ml-10"
           aria-label="Studio P.A. Halvorsen"
         >
           <img
             src={logoMark}
             alt="Studio P.A. Halvorsen"
-            className="h-20 md:h-28 w-auto -my-6 shrink-0"
+            className="h-32 md:h-32 w-auto -my-10 shrink-0"
           />
         </Link>
         <nav className="hidden md:flex items-center gap-6">

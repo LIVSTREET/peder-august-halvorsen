@@ -200,7 +200,7 @@ function MobileHeroStack() {
       ? {
           left: "0%",
           right: "0%",
-          bottom: "0%",
+          bottom: "18%",
           top: "auto",
           width: "100%",
           transform: "scale(1)",
@@ -257,11 +257,12 @@ function MobileHeroStack() {
           aria-hidden={front !== "logo"}
         >
           {/* Crop window — keep aspect ratio so the wordmark is fully visible on screen */}
-          <div className="relative w-full aspect-[16/6] overflow-hidden drop-shadow-[0_24px_50px_rgba(0,0,0,0.6)]">
+          <div className="relative w-full aspect-[16/5] overflow-hidden drop-shadow-[0_24px_50px_rgba(0,0,0,0.6)]">
+            {/* Cropped to wordmark only (R signature trimmed away), shifted slightly left */}
             <img
               src={logoPah}
               alt="Studio P.A. Halvorsen"
-              className="absolute left-1/2 top-1/2 w-[180%] max-w-none h-auto -translate-x-[46%] -translate-y-[42%]"
+              className="absolute left-1/2 top-1/2 w-[220%] max-w-none h-auto -translate-x-[55%] -translate-y-[43%]"
             />
           </div>
         </div>
