@@ -70,11 +70,12 @@ function Hero() {
           {tKey("Studio · Norge", "Studio · Norway", locale)}
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="font-display text-[2.6rem] font-extrabold tracking-tighter text-foreground leading-[1.02]">
-            {tKey("Studio P.A.", "Studio P.A.", locale)}
-            <br />
-            <span className="text-foreground/90">Halvorsen</span>
-            <span className="text-primary">.</span>
+          <h1 className="leading-none -mx-6">
+            <img
+              src={logoPah}
+              alt="Studio P.A. Halvorsen"
+              className="w-[112%] max-w-none h-auto"
+            />
           </h1>
         </Reveal>
         <Reveal delay={160} as="p" className="mt-3 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
