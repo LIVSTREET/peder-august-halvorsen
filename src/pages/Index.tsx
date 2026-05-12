@@ -365,7 +365,8 @@ function TrustSection() {
       ];
 
   return (
-    <section className="container py-10 md:py-16 border-t border-border/70">
+    <section className="container py-16 md:py-16 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Slik jobber jeg", "How I work", locale)}
         subtitle={tKey(
@@ -374,18 +375,19 @@ function TrustSection() {
           locale
         )}
       />
+      </Reveal>
 
-      <div className="max-w-4xl mx-auto space-y-10 md:space-y-12">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 md:gap-y-8">
-          {points.map((p) => (
-            <li key={p.k} className="flex flex-col gap-2">
+      <div className="max-w-4xl mx-auto space-y-12 md:space-y-12">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 md:gap-y-8">
+          {points.map((p, i) => (
+            <Reveal as="li" key={p.k} delay={i * 70} className="flex flex-col gap-2">
               <span className="text-[10px] md:text-[11px] font-mono text-primary uppercase tracking-widest">
                 {p.k}
               </span>
               <p className="font-display text-foreground text-lg md:text-xl leading-snug">
                 {p.v}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ul>
 
@@ -394,12 +396,12 @@ function TrustSection() {
             {tKey("Prosess", "Process", locale)}
           </p>
           <ol className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {steps.map((s) => (
-              <li key={s.n} className="border border-border/70 p-3">
+            {steps.map((s, i) => (
+              <Reveal as="li" key={s.n} delay={i * 70} className="border border-border/70 p-4">
                 <p className="text-xs font-mono text-primary">{s.n}</p>
                 <p className="font-display font-bold text-foreground text-sm md:text-base mt-1.5">{s.t}</p>
                 <p className="text-xs text-muted-foreground mt-1.5 leading-snug">{s.d}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
@@ -446,7 +448,8 @@ function ComparisonSection() {
       ];
 
   return (
-    <section className="container py-12 md:py-24 border-t border-border/70">
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Hvorfor ikke bare en standard nettsidebygger?", "Why not just a standard site builder?", locale)}
         subtitle={tKey(
@@ -455,6 +458,7 @@ function ComparisonSection() {
           locale
         )}
       />
+      </Reveal>
 
       <div className="border border-border/70 overflow-hidden">
         <div className="hidden md:grid grid-cols-[1fr_1fr_1fr] bg-muted/30">
@@ -517,7 +521,8 @@ function BeforeAfterSection() {
   ];
 
   return (
-    <section className="container py-12 md:py-24 border-t border-border/70">
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
       <SectionHeader
         title={tKey("Før og etter", "Before and after", locale)}
         subtitle={tKey(
@@ -526,9 +531,10 @@ function BeforeAfterSection() {
           locale
         )}
       />
-      <div className="space-y-10 md:space-y-14">
+      </Reveal>
+      <div className="space-y-12 md:space-y-14">
         {pairs.map((pair, idx) => (
-          <div key={idx}>
+          <Reveal key={idx} delay={idx * 100}>
             {pair.caption && (
               <p className="mb-3 text-xs font-mono uppercase tracking-widest text-muted-foreground">
                 {pair.caption}
@@ -538,7 +544,7 @@ function BeforeAfterSection() {
               <BeforeAfterCard src={pair.before} label={tKey("Før", "Before", locale)} variant="before" />
               <BeforeAfterCard src={pair.after} label={tKey("Etter", "After", locale)} variant="after" />
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
