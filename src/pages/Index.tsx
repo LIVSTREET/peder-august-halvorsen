@@ -73,7 +73,7 @@ function Hero() {
           <h1 className="sr-only">Studio P.A. Halvorsen</h1>
           <MobileHeroStack />
         </Reveal>
-        <Reveal delay={160} as="p" className="text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
+        <Reveal delay={160} as="p" className="mt-8 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
           {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
         </Reveal>
         <Reveal delay={240}>
