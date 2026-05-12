@@ -1,6 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import heroPortrait from "@/assets/hero-portrait.jpg";
 import logoPah from "@/assets/logo-pah.png";
+import { useRef, useState } from "react";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import ProjectCoverMedia from "@/components/ProjectCoverMedia";
