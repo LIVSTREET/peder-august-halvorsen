@@ -157,9 +157,6 @@ function Hero() {
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
             {tKey("Send forespørsel", "Send request", locale)}
           </CTAButton>
-          <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center">
-            {tKey("Book en prat", "Book a chat", locale)}
-          </CTAButton>
         </div>
       </div>
 
@@ -402,9 +399,6 @@ function TrustSection() {
             <CTAButton to={withLocalePath("/brief")}>
               {tKey("Send forespørsel", "Send request", locale)}
             </CTAButton>
-            <CTAButton to={withLocalePath("/prat")} variant="outline">
-              {tKey("Book en prat", "Book a chat", locale)}
-            </CTAButton>
           </div>
         </div>
       </div>
@@ -484,9 +478,6 @@ function ComparisonSection() {
       <div className="mt-8 flex flex-wrap gap-3">
         <CTAButton to={withLocalePath("/brief")}>
           {tKey("Send forespørsel", "Send request", locale)}
-        </CTAButton>
-        <CTAButton to={withLocalePath("/prat")} variant="outline">
-          {tKey("Book en prat", "Book a chat", locale)}
         </CTAButton>
       </div>
     </section>

@@ -25,12 +25,6 @@ export default function MobileStickyCTA() {
         >
           {locale === "en" ? "Send request" : "Send forespørsel"}
         </Link>
-        <Link
-          to={withLocalePath("/prat")}
-          className="flex-1 inline-flex items-center justify-center whitespace-nowrap px-4 py-2.5 min-h-[44px] font-body text-xs font-medium tracking-wide uppercase border bg-transparent text-foreground border-foreground/30 active:border-primary active:text-primary"
-        >
-          {locale === "en" ? "Book a chat" : "Book en prat"}
-        </Link>
       </div>
     </div>
   );
