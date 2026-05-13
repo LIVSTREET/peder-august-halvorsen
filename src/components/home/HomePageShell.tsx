@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 export function HomePageShell({ children }: { children: ReactNode }) {
   return (
     <section className="relative">
-      <div className="container max-w-[1400px] px-3 md:px-6 pt-4 pb-12 md:pt-8 md:pb-20">
+      <div className="container max-w-[1280px] px-4 md:px-8 pt-4 pb-12 md:pt-8 md:pb-20">
         <div
           data-header-theme="dark"
           className="relative rounded-[28px] md:rounded-[36px] border border-white/5"
