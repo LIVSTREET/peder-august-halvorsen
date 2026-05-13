@@ -2,14 +2,24 @@ import Header from "./Header";
 import Footer from "./Footer";
 import MobileStickyCTA from "./MobileStickyCTA";
 import logoMark from "@/assets/logo-mark.png";
+import { useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/" || pathname === "/en";
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div
+      className={cn(
+        "min-h-screen flex flex-col relative",
+        isHome &&
+          "bg-[#c9c9c2] bg-[radial-gradient(ellipse_100%_60%_at_50%_-10%,hsl(0_0%_100%_/_0.35),transparent_55%),repeating-linear-gradient(135deg,hsl(0_0%_0%_/_0.028)_0_1px,transparent_1px_8px)]"
+      )}
+    >
       {/* Signature watermark — subtle R-mark fixed in background */}
       <img
         src={logoMark}

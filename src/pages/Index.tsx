@@ -19,7 +19,7 @@ import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 import { tKey, tField } from "@/lib/i18n";
-import { HomeHeroShell } from "@/components/home/HomeHeroShell";
+import { HomePageShell } from "@/components/home/HomePageShell";
 import { HeroTechFooter } from "@/components/home/HeroTechFooter";
 
 const organizationSchema = {
@@ -50,11 +50,13 @@ export default function Index() {
   return (
     <Layout>
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
-      <Hero />
-      <TrustSection />
-      <BeforeAfterSection />
-      <ArbeidSection />
-      <ComparisonSection />
+      <HomePageShell>
+        <Hero />
+        <TrustSection />
+        <BeforeAfterSection />
+        <ArbeidSection />
+        <ComparisonSection />
+      </HomePageShell>
     </Layout>
   );
 }
@@ -72,13 +74,13 @@ function Hero() {
   );
 
   return (
-    <HomeHeroShell>
+    <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
       <div className="hidden md:block relative px-10 lg:px-14 pt-20 pb-12">
         {/* Massive h1 sitting behind the portrait */}
         <h1
-          className="absolute left-0 right-0 top-[18%] z-[10] text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none whitespace-nowrap"
-          style={{ fontSize: "clamp(3rem, 9vw, 8rem)", lineHeight: 0.9 }}
+          className="absolute left-0 right-0 top-[14%] z-[10] px-6 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none text-balance"
+          style={{ fontSize: "clamp(2.25rem, 6.5vw, 6rem)", lineHeight: 1.02 }}
         >
           Studio P.&nbsp;A.&nbsp;Halvorsen
         </h1>
@@ -124,8 +126,8 @@ function Hero() {
       {/* Mobile hero — stacked */}
       <div className="md:hidden relative px-5 pt-10 pb-8">
         <h1
-          className="text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 leading-[0.9]"
-          style={{ fontSize: "clamp(2rem, 11vw, 3.25rem)" }}
+          className="text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 text-balance"
+          style={{ fontSize: "clamp(1.75rem, 8.5vw, 2.75rem)", lineHeight: 1.05 }}
         >
           Studio P.&nbsp;A.&nbsp;Halvorsen
         </h1>
@@ -157,7 +159,7 @@ function Hero() {
       </div>
 
       <HeroTechFooter />
-    </HomeHeroShell>
+    </>
   );
 }
 
