@@ -76,15 +76,15 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-6 md:px-10 lg:px-16 pt-12 md:pt-16 pb-8">
+      <div className="hidden md:block relative px-6 md:px-10 lg:px-16 pt-4 md:pt-6 pb-4">
         {/* Background statement: STUDIO / P. A. HALVORSEN — pure decor */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-[1] text-center font-display font-extrabold uppercase tracking-tighter text-foreground/[0.08] pointer-events-none select-none whitespace-nowrap"
-          style={{ fontSize: "clamp(3rem, 11vw, 9rem)", lineHeight: 0.88, letterSpacing: "-0.05em" }}
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-[1] text-center font-display font-extrabold uppercase tracking-tighter text-foreground/[0.08] pointer-events-none select-none"
+          style={{ fontSize: "clamp(2.5rem, 8.6vw, 7.5rem)", lineHeight: 0.88, letterSpacing: "-0.05em" }}
         >
-          <span className="block">STUDIO</span>
-          <span className="block">P.&nbsp;A.&nbsp;HALVORSEN</span>
+          <span className="block whitespace-nowrap">STUDIO</span>
+          <span className="block whitespace-nowrap">P.&nbsp;A.&nbsp;HALVORSEN</span>
         </h1>
 
         {/* Portrait — the subject */}
@@ -95,13 +95,13 @@ function Hero() {
               if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
             }}
             alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-            className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
+            className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
             loading="eager"
           />
         </Reveal>
 
         {/* Bottom row — tagline left, pitch right, single CTA centered */}
-        <div className="relative z-10 mt-6 md:mt-8 grid grid-cols-[1fr_auto_1fr] items-end gap-8 lg:gap-14">
+        <div className="relative z-10 mt-3 md:mt-4 grid grid-cols-[1fr_auto_1fr] items-end gap-6 lg:gap-12">
           <Reveal as="p" delay={120} className="text-right text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/60">
             {tagline}
           </Reveal>
