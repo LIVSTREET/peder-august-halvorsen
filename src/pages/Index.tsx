@@ -77,13 +77,34 @@ function Hero() {
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
       <div className="hidden md:block relative px-6 md:px-10 lg:px-16 pt-4 md:pt-6 pb-4">
-        {/* Background statement: STUDIO / P. A. HALVORSEN — pure decor */}
+        {/* Background statement: STUDIO P.A. HALVORSEN — auto-fit SVG so it never clips */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 top-[3%] z-[1] px-4 max-w-full text-center font-display font-black uppercase text-foreground/90 pointer-events-none select-none whitespace-nowrap"
-          style={{ fontSize: "clamp(2.25rem, 9.4vw, 8rem)", lineHeight: 0.85, letterSpacing: "-0.03em", transform: "scale(0.92, 1.55)", transformOrigin: "top center" }}
+          className="absolute inset-x-0 top-[3%] z-[1] px-6 md:px-10 max-w-full pointer-events-none select-none"
         >
-          STUDIO P.A.&nbsp;HALVORSEN
+          <svg
+            viewBox="0 0 1000 155"
+            preserveAspectRatio="xMidYMid meet"
+            className="block w-full h-auto"
+            aria-hidden="true"
+          >
+            <text
+              x="500"
+              y="135"
+              textAnchor="middle"
+              className="font-display fill-foreground/90"
+              style={{
+                fontWeight: 900,
+                fontSize: "180px",
+                letterSpacing: "-6px",
+                textTransform: "uppercase",
+                transform: "scaleY(1.05)",
+                transformOrigin: "center",
+              }}
+            >
+              STUDIO P.A. HALVORSEN
+            </text>
+          </svg>
         </h1>
 
         {/* Portrait — the subject */}
