@@ -22,7 +22,9 @@ export default function Header() {
   const { locale, withLocalePath, switchLocaleUrl } = useLocale();
   const [moreOpen, setMoreOpen] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
-  const [overDark, setOverDark] = React.useState(false);
+  const isHome = pathname === "/" || pathname === "/en";
+  // All non-home pages use the dark editorial background, so default header to light text there.
+  const [overDark, setOverDark] = React.useState(!isHome);
 
   React.useEffect(() => {
     let lastY = window.scrollY;
@@ -45,6 +47,11 @@ export default function Header() {
   // Detect whether the header sits over a dark surface (any element with data-header-theme="dark")
   React.useEffect(() => {
     const compute = () => {
+      // On non-home pages the page background itself is dark — keep header light.
+      if (!isHome) {
+        setOverDark(true);
+        return;
+      }
       const probeY = 28; // ~middle of header
       const targets = document.querySelectorAll<HTMLElement>('[data-header-theme="dark"]');
       let dark = false;
@@ -61,7 +68,7 @@ export default function Header() {
       window.removeEventListener("scroll", compute);
       window.removeEventListener("resize", compute);
     };
-  }, [pathname]);
+  }, [pathname, isHome]);
 
   const isActive = (to: string) => {
     const localized = withLocalePath(to);
