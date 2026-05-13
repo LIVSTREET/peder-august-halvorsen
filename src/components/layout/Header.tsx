@@ -9,7 +9,6 @@ const primaryLinks: NavLink[] = [
   { to: "/tjenester", labelNo: "Tjenester", labelEn: "Services" },
   { to: "/prosjekter", labelNo: "Arbeid", labelEn: "Work" },
   { to: "/brief", labelNo: "Forespørsel", labelEn: "Request" },
-  { to: "/prat", labelNo: "Prat", labelEn: "Chat" },
 ];
 
 const moreLinks: NavLink[] = [
