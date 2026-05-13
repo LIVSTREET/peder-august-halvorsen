@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import logoSignature from "@/assets/logo-signature.png";
 import { cn } from "@/lib/utils";
 import thumbBilgarasje from "@/assets/thumb-bilgarasje.png";
+import thumbPastelly from "@/assets/thumb-pastelly.png";
+import thumbKursKragero from "@/assets/thumb-kurs-kragero.png";
 
 const principles = [
   {
@@ -196,6 +198,7 @@ export default function Om() {
             )}
             href={withLocalePath("/prosjekter")}
             external={false}
+            thumbnail={thumbPastelly}
           />
           <ProjectCard
             title={tKey("Kurs Kragerø", "Kurs Kragerø", locale)}
@@ -206,6 +209,7 @@ export default function Om() {
             )}
             href={withLocalePath("/prosjekter/kurs-kragero")}
             external={false}
+            thumbnail={thumbKursKragero}
           />
         </div>
       </section>
