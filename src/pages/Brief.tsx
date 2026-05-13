@@ -184,7 +184,7 @@ export default function Brief() {
                 value={form.details}
                 onChange={(e) => set("details", e.target.value)}
                 placeholder={tKey("Beskriv prosjektet, utfordringen, eller ideen din…", "Describe your project, challenge, or idea…", locale)}
-                className="w-full h-40 bg-transparent border border-border p-4 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary resize-none"
+                className="w-full h-40 bg-transparent border border-border p-4 text-foreground text-base md:text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary resize-none"
                 maxLength={2000}
               />
               <button
@@ -207,7 +207,7 @@ export default function Brief() {
                   placeholder={tKey("Navn", "Name", locale)}
                   value={form.name}
                   onChange={(e) => set("name", e.target.value)}
-                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-base md:text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
                   maxLength={100}
                 />
                 <input
@@ -215,7 +215,7 @@ export default function Brief() {
                   placeholder={tKey("E-post", "Email", locale)}
                   value={form.email}
                   onChange={(e) => set("email", e.target.value)}
-                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-base md:text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
                   maxLength={255}
                 />
                 <input
@@ -223,7 +223,7 @@ export default function Brief() {
                   placeholder={tKey("Telefon (valgfritt)", "Phone (optional)", locale)}
                   value={form.phone}
                   onChange={(e) => set("phone", e.target.value)}
-                  className="w-full bg-transparent border border-border p-3 text-foreground text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
+                  className="w-full bg-transparent border border-border p-3 text-foreground text-base md:text-sm font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary"
                   maxLength={20}
                 />
               </div>
