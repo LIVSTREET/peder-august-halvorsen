@@ -48,12 +48,6 @@ export default function Footer() {
             >
               {locale === "en" ? "Send request" : "Send forespørsel"}
             </Link>
-            <Link
-              to={withLocalePath("/prat")}
-              className="inline-flex items-center whitespace-nowrap px-4 md:px-5 py-2 md:py-2.5 min-h-[40px] md:min-h-[44px] font-body text-[12px] md:text-sm font-medium tracking-wide uppercase border bg-transparent text-foreground border-foreground/30 hover:border-primary hover:text-primary transition-all"
-            >
-              {locale === "en" ? "Book a chat" : "Book en prat"}
-            </Link>
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6 md:gap-8">
