@@ -92,13 +92,13 @@ function Hero() {
               x="500"
               y="135"
               textAnchor="middle"
-              textLength="520"
+              textLength="600"
               lengthAdjust="spacingAndGlyphs"
               className="font-display fill-foreground/90"
               style={{
-                fontWeight: 600,
-                fontSize: "150px",
-                letterSpacing: "-4.5px",
+                fontWeight: 800,
+                fontSize: "170px",
+                letterSpacing: "-5px",
                 textTransform: "uppercase",
               }}
             >
@@ -108,13 +108,13 @@ function Hero() {
               x="500"
               y="290"
               textAnchor="middle"
-              textLength="980"
+              textLength="990"
               lengthAdjust="spacingAndGlyphs"
               className="font-display fill-foreground/90"
               style={{
-                fontWeight: 600,
-                fontSize: "150px",
-                letterSpacing: "-4.5px",
+                fontWeight: 800,
+                fontSize: "170px",
+                letterSpacing: "-5px",
                 textTransform: "uppercase",
               }}
             >
