@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
+import logoSignature from "@/assets/logo-signature.png";
 
 type NavLink = { to: string; labelNo: string; labelEn: string };
 
@@ -56,12 +57,16 @@ export default function Header() {
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
-          className="flex items-center"
+          className="flex items-center shrink-0"
           aria-label="Studio P.A. Halvorsen"
         >
-          <span className="font-mono uppercase tracking-[0.18em] text-base md:text-lg text-foreground">
-            P.A.H.
-          </span>
+          <img
+            src={logoSignature}
+            alt=""
+            aria-hidden="true"
+            className="h-10 md:h-12 w-auto max-w-[140px] object-contain invert opacity-90 hover:opacity-100 transition-opacity"
+            decoding="async"
+          />
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {primaryLinks.map((l) => (
