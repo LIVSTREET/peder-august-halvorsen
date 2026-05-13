@@ -203,7 +203,7 @@ function ProjectGrid({ projects }: { projects: any[] }) {
     <div className="space-y-8 md:space-y-12">
       {featured && <FeaturedProject project={featured} />}
       {rest.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {rest.map((p, i) => (
             <Reveal key={p.id} delay={i * 80}>
               <ProjectCard project={p} />
