@@ -15,17 +15,16 @@ export default function MobileStickyCTA() {
 
   return (
     <div
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-sm"
+      className="md:hidden fixed bottom-3 inset-x-3 z-40 pointer-events-none"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <div className="flex gap-2 px-3 py-2">
-        <Link
-          to={withLocalePath("/brief")}
-          className="flex-1 inline-flex items-center justify-center whitespace-nowrap px-4 py-2.5 min-h-[44px] font-body text-xs font-medium tracking-wide uppercase border bg-primary text-primary-foreground border-primary active:brightness-110"
-        >
-          {locale === "en" ? "Send request" : "Send forespørsel"}
-        </Link>
-      </div>
+      <Link
+        to={withLocalePath("/brief")}
+        className="pointer-events-auto flex items-center justify-center w-full whitespace-nowrap px-4 py-2.5 min-h-[40px] rounded-full font-mono text-[11px] tracking-[0.22em] uppercase border border-foreground/15 bg-background/85 backdrop-blur-md text-foreground shadow-[0_8px_24px_-8px_rgba(0,0,0,0.4)] active:bg-primary active:text-primary-foreground active:border-primary transition-colors"
+      >
+        <span className="text-primary mr-2">→</span>
+        {locale === "en" ? "Send request" : "Send forespørsel"}
+      </Link>
     </div>
   );
 }
