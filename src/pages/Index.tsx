@@ -100,20 +100,24 @@ function Hero() {
           />
         </Reveal>
 
-        {/* Bottom row — tagline left, pitch right, single CTA centered */}
-        <div className="relative z-10 mt-3 md:mt-4 grid grid-cols-[1fr_auto_1fr] items-end gap-6 lg:gap-12">
+        {/* Bottom row — tagline left, pitch + CTAs right */}
+        <div className="relative z-10 mt-3 md:mt-4 grid grid-cols-2 items-end gap-8 lg:gap-14">
           <Reveal as="p" delay={120} className="text-right text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/60">
             {tagline}
           </Reveal>
 
-          <Reveal as="div" delay={180} className="flex justify-center">
-            <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send request", locale)}
-            </CTAButton>
-          </Reveal>
-
-          <Reveal as="p" delay={120} className="max-w-xs text-left text-sm md:text-[15px] text-foreground/75 font-body leading-relaxed">
-            {pitch}
+          <Reveal as="div" delay={160} className="max-w-md flex flex-col items-start gap-3 md:gap-4">
+            <p className="text-sm md:text-[15px] text-foreground/75 font-body leading-relaxed text-balance">
+              {pitch}
+            </p>
+            <div className="flex flex-wrap items-center gap-2.5 md:gap-3">
+              <CTAButton to={withLocalePath("/brief")}>
+                {tKey("Send forespørsel", "Send request", locale)}
+              </CTAButton>
+              <CTAButton to={withLocalePath("/prat")} variant="outline">
+                {tKey("Book en prat", "Book a chat", locale)}
+              </CTAButton>
+            </div>
           </Reveal>
         </div>
       </div>
