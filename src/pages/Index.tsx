@@ -77,50 +77,17 @@ function Hero() {
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
       <div className="hidden md:block relative px-6 md:px-10 lg:px-14 pt-3 md:pt-4 pb-3">
-        {/* Background statement: STUDIO P.A. HALVORSEN — auto-fit SVG so it never clips */}
+        {/* Background wordmark — Studio P. A. Halvorsen, layered behind portrait */}
         <h1
           aria-label="Studio P. A. Halvorsen"
           className="absolute inset-x-0 top-[2%] z-[1] px-6 md:px-10 max-w-full pointer-events-none select-none"
         >
-          <svg
-            viewBox="0 0 1000 320"
-            preserveAspectRatio="xMidYMid meet"
-            className="block w-full h-auto overflow-visible"
+          <img
+            src={heroWordmark}
+            alt=""
             aria-hidden="true"
-          >
-            <text
-              x="500"
-              y="135"
-              textAnchor="middle"
-              textLength="600"
-              lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/25"
-              style={{
-                fontWeight: 800,
-                fontSize: "170px",
-                letterSpacing: "-5px",
-                textTransform: "uppercase",
-              }}
-            >
-              STUDIO
-            </text>
-            <text
-              x="500"
-              y="290"
-              textAnchor="middle"
-              textLength="990"
-              lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/25"
-              style={{
-                fontWeight: 800,
-                fontSize: "170px",
-                letterSpacing: "-5px",
-                textTransform: "uppercase",
-              }}
-            >
-              P. A. HALVORSEN
-            </text>
-          </svg>
+            className="block w-full h-auto opacity-25 dark:invert"
+          />
         </h1>
 
         {/* Portrait flanked by tagline (left) and pitch + single CTA (right) */}
