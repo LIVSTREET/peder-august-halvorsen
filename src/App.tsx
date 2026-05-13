@@ -16,6 +16,7 @@ import PostDetalj from "./pages/PostDetalj";
 import Musikk from "./pages/Musikk";
 import Prat from "./pages/Prat";
 import Brief from "./pages/Brief";
+import Om from "./pages/Om";
 import NotFound from "./pages/NotFound";
 import ContentListe from "./pages/ContentListe";
 import ContentDetalj from "./pages/ContentDetalj";
@@ -76,6 +77,7 @@ const App = () => (
               {LocalizedRoutes({ path: "/musikk", element: <Musikk /> })}
               {LocalizedRoutes({ path: "/prat", element: <Prat /> })}
               {LocalizedRoutes({ path: "/brief", element: <Brief /> })}
+              {LocalizedRoutes({ path: "/om", element: <Om /> })}
 
               {/* Content */}
               {LocalizedRoutes({
