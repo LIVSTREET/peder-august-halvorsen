@@ -80,20 +80,23 @@ function Hero() {
         {/* Massive h1 sitting behind the portrait */}
         <h1
           className="absolute left-0 right-0 top-6 md:top-8 z-[10] px-6 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none text-balance whitespace-nowrap"
-          style={{ fontSize: "clamp(2rem, 6vw, 6rem)", lineHeight: 1 }}
+          style={{ fontSize: "clamp(1.5rem, 4.6vw, 4.5rem)", lineHeight: 1 }}
         >
           Studio P.&nbsp;A.&nbsp;Halvorsen
         </h1>
 
-        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(200px,300px)_minmax(0,1fr)] items-center gap-5 md:gap-6 lg:gap-10 pt-10 md:pt-12">
-          {/* LEFT: tagline */}
-          <Reveal as="div" className="text-right min-w-0">
+        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(280px,420px)_minmax(0,1fr)] items-center gap-5 md:gap-6 lg:gap-10 pt-10 md:pt-12">
+          {/* LEFT: tagline + primary CTA */}
+          <Reveal as="div" className="text-right min-w-0 flex flex-col items-end gap-4 md:gap-5">
             <p className="text-base md:text-lg lg:text-3xl font-display font-semibold text-foreground/70 tracking-tight text-balance leading-snug">
               {tagline}
             </p>
+            <CTAButton to={withLocalePath("/brief")}>
+              {tKey("Send forespørsel", "Send request", locale)}
+            </CTAButton>
           </Reveal>
 
-          {/* MIDDLE: portrait */}
+          {/* MIDDLE: portrait — dominant */}
           <Reveal delay={100} as="div" className="flex justify-center">
             <img
               src={portraitSrc}
@@ -101,24 +104,19 @@ function Hero() {
                 if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
               }}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="w-full max-w-[260px] lg:max-w-[320px] h-auto object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
+              className="w-full max-w-[360px] lg:max-w-[440px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
               loading="eager"
             />
           </Reveal>
 
-          {/* RIGHT: pitch + CTA */}
-          <Reveal delay={180} as="div" className="max-w-sm min-w-0">
+          {/* RIGHT: pitch + secondary CTA */}
+          <Reveal delay={180} as="div" className="max-w-sm min-w-0 flex flex-col items-start gap-4 md:gap-5">
             <p className="text-sm md:text-base lg:text-xl text-foreground/80 font-body leading-relaxed text-balance">
               {pitch}
             </p>
-            <div className="mt-4 md:mt-5 flex flex-wrap gap-2 md:gap-3">
-              <CTAButton to={withLocalePath("/brief")}>
-                {tKey("Send forespørsel", "Send request", locale)}
-              </CTAButton>
-              <CTAButton to={withLocalePath("/prat")} variant="outline">
-                {tKey("Book en prat", "Book a chat", locale)}
-              </CTAButton>
-            </div>
+            <CTAButton to={withLocalePath("/prat")} variant="outline">
+              {tKey("Book en prat", "Book a chat", locale)}
+            </CTAButton>
           </Reveal>
         </div>
       </div>
