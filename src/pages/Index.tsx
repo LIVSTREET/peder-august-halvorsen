@@ -76,47 +76,44 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-6 md:px-8 lg:px-14 pt-10 md:pt-12 pb-6 md:pb-8">
-        {/* Massive h1 sitting behind the portrait */}
+      <div className="hidden md:block relative px-6 md:px-10 lg:px-16 pt-12 md:pt-16 pb-8">
+        {/* Background statement: STUDIO / P. A. HALVORSEN — pure decor */}
         <h1
-          className="absolute left-0 right-0 top-1/2 -translate-y-[58%] z-[10] px-4 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/95 pointer-events-none select-none text-balance whitespace-nowrap"
-          style={{ fontSize: "clamp(2rem, 7.2vw, 6rem)", lineHeight: 0.95, letterSpacing: "-0.04em" }}
+          aria-label="Studio P. A. Halvorsen"
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-[1] text-center font-display font-extrabold uppercase tracking-tighter text-foreground/[0.08] pointer-events-none select-none whitespace-nowrap"
+          style={{ fontSize: "clamp(3rem, 11vw, 9rem)", lineHeight: 0.88, letterSpacing: "-0.05em" }}
         >
-          Studio P.&nbsp;A.&nbsp;Halvorsen
+          <span className="block">STUDIO</span>
+          <span className="block">P.&nbsp;A.&nbsp;HALVORSEN</span>
         </h1>
 
-        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(260px,380px)_minmax(0,1fr)] items-center gap-4 md:gap-6 lg:gap-10 pt-2">
-          {/* LEFT: tagline + primary CTA */}
-          <Reveal as="div" className="text-right min-w-0 flex flex-col items-end gap-3 md:gap-4">
-            <p className="text-sm md:text-base lg:text-2xl font-display font-semibold text-foreground/70 tracking-tight text-balance leading-snug">
-              {tagline}
-            </p>
+        {/* Portrait — the subject */}
+        <Reveal as="div" className="relative z-10 flex justify-center">
+          <img
+            src={portraitSrc}
+            onError={() => {
+              if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
+            }}
+            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
+            className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
+            loading="eager"
+          />
+        </Reveal>
+
+        {/* Bottom row — tagline left, pitch right, single CTA centered */}
+        <div className="relative z-10 mt-6 md:mt-8 grid grid-cols-[1fr_auto_1fr] items-end gap-8 lg:gap-14">
+          <Reveal as="p" delay={120} className="text-right text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/60">
+            {tagline}
+          </Reveal>
+
+          <Reveal as="div" delay={180} className="flex justify-center">
             <CTAButton to={withLocalePath("/brief")}>
               {tKey("Send forespørsel", "Send request", locale)}
             </CTAButton>
           </Reveal>
 
-          {/* MIDDLE: portrait — dominant */}
-          <Reveal delay={100} as="div" className="flex justify-center">
-            <img
-              src={portraitSrc}
-              onError={() => {
-                if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
-              }}
-              alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="relative z-10 w-full max-w-[300px] lg:max-w-[380px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
-              loading="eager"
-            />
-          </Reveal>
-
-          {/* RIGHT: pitch + secondary CTA */}
-          <Reveal delay={180} as="div" className="max-w-sm min-w-0 flex flex-col items-start gap-3 md:gap-4">
-            <p className="text-sm md:text-[15px] lg:text-lg text-foreground/80 font-body leading-relaxed text-balance">
-              {pitch}
-            </p>
-            <CTAButton to={withLocalePath("/prat")} variant="outline">
-              {tKey("Book en prat", "Book a chat", locale)}
-            </CTAButton>
+          <Reveal as="p" delay={120} className="max-w-xs text-left text-sm md:text-[15px] text-foreground/75 font-body leading-relaxed">
+            {pitch}
           </Reveal>
         </div>
       </div>
