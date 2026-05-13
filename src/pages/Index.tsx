@@ -125,8 +125,13 @@ function Hero() {
 
         {/* Portrait flanked by tagline (left) and pitch + single CTA (right) */}
         <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-end gap-4 lg:gap-10 pt-20 md:pt-24 lg:pt-28">
-          <Reveal as="p" delay={120} className="justify-self-end text-right max-w-[18ch] text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/65 pb-8 md:pb-10">
-            {tagline}
+          <Reveal as="div" delay={120} className="justify-self-end max-w-[22ch] flex flex-col items-end gap-3 md:gap-4 pb-8 md:pb-10 text-right">
+            <p className="font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance">
+              {tagline}
+            </p>
+            <CTAButton to={withLocalePath("/brief")}>
+              {tKey("Send forespørsel", "Send request", locale)}
+            </CTAButton>
           </Reveal>
 
           <Reveal as="div" delay={60} className="flex justify-center">
@@ -141,13 +146,8 @@ function Hero() {
             />
           </Reveal>
 
-          <Reveal as="div" delay={160} className="justify-self-start max-w-[26ch] flex flex-col items-start gap-3 md:gap-4 pb-8 md:pb-10">
-            <p className="text-sm md:text-[15px] text-foreground/85 font-body leading-relaxed text-balance">
-              {pitch}
-            </p>
-            <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send request", locale)}
-            </CTAButton>
+          <Reveal as="p" delay={160} className="justify-self-start max-w-[26ch] text-sm md:text-[15px] text-foreground/85 font-body leading-relaxed text-balance pb-8 md:pb-10">
+            {pitch}
           </Reveal>
         </div>
       </div>
