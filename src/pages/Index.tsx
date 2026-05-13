@@ -442,40 +442,59 @@ function ComparisonSection() {
       />
       </Reveal>
 
-      <div className="border border-border/70 overflow-hidden">
-        <div className="hidden md:grid grid-cols-[1fr_1fr_1fr] bg-muted/30">
-          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-muted-foreground" />
-          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-muted-foreground border-l border-border/70">
-            {tKey("Standard nettsidebygger", "Standard site builder", locale)}
-          </div>
-          <div className="px-4 py-3 text-xs font-mono uppercase tracking-widest text-primary border-l border-border/70">
-            Studio P.A. Halvorsen
-          </div>
+      {/* Mobile legend */}
+      <div className="flex items-center gap-5 mb-8 md:hidden">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-muted-foreground/40" />
+          <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60">
+            {tKey("Standard", "Standard", locale)}
+          </span>
         </div>
-        <ul className="divide-y divide-border/70">
-          {rows.map((r) => (
-            <li key={r.k} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr]">
-              <div className="px-4 py-3 font-display font-semibold text-foreground text-sm md:text-base md:border-r md:border-border/70 bg-muted/20 md:bg-transparent">
-                {r.k}
-              </div>
-              <div className="px-4 py-3 text-sm text-muted-foreground md:border-r md:border-border/70">
-                <span className="md:hidden text-[10px] font-mono uppercase tracking-widest text-muted-foreground/70 block mb-1">
-                  {tKey("Standard", "Standard", locale)}
-                </span>
-                {r.a}
-              </div>
-              <div className="px-4 py-3 text-sm text-foreground/90">
-                <span className="md:hidden text-[10px] font-mono uppercase tracking-widest text-primary block mb-1">
-                  Studio P.A. Halvorsen
-                </span>
-                {r.b}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-[10px] font-mono uppercase tracking-widest text-primary">
+            Studio P.A. Halvorsen
+          </span>
+        </div>
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-3">
+      {/* Desktop header */}
+      <div className="hidden md:grid grid-cols-[1fr_1fr_1fr] mb-2">
+        <div />
+        <div className="px-4 pb-2 text-xs font-mono uppercase tracking-widest text-muted-foreground/60 border-b border-border/40">
+          {tKey("Standard nettsidebygger", "Standard site builder", locale)}
+        </div>
+        <div className="px-4 pb-2 text-xs font-mono uppercase tracking-widest text-primary border-b border-border/40">
+          Studio P.A. Halvorsen
+        </div>
+      </div>
+
+      <ul className="space-y-10 md:space-y-0">
+        {rows.map((r) => (
+          <li
+            key={r.k}
+            className="md:grid md:grid-cols-[1fr_1fr_1fr] md:border-b md:border-border/30 md:py-5"
+          >
+            <div className="mb-2.5 md:mb-0 md:px-4 md:py-0 flex items-start md:items-center">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground/50 md:text-muted-foreground/80">
+                {r.k}
+              </span>
+            </div>
+            <div className="md:px-4 md:border-l md:border-border/30">
+              <p className="text-[15px] md:text-sm text-muted-foreground leading-relaxed">
+                {r.a}
+              </p>
+            </div>
+            <div className="mt-3 md:mt-0 md:px-4 md:border-l md:border-border/30">
+              <p className="text-[15px] md:text-sm text-foreground/90 leading-relaxed">
+                {r.b}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-10 flex flex-wrap gap-3">
         <CTAButton to={withLocalePath("/brief")}>
           {tKey("Send forespørsel", "Send request", locale)}
         </CTAButton>
