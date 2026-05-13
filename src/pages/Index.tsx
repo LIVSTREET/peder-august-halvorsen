@@ -121,31 +121,39 @@ function Hero() {
       </div>
 
       {/* Mobile hero — stacked */}
-      <div className="md:hidden relative px-5 pt-10 pb-8">
+      <div className="md:hidden relative px-4 pt-3 pb-6">
+        {/* Wordmark layered behind portrait */}
         <h1
-          className="text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 text-balance"
-          style={{ fontSize: "clamp(1.75rem, 8.5vw, 2.75rem)", lineHeight: 1.05 }}
+          aria-label="Studio P. A. Halvorsen"
+          className="absolute inset-x-0 top-0 z-[1] pointer-events-none select-none flex justify-center"
         >
-          Studio P.&nbsp;A.&nbsp;Halvorsen
+          <img
+            src={heroWordmark}
+            alt=""
+            aria-hidden="true"
+            className="block w-[150%] max-w-none h-auto opacity-100 dark:invert"
+          />
         </h1>
-        <div className="relative -mt-4 flex justify-center">
+
+        <div className="relative z-10 flex justify-center pt-16">
           <img
             src={portraitSrc}
             onError={() => {
               if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
             }}
             alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-            className="w-full max-w-[260px] h-auto object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.55)]"
+            className="w-full max-w-[240px] h-auto object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.6)]"
             loading="eager"
           />
         </div>
-        <p className="mt-2 text-center text-sm font-display font-semibold text-foreground/65 tracking-tight">
+
+        <p className="relative z-10 mt-3 text-center font-display font-semibold text-foreground/85 text-base leading-tight tracking-tight text-balance px-2">
           {tagline}
         </p>
-        <p className="mt-5 text-[15px] text-foreground/80 font-body leading-relaxed text-center">
+        <p className="relative z-10 mt-2 text-[14px] text-foreground/75 font-body leading-relaxed text-center px-2 text-balance">
           {pitch}
         </p>
-        <div className="mt-6 flex flex-col gap-2.5">
+        <div className="relative z-10 mt-5 flex flex-col gap-2.5">
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
             {tKey("Send forespørsel", "Send request", locale)}
           </CTAButton>
