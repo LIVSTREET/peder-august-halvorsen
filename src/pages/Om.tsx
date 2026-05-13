@@ -7,6 +7,7 @@ import { tKey } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import logoSignature from "@/assets/logo-signature.png";
 import { cn } from "@/lib/utils";
+import thumbBilgarasje from "@/assets/thumb-bilgarasje.png";
 
 const principles = [
   {
@@ -184,6 +185,7 @@ export default function Om() {
             )}
             href="https://bilgarasje.no"
             external
+            thumbnail={thumbBilgarasje}
           />
           <ProjectCard
             title={tKey("Pastelly", "Pastelly", locale)}
@@ -246,11 +248,13 @@ function ProjectCard({
   description,
   href,
   external,
+  thumbnail,
 }: {
   title: string;
   description: string;
   href: string;
   external: boolean;
+  thumbnail?: string;
 }) {
   const className = cn(
     "group block text-left rounded-2xl md:rounded-3xl border border-border",
@@ -262,7 +266,16 @@ function ProjectCard({
 
   const content = (
     <>
-      <div className="aspect-[16/10] rounded-xl bg-gradient-to-br from-muted/40 to-muted/20 mb-5 md:mb-6" />
+      <div className="aspect-[16/10] rounded-xl overflow-hidden bg-gradient-to-br from-muted/40 to-muted/20 mb-5 md:mb-6">
+        {thumbnail && (
+          <img
+            src={thumbnail}
+            alt={title}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        )}
+      </div>
       <h3 className="font-display text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
         {title}
       </h3>
