@@ -76,19 +76,19 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-6 md:px-8 lg:px-14 pt-16 md:pt-20 pb-10 md:pb-14">
+      <div className="hidden md:block relative px-6 md:px-8 lg:px-14 pt-10 md:pt-12 pb-6 md:pb-8">
         {/* Massive h1 sitting behind the portrait */}
         <h1
-          className="absolute left-0 right-0 top-6 md:top-8 z-[10] px-6 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none text-balance whitespace-nowrap"
-          style={{ fontSize: "clamp(1.5rem, 4.6vw, 4.5rem)", lineHeight: 1 }}
+          className="absolute left-0 right-0 top-1/2 -translate-y-[58%] z-[10] px-4 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/95 pointer-events-none select-none text-balance whitespace-nowrap"
+          style={{ fontSize: "clamp(2rem, 7.2vw, 6rem)", lineHeight: 0.95, letterSpacing: "-0.04em" }}
         >
           Studio P.&nbsp;A.&nbsp;Halvorsen
         </h1>
 
-        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(280px,420px)_minmax(0,1fr)] items-center gap-5 md:gap-6 lg:gap-10 pt-10 md:pt-12">
+        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(260px,380px)_minmax(0,1fr)] items-center gap-4 md:gap-6 lg:gap-10 pt-2">
           {/* LEFT: tagline + primary CTA */}
-          <Reveal as="div" className="text-right min-w-0 flex flex-col items-end gap-4 md:gap-5">
-            <p className="text-base md:text-lg lg:text-3xl font-display font-semibold text-foreground/70 tracking-tight text-balance leading-snug">
+          <Reveal as="div" className="text-right min-w-0 flex flex-col items-end gap-3 md:gap-4">
+            <p className="text-sm md:text-base lg:text-2xl font-display font-semibold text-foreground/70 tracking-tight text-balance leading-snug">
               {tagline}
             </p>
             <CTAButton to={withLocalePath("/brief")}>
@@ -104,14 +104,14 @@ function Hero() {
                 if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
               }}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="w-full max-w-[360px] lg:max-w-[440px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
+              className="relative z-10 w-full max-w-[300px] lg:max-w-[380px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
               loading="eager"
             />
           </Reveal>
 
           {/* RIGHT: pitch + secondary CTA */}
-          <Reveal delay={180} as="div" className="max-w-sm min-w-0 flex flex-col items-start gap-4 md:gap-5">
-            <p className="text-sm md:text-base lg:text-xl text-foreground/80 font-body leading-relaxed text-balance">
+          <Reveal delay={180} as="div" className="max-w-sm min-w-0 flex flex-col items-start gap-3 md:gap-4">
+            <p className="text-sm md:text-[15px] lg:text-lg text-foreground/80 font-body leading-relaxed text-balance">
               {pitch}
             </p>
             <CTAButton to={withLocalePath("/prat")} variant="outline">
