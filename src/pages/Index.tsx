@@ -146,7 +146,7 @@ function Hero() {
             />
           </Reveal>
 
-          <Reveal as="p" delay={160} className="justify-self-start max-w-[26ch] text-sm md:text-[15px] text-foreground/85 font-body leading-relaxed text-balance pb-8 md:pb-10">
+          <Reveal as="p" delay={160} className="justify-self-start max-w-[22ch] text-left font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance pb-8 md:pb-10">
             {pitch}
           </Reveal>
         </div>
