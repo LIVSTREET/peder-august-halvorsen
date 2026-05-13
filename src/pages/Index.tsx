@@ -76,19 +76,19 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-10 lg:px-14 pt-20 pb-12">
+      <div className="hidden md:block relative px-6 md:px-8 lg:px-14 pt-16 md:pt-20 pb-10 md:pb-14">
         {/* Massive h1 sitting behind the portrait */}
         <h1
-          className="absolute left-0 right-0 top-[14%] z-[10] px-6 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none text-balance"
-          style={{ fontSize: "clamp(2.25rem, 6.5vw, 6rem)", lineHeight: 1.02 }}
+          className="absolute left-0 right-0 top-6 md:top-8 z-[10] px-6 text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none text-balance whitespace-nowrap"
+          style={{ fontSize: "clamp(2rem, 6vw, 6rem)", lineHeight: 1 }}
         >
           Studio P.&nbsp;A.&nbsp;Halvorsen
         </h1>
 
-        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(220px,320px)_minmax(0,1fr)] items-center gap-10">
+        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(200px,300px)_minmax(0,1fr)] items-center gap-5 md:gap-6 lg:gap-10 pt-10 md:pt-12">
           {/* LEFT: tagline */}
-          <Reveal as="div" className="text-right">
-            <p className="text-2xl lg:text-3xl font-display font-semibold text-foreground/70 tracking-tight text-balance">
+          <Reveal as="div" className="text-right min-w-0">
+            <p className="text-base md:text-lg lg:text-3xl font-display font-semibold text-foreground/70 tracking-tight text-balance leading-snug">
               {tagline}
             </p>
           </Reveal>
@@ -101,17 +101,17 @@ function Hero() {
                 if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
               }}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="w-full max-w-[320px] h-auto object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
+              className="w-full max-w-[260px] lg:max-w-[320px] h-auto object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
               loading="eager"
             />
           </Reveal>
 
           {/* RIGHT: pitch + CTA */}
-          <Reveal delay={180} as="div" className="max-w-sm">
-            <p className="text-lg lg:text-xl text-foreground/80 font-body leading-relaxed text-balance">
+          <Reveal delay={180} as="div" className="max-w-sm min-w-0">
+            <p className="text-sm md:text-base lg:text-xl text-foreground/80 font-body leading-relaxed text-balance">
               {pitch}
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-4 md:mt-5 flex flex-wrap gap-2 md:gap-3">
               <CTAButton to={withLocalePath("/brief")}>
                 {tKey("Send forespørsel", "Send request", locale)}
               </CTAButton>
