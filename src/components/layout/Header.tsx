@@ -159,13 +159,13 @@ export default function Header() {
             {locale === "en" ? "NO" : "EN"}
           </Link>
         </nav>
-        <MobileNav />
+        <MobileNav overDark={overDark} />
       </div>
     </header>
   );
 }
 
-function MobileNav() {
+function MobileNav({ overDark }: { overDark: boolean }) {
   const { pathname } = useLocation();
   const { locale, withLocalePath, switchLocaleUrl } = useLocale();
   const [open, setOpen] = React.useState(false);
@@ -177,11 +177,19 @@ function MobileNav() {
     <div className="md:hidden flex items-center gap-2">
       <Link
         to={switchLocaleUrl()}
-        className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
+        className={`text-xs font-mono transition-colors ${
+          overDark ? "text-white/65 hover:text-white" : "text-foreground/55 hover:text-foreground"
+        }`}
       >
         {locale === "en" ? "NO" : "EN"}
       </Link>
-      <button onClick={() => setOpen(!open)} className="text-foreground p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Meny">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors ${
+          overDark ? "text-white" : "text-foreground"
+        }`}
+        aria-label="Meny"
+      >
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
           {open ? (
             <path d="M5 5l10 10M15 5L5 15" />
