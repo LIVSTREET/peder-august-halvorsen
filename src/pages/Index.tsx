@@ -81,7 +81,7 @@ function Hero() {
         <h1
           aria-label="Studio P. A. Halvorsen"
           className="absolute inset-x-0 top-[8%] z-[1] px-8 max-w-full text-center font-display font-extrabold uppercase tracking-tight text-foreground/[0.16] pointer-events-none select-none"
-          style={{ fontSize: "clamp(2rem, 7.4vw, 6rem)", lineHeight: 0.85, letterSpacing: "-0.04em", transform: "scaleY(1.35)", transformOrigin: "top center" }}
+          style={{ fontSize: "clamp(2rem, 7.4vw, 6rem)", lineHeight: 0.82, letterSpacing: "-0.06em", transform: "scale(0.78, 1.9)", transformOrigin: "top center" }}
         >
           <span className="block">STUDIO</span>
           <span className="block">P.&nbsp;A.&nbsp;HALVORSEN</span>
