@@ -83,23 +83,22 @@ function Hero() {
           className="absolute inset-x-0 top-[3%] z-[1] px-6 md:px-10 max-w-full pointer-events-none select-none"
         >
           <svg
-            viewBox="0 0 1000 155"
+            viewBox="0 0 1000 180"
             preserveAspectRatio="xMidYMid meet"
-            className="block w-full h-auto"
+            className="block w-full h-auto overflow-visible"
             aria-hidden="true"
           >
             <text
               x="500"
-              y="135"
+              y="155"
               textAnchor="middle"
+              textLength="980"
+              lengthAdjust="spacingAndGlyphs"
               className="font-display fill-foreground/90"
               style={{
                 fontWeight: 900,
                 fontSize: "180px",
-                letterSpacing: "-6px",
                 textTransform: "uppercase",
-                transform: "scaleY(1.05)",
-                transformOrigin: "center",
               }}
             >
               STUDIO P.A. HALVORSEN
