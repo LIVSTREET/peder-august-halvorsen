@@ -7,12 +7,12 @@ import type { ReactNode } from "react";
 export function HomePageShell({ children }: { children: ReactNode }) {
   return (
     <section className="relative">
-      <div className="container pt-6 pb-10 md:pt-10 md:pb-16">
+      <div className="container pt-4 pb-12 md:pt-8 md:pb-20">
         <div
-          className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-border/40 bg-[hsl(var(--background))]"
+          className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5 bg-[hsl(var(--background))]"
           style={{
             boxShadow:
-              "0 40px 80px -20px rgba(0,0,0,0.55), 0 8px 24px -8px rgba(0,0,0,0.4)",
+              "0 60px 120px -30px rgba(0,0,0,0.7), 0 20px 40px -12px rgba(0,0,0,0.5), 0 1px 0 hsl(0 0% 100% / 0.04) inset",
           }}
         >
           {children}
