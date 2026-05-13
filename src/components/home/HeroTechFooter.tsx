@@ -14,16 +14,18 @@ export function HeroTechFooter() {
   );
 
   return (
-    <div className="border-t border-border/40 px-6 md:px-10 py-3 md:py-4 flex flex-col items-center text-center gap-1.5">
-      <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] md:text-sm font-mono uppercase tracking-[0.18em] text-foreground/80">
+    <div className="border-t border-border/40 px-6 md:px-10 py-4 md:py-5 flex flex-col items-center text-center gap-2">
+      <ul className="flex flex-wrap items-center justify-center text-[11px] md:text-[13px] font-mono uppercase tracking-[0.22em] text-foreground/85">
         {items.map((label, i) => (
-          <li key={label} className="flex items-center gap-3">
-            <span>{label}</span>
-            {i < items.length - 1 && <span className="text-primary/70">•</span>}
+          <li key={label} className="flex items-center">
+            <span className="px-3 md:px-4 py-0.5">{label}</span>
+            {i < items.length - 1 && (
+              <span aria-hidden="true" className="text-primary/60 select-none">·</span>
+            )}
           </li>
         ))}
       </ul>
-      <p className="text-xs md:text-sm font-body italic text-muted-foreground">
+      <p className="text-[11px] md:text-xs font-body italic text-muted-foreground/90 tracking-wide">
         {tagline}
       </p>
     </div>
