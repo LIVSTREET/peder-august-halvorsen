@@ -10,7 +10,7 @@ export function HomePageShell({ children }: { children: ReactNode }) {
       <div className="container pt-4 pb-12 md:pt-8 md:pb-20">
         <div
           data-header-theme="dark"
-          className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5"
+          className="relative rounded-[28px] md:rounded-[36px] border border-white/5"
           style={{
             backgroundColor: "#151311",
             boxShadow:
