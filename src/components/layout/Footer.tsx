@@ -19,9 +19,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-border mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
-      <div className="container py-16">
-        <div className="mb-12 pb-12 border-b border-border flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+    <footer className="mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
+      <div className="container pt-4 pb-12 md:pt-2 md:pb-20">
+        <div
+          className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5 px-6 md:px-12 py-12 md:py-16"
+          style={{
+            backgroundColor: "#151311",
+            boxShadow:
+              "0 100px 180px -30px rgba(0,0,0,0.55), 0 50px 90px -20px rgba(0,0,0,0.4), 0 20px 40px -10px rgba(0,0,0,0.35), 0 0 140px rgba(120,70,30,0.08), 0 1px 0 hsl(30 30% 90% / 0.04) inset",
+          }}
+        >
+        <div className="mb-12 pb-12 border-b border-white/10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div className="max-w-md">
             <p className="font-display text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
               {locale === "en" ? "Have a project in mind?" : "Har du noe på gang?"}
@@ -103,13 +111,14 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="mt-8 pt-4 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="mt-8 pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <p className="text-xs text-muted-foreground/40 flex items-center gap-2">
             © {new Date().getFullYear()} · <SiteCredit locale={locale} /> · <a href="/dashboard" className="hover:text-muted-foreground/60 transition-colors">◆</a>
           </p>
           <p className="text-xs text-muted-foreground/40 italic leading-relaxed">
             "I walk by faith, and not by sight"
           </p>
+        </div>
         </div>
       </div>
     </footer>
