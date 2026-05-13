@@ -54,7 +54,10 @@ export default function Header() {
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}
     >
-      <div className="container flex items-center justify-between gap-4 h-14 md:h-16">
+      <div
+        className="container flex items-center justify-between gap-4 h-14 md:h-16"
+        style={{ mixBlendMode: "difference" }}
+      >
         <Link
           to={withLocalePath("/")}
           aria-label="Studio P.A. Halvorsen"
@@ -64,7 +67,7 @@ export default function Header() {
             src={logoSignature}
             alt=""
             aria-hidden="true"
-            className="h-10 md:h-12 lg:h-14 w-auto max-w-[140px] lg:max-w-[170px] object-contain opacity-95 hover:opacity-100 transition-opacity"
+            className="h-10 md:h-12 lg:h-14 w-auto max-w-[140px] lg:max-w-[170px] object-contain invert opacity-95 hover:opacity-100 transition-opacity"
             decoding="async"
           />
         </Link>
@@ -74,7 +77,7 @@ export default function Header() {
               key={l.to}
               to={withLocalePath(l.to)}
               className={`text-[13px] font-mono uppercase tracking-[0.1em] whitespace-nowrap transition-colors ${
-                isActive(l.to) ? "text-primary" : "text-foreground/75 hover:text-foreground"
+                isActive(l.to) ? "text-primary" : "text-white/85 hover:text-white"
               }`}
             >
               {locale === "en" ? l.labelEn : l.labelNo}
@@ -90,7 +93,7 @@ export default function Header() {
               className={`text-[13px] font-mono uppercase tracking-[0.1em] whitespace-nowrap transition-colors ${
                 moreLinks.some((l) => isActive(l.to))
                   ? "text-primary"
-                  : "text-foreground/75 hover:text-foreground"
+                  : "text-white/85 hover:text-white"
               }`}
               aria-haspopup="true"
               aria-expanded={moreOpen}
@@ -118,7 +121,7 @@ export default function Header() {
           </div>
           <Link
             to={switchLocaleUrl()}
-            className="text-[13px] font-mono uppercase tracking-[0.1em] text-foreground/55 hover:text-foreground transition-colors ml-1"
+            className="text-[13px] font-mono uppercase tracking-[0.1em] text-white/65 hover:text-white transition-colors ml-1"
           >
             {locale === "en" ? "NO" : "EN"}
           </Link>
