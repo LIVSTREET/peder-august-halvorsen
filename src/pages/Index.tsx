@@ -81,13 +81,13 @@ function Hero() {
         {/* Background wordmark — Studio P. A. Halvorsen, layered behind portrait */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 -top-[4%] z-[1] px-0 max-w-none pointer-events-none select-none"
+          className="absolute inset-x-0 -top-[12%] z-[1] px-0 max-w-none pointer-events-none select-none flex justify-center"
         >
           <img
             src={heroWordmark}
             alt=""
             aria-hidden="true"
-            className="block w-[115%] -mx-[7.5%] h-auto opacity-15 dark:invert"
+            className="block w-[135%] max-w-none h-auto opacity-30 dark:invert"
           />
         </h1>
 
