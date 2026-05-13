@@ -76,11 +76,11 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-6 md:px-10 lg:px-16 pt-4 md:pt-6 pb-4">
+      <div className="hidden md:block relative px-6 md:px-10 lg:px-14 pt-3 md:pt-4 pb-3">
         {/* Background statement: STUDIO P.A. HALVORSEN — auto-fit SVG so it never clips */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 top-[3%] z-[1] px-6 md:px-10 max-w-full pointer-events-none select-none"
+          className="absolute inset-x-0 top-[2%] z-[1] px-6 md:px-10 max-w-full pointer-events-none select-none"
         >
           <svg
             viewBox="0 0 1000 320"
@@ -94,7 +94,7 @@ function Hero() {
               textAnchor="middle"
               textLength="600"
               lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/90"
+              className="font-display fill-foreground/80"
               style={{
                 fontWeight: 800,
                 fontSize: "170px",
@@ -110,7 +110,7 @@ function Hero() {
               textAnchor="middle"
               textLength="990"
               lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/90"
+              className="font-display fill-foreground/80"
               style={{
                 fontWeight: 800,
                 fontSize: "170px",
@@ -124,8 +124,8 @@ function Hero() {
         </h1>
 
         {/* Portrait flanked by tagline (left) and pitch + single CTA (right) */}
-        <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-end gap-6 lg:gap-12">
-          <Reveal as="p" delay={120} className="justify-self-end text-right max-w-[18ch] text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/60 pb-6">
+        <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-end gap-4 lg:gap-10 pt-20 md:pt-24 lg:pt-28">
+          <Reveal as="p" delay={120} className="justify-self-end text-right max-w-[18ch] text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-foreground/65 pb-8 md:pb-10">
             {tagline}
           </Reveal>
 
@@ -136,13 +136,13 @@ function Hero() {
                 if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
               }}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.75)]"
+              className="w-full max-w-[300px] lg:max-w-[360px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
               loading="eager"
             />
           </Reveal>
 
-          <Reveal as="div" delay={160} className="justify-self-start max-w-[28ch] flex flex-col items-start gap-3 md:gap-4 pb-6">
-            <p className="text-sm md:text-[15px] text-foreground/80 font-body leading-relaxed text-balance">
+          <Reveal as="div" delay={160} className="justify-self-start max-w-[26ch] flex flex-col items-start gap-3 md:gap-4 pb-8 md:pb-10">
+            <p className="text-sm md:text-[15px] text-foreground/85 font-body leading-relaxed text-balance">
               {pitch}
             </p>
             <CTAButton to={withLocalePath("/brief")}>
