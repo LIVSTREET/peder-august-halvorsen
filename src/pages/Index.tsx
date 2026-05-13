@@ -94,7 +94,7 @@ function Hero() {
               textAnchor="middle"
               textLength="600"
               lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/80"
+              className="font-display fill-foreground/25"
               style={{
                 fontWeight: 800,
                 fontSize: "170px",
@@ -110,7 +110,7 @@ function Hero() {
               textAnchor="middle"
               textLength="990"
               lengthAdjust="spacingAndGlyphs"
-              className="font-display fill-foreground/80"
+              className="font-display fill-foreground/25"
               style={{
                 fontWeight: 800,
                 fontSize: "170px",
