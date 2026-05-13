@@ -28,7 +28,12 @@ export default function Layout({ children }: LayoutProps) {
         className="pointer-events-none fixed -left-[10vw] top-1/2 -translate-y-1/2 w-[120vw] md:w-[80vw] max-w-none opacity-[0.025] mix-blend-screen z-0"
       />
       <Header />
-      <main className="flex-1 relative z-10">{children}</main>
+      <main
+        className="flex-1 relative z-10"
+        data-header-theme={isHome ? undefined : "dark"}
+      >
+        {children}
+      </main>
       <Footer />
       <MobileStickyCTA />
       {/* Spacer so sticky CTA does not overlap content on mobile */}
