@@ -80,8 +80,8 @@ function Hero() {
         {/* Background statement: STUDIO / P. A. HALVORSEN — pure decor */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-[1] px-4 max-w-full text-center font-display font-extrabold uppercase tracking-tighter text-foreground/[0.08] pointer-events-none select-none"
-          style={{ fontSize: "clamp(2rem, 7vw, 5.5rem)", lineHeight: 0.9, letterSpacing: "-0.05em" }}
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-[1] px-8 max-w-full text-center font-display font-extrabold uppercase tracking-tight text-foreground/[0.08] pointer-events-none select-none"
+          style={{ fontSize: "clamp(1.75rem, 6vw, 4.75rem)", lineHeight: 0.92, letterSpacing: "-0.04em" }}
         >
           <span className="block">STUDIO</span>
           <span className="block">P.&nbsp;A.&nbsp;HALVORSEN</span>
