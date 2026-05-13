@@ -12,7 +12,7 @@ export function HomePageShell({ children }: { children: ReactNode }) {
           className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5 bg-[hsl(var(--background))]"
           style={{
             boxShadow:
-              "0 60px 120px -30px rgba(0,0,0,0.7), 0 20px 40px -12px rgba(0,0,0,0.5), 0 1px 0 hsl(0 0% 100% / 0.04) inset",
+              "0 100px 180px -30px rgba(0,0,0,0.95), 0 50px 90px -20px rgba(0,0,0,0.75), 0 20px 40px -10px rgba(0,0,0,0.6), 0 1px 0 hsl(0 0% 100% / 0.05) inset",
           }}
         >
           {children}
