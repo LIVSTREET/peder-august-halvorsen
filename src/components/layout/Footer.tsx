@@ -7,8 +7,6 @@ export default function Footer() {
   const { locale, withLocalePath } = useLocale();
 
   const more = [
-    { to: "/skriver", labelNo: "Skriver", labelEn: "Writing" },
-    { to: "/arkiv", labelNo: "Arkiv", labelEn: "Archive" },
     { to: "/musikk", labelNo: "Musikk", labelEn: "Music" },
   ];
   const primary = [
