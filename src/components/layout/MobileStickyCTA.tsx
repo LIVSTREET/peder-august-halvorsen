@@ -12,7 +12,6 @@ export default function MobileStickyCTA() {
     const localized = withLocalePath(p);
     return pathname === localized || pathname.startsWith(localized + "/");
   });
-  if (isHidden) return null;
 
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -21,6 +20,8 @@ export default function MobileStickyCTA() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (isHidden) return null;
 
   return (
     <div
