@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import heroPortraitFallback from "@/assets/hero-portrait.jpg";
+import heroWordmark from "@/assets/hero-wordmark.png";
 import { useState } from "react";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
