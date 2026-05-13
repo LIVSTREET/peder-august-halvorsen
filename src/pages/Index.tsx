@@ -1,7 +1,6 @@
 import Layout from "@/components/layout/Layout";
-import heroPortrait from "@/assets/hero-portrait.jpg";
-import logoPah from "@/assets/logo-pah.png";
-import { useRef, useState } from "react";
+import heroPortraitFallback from "@/assets/hero-portrait.jpg";
+import { useState } from "react";
 import SeoHead from "@/components/SeoHead";
 import SectionHeader from "@/components/SectionHeader";
 import ProjectCoverMedia from "@/components/ProjectCoverMedia";
@@ -20,6 +19,8 @@ import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 import { tKey, tField } from "@/lib/i18n";
+import { HomeHeroShell } from "@/components/home/HomeHeroShell";
+import { HeroTechFooter } from "@/components/home/HeroTechFooter";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -50,7 +51,6 @@ export default function Index() {
     <Layout>
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <Hero />
-      <TrustStrip />
       <TrustSection />
       <BeforeAfterSection />
       <ArbeidSection />
@@ -61,213 +61,103 @@ export default function Index() {
 
 function Hero() {
   const { locale, withLocalePath } = useLocale();
+  const cutoutUrl = `${import.meta.env.BASE_URL}hero-portrait-cutout.png`;
+  const [portraitSrc, setPortraitSrc] = useState(cutoutUrl);
 
-  return (
-    <section className="container pt-4 pb-10 md:pt-8 md:pb-16">
-      {/* Mobile hero */}
-      <div className="md:hidden">
-        <Reveal as="p" className="text-[10px] font-mono uppercase tracking-[0.22em] text-primary/80 mb-2">
-          {tKey("Studio · Norge", "Studio · Norway", locale)}
-        </Reveal>
-        <Reveal delay={80}>
-          <h1 className="sr-only">Studio P.A. Halvorsen</h1>
-          <MobileHeroStack />
-        </Reveal>
-        <Reveal delay={160} as="p" className="mt-4 text-[13px] font-display font-semibold text-foreground/55 tracking-tight">
-          {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
-        </Reveal>
-        <Reveal delay={240}>
-          <div className="mt-6 h-px bg-border/60" />
-        </Reveal>
-        <Reveal delay={300} as="p" className="mt-6 text-[15px] text-foreground/80 font-body leading-relaxed">
-          {tKey(
-            "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
-            "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
-            locale
-          )}
-        </Reveal>
-        <Reveal delay={380}>
-          <div className="mt-7 flex flex-col gap-2.5">
-            <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-              {tKey("Send forespørsel", "Send request", locale)}
-            </CTAButton>
-            <CTAButton
-              to={withLocalePath("/prat")}
-              variant="outline"
-              className="w-full text-center"
-            >
-              {tKey("Book en prat", "Book a chat", locale)}
-            </CTAButton>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Desktop hero */}
-      <div className="hidden md:grid grid-cols-[1.4fr_1fr] gap-20 items-center">
-        <div>
-          <h1 className="leading-none -mt-32 -mb-40 -ml-32">
-            <img
-              src={logoPah}
-              alt="Studio P.A. Halvorsen"
-              className="w-[120%] max-w-none h-auto"
-            />
-          </h1>
-          <p className="text-2xl font-display font-semibold text-foreground/60 tracking-tight">
-            {tKey("Moderne digitalt håndverk", "Modern digital craft", locale)}
-          </p>
-          <p className="mt-8 text-xl text-foreground/80 max-w-xl font-body leading-relaxed">
-            {tKey(
-              "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
-              "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
-              locale
-            )}
-          </p>
-          <div className="mt-10 flex flex-row items-center gap-4">
-            <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send request", locale)}
-            </CTAButton>
-            <CTAButton to={withLocalePath("/prat")} variant="outline">
-              {tKey("Book en prat", "Book a chat", locale)}
-            </CTAButton>
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <div className="relative w-full max-w-[340px]">
-            <img
-              src={heroPortrait}
-              alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="object-cover w-full aspect-[3/4] [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
-              loading="eager"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
-            <div className="pointer-events-none absolute inset-0 bg-background/10" />
-          </div>
-        </div>
-      </div>
-    </section>
+  const tagline = tKey("Moderne digitalt håndverk", "Modern digital craft", locale);
+  const pitch = tKey(
+    "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
+    "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
+    locale
   );
-}
-
-function MobileHeroStack() {
-  const [front, setFront] = useState<"logo" | "portrait">("logo");
-  const startX = useRef(0);
-  const startY = useRef(0);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    startX.current = e.touches[0].clientX;
-    startY.current = e.touches[0].clientY;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - startX.current;
-    const dy = e.changedTouches[0].clientY - startY.current;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-      setFront((f) => (f === "logo" ? "portrait" : "logo"));
-    }
-  };
-
-  const transition =
-    "transition-[transform,opacity,filter,top,left,right,width] duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] [backface-visibility:hidden]";
-
-  const swap = () => setFront((f) => (f === "logo" ? "portrait" : "logo"));
-
-  // PORTRAIT slot — when in back: small, upper-right, tilted inward, dimmed.
-  // When in front: large, centered, clear.
-  const portraitWrapStyle: React.CSSProperties =
-    front === "portrait"
-      ? {
-          top: "8%",
-          right: "14%",
-          width: "72%",
-          transform: "scale(1)",
-          opacity: 1,
-          filter: "none",
-          zIndex: 20,
-        }
-      : {
-          top: "0%",
-          right: "2%",
-          width: "44%",
-          transform: "scale(1)",
-          opacity: 0.55,
-          filter: "blur(1.5px) brightness(0.6) saturate(0.85)",
-          zIndex: 10,
-        };
-
-  // LOGO slot — when in front: full width near bottom, clear.
-  // When in back: small, upper-left, tilted inward, dimmed.
-  const logoWrapStyle: React.CSSProperties =
-    front === "logo"
-      ? {
-          left: "0%",
-          right: "0%",
-          bottom: "18%",
-          top: "auto",
-          width: "100%",
-          transform: "scale(1)",
-          opacity: 1,
-          filter: "none",
-          zIndex: 20,
-        }
-      : {
-          left: "2%",
-          right: "auto",
-          top: "6%",
-          bottom: "auto",
-          width: "44%",
-          transform: "scale(1)",
-          opacity: 0.35,
-          filter: "blur(1.5px) brightness(0.6)",
-          zIndex: 10,
-        };
 
   return (
-    <div
-      className="relative left-1/2 -translate-x-1/2 w-screen select-none"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      style={{ touchAction: "pan-y", perspective: "1200px" }}
-    >
-      {/* Stage: portrait-orientation so face sits clearly above logo */}
-      <div className="relative mx-auto w-full aspect-[4/5] overflow-hidden">
-        {/* Portrait layer */}
-        <div
-          className={`absolute ${transition}`}
-          style={{ ...portraitWrapStyle, willChange: "transform, opacity, filter" }}
-          onClick={() => front !== "portrait" && swap()}
-          aria-hidden={front !== "portrait"}
+    <HomeHeroShell>
+      {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
+      <div className="hidden md:block relative px-10 lg:px-14 pt-20 pb-12">
+        {/* Massive h1 sitting behind the portrait */}
+        <h1
+          className="absolute left-0 right-0 top-[18%] z-[10] text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 pointer-events-none select-none whitespace-nowrap"
+          style={{ fontSize: "clamp(3rem, 9vw, 8rem)", lineHeight: 0.9 }}
         >
-          <div className="relative w-full aspect-[3/4] drop-shadow-[0_24px_48px_rgba(0,0,0,0.7)]">
+          Studio P.&nbsp;A.&nbsp;Halvorsen
+        </h1>
+
+        <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_minmax(220px,320px)_minmax(0,1fr)] items-center gap-10">
+          {/* LEFT: tagline */}
+          <Reveal as="div" className="text-right">
+            <p className="text-2xl lg:text-3xl font-display font-semibold text-foreground/70 tracking-tight text-balance">
+              {tagline}
+            </p>
+          </Reveal>
+
+          {/* MIDDLE: portrait */}
+          <Reveal delay={100} as="div" className="flex justify-center">
             <img
-              src={heroPortrait}
+              src={portraitSrc}
+              onError={() => {
+                if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
+              }}
               alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
-              className="object-cover w-full h-full [filter:brightness(0.88)_saturate(0.9)_contrast(1.05)]"
+              className="w-full max-w-[320px] h-auto object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
               loading="eager"
             />
-            {/* Cinematic depth: dark gradient rising from bottom */}
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,hsl(var(--background))_0%,hsl(var(--background)/0.7)_25%,transparent_70%)]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.55)_100%)]" />
-          </div>
-        </div>
+          </Reveal>
 
-        {/* Logo layer */}
-        <div
-          className={`absolute ${transition}`}
-          style={{ ...logoWrapStyle, willChange: "transform, opacity, filter" }}
-          onClick={() => front !== "logo" && swap()}
-          aria-hidden={front !== "logo"}
-        >
-          {/* Crop window — keep aspect ratio so the wordmark is fully visible on screen */}
-          <div className="relative w-full aspect-[16/5] overflow-hidden drop-shadow-[0_24px_50px_rgba(0,0,0,0.6)]">
-            {/* Cropped to wordmark only (R signature trimmed away), shifted slightly left */}
-            <img
-              src={logoPah}
-              alt="Studio P.A. Halvorsen"
-              className="absolute left-1/2 top-1/2 w-[220%] max-w-none h-auto -translate-x-[55%] -translate-y-[43%]"
-            />
-          </div>
+          {/* RIGHT: pitch + CTA */}
+          <Reveal delay={180} as="div" className="max-w-sm">
+            <p className="text-lg lg:text-xl text-foreground/80 font-body leading-relaxed text-balance">
+              {pitch}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <CTAButton to={withLocalePath("/brief")}>
+                {tKey("Send forespørsel", "Send request", locale)}
+              </CTAButton>
+              <CTAButton to={withLocalePath("/prat")} variant="outline">
+                {tKey("Book en prat", "Book a chat", locale)}
+              </CTAButton>
+            </div>
+          </Reveal>
         </div>
       </div>
-    </div>
+
+      {/* Mobile hero — stacked */}
+      <div className="md:hidden relative px-5 pt-10 pb-8">
+        <h1
+          className="text-center font-display font-extrabold uppercase tracking-tighter text-foreground/85 leading-[0.9]"
+          style={{ fontSize: "clamp(2rem, 11vw, 3.25rem)" }}
+        >
+          Studio P.&nbsp;A.&nbsp;Halvorsen
+        </h1>
+        <div className="relative -mt-4 flex justify-center">
+          <img
+            src={portraitSrc}
+            onError={() => {
+              if (portraitSrc !== heroPortraitFallback) setPortraitSrc(heroPortraitFallback);
+            }}
+            alt={`${PERSON_NAME} — Studio P.A. Halvorsen`}
+            className="w-full max-w-[260px] h-auto object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.55)]"
+            loading="eager"
+          />
+        </div>
+        <p className="mt-2 text-center text-sm font-display font-semibold text-foreground/65 tracking-tight">
+          {tagline}
+        </p>
+        <p className="mt-5 text-[15px] text-foreground/80 font-body leading-relaxed text-center">
+          {pitch}
+        </p>
+        <div className="mt-6 flex flex-col gap-2.5">
+          <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
+            {tKey("Send forespørsel", "Send request", locale)}
+          </CTAButton>
+          <CTAButton to={withLocalePath("/prat")} variant="outline" className="w-full text-center">
+            {tKey("Book en prat", "Book a chat", locale)}
+          </CTAButton>
+        </div>
+      </div>
+
+      <HeroTechFooter />
+    </HomeHeroShell>
   );
 }
 
@@ -419,34 +309,6 @@ function BuildingNowSection() {
         <Link to={withLocalePath("/na-bygger-jeg")} className="text-sm font-mono text-primary hover:underline underline-offset-4">
           {tKey("Se alt →", "See all →", locale)}
         </Link>
-      </div>
-    </section>
-  );
-}
-
-function TrustStrip() {
-  const { locale } = useLocale();
-  const items = locale === "en"
-    ? ["Websites", "SEO", "Admin systems", "AI", "Automation"]
-    : ["Nettsider", "SEO", "Adminsystem", "AI", "Automatisering"];
-  const tagline = locale === "en"
-    ? "Built for local businesses and modern founders."
-    : "Bygget for lokale bedrifter og moderne gründere.";
-
-  return (
-    <section className="border-y border-border/60 bg-background/40">
-      <div className="container py-5 md:py-6 flex flex-col items-center text-center gap-2">
-        <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm font-mono text-foreground/80">
-          {items.map((label, i) => (
-            <li key={label} className="flex items-center gap-3">
-              <span>{label}</span>
-              {i < items.length - 1 && <span className="text-primary/70">•</span>}
-            </li>
-          ))}
-        </ul>
-        <p className="text-xs md:text-sm font-body italic text-muted-foreground">
-          {tagline}
-        </p>
       </div>
     </section>
   );

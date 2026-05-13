@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
-import logoMark from "@/assets/logo-mark.png";
 
 type NavLink = { to: string; labelNo: string; labelEn: string };
 
@@ -57,21 +56,19 @@ export default function Header() {
       <div className="container flex items-center justify-between h-14">
         <Link
           to={withLocalePath("/")}
-          className="flex items-center -ml-8 md:-ml-10"
+          className="flex items-center"
           aria-label="Studio P.A. Halvorsen"
         >
-          <img
-            src={logoMark}
-            alt="Studio P.A. Halvorsen"
-            className="h-32 md:h-32 w-auto -my-10 shrink-0"
-          />
+          <span className="font-mono uppercase tracking-[0.18em] text-base md:text-lg text-foreground">
+            P.A.H.
+          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {primaryLinks.map((l) => (
             <Link
               key={l.to}
               to={withLocalePath(l.to)}
-              className={`text-sm font-body transition-colors ${
+              className={`text-[11px] font-mono uppercase tracking-[0.14em] transition-colors ${
                 isActive(l.to) ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -85,7 +82,7 @@ export default function Header() {
           >
             <button
               type="button"
-              className={`text-sm font-body transition-colors ${
+              className={`text-[11px] font-mono uppercase tracking-[0.14em] transition-colors ${
                 moreLinks.some((l) => isActive(l.to))
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
