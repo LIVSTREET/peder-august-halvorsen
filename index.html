@@ -8,6 +8,21 @@
       :root { color-scheme: dark; }
       html, body { background-color: hsl(0 0% 4%); }
       #root { min-height: 100dvh; background-color: hsl(0 0% 4%); }
+      /* Beautiful first-paint intro: hold a dark veil, then fade content in.
+         Removed by JS once React has mounted + fonts are ready. */
+      html.intro-loading #root { opacity: 0; }
+      html.intro-ready #root {
+        opacity: 1;
+        animation: introFade 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes introFade {
+        0%   { opacity: 0; transform: translateY(8px); filter: blur(6px); }
+        60%  { filter: blur(0); }
+        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html.intro-ready #root { animation: none; }
+      }
     </style>
     <title>Studio P.A. Halvorsen — Moderne digitalt håndverk</title>
     <meta name="description" content="Studio P.A. Halvorsen bygger profesjonelle nettsider og digitale systemer for små bedrifter." />
