@@ -17,7 +17,7 @@ export default function Layout({ children }: LayoutProps) {
       className={cn(
         "min-h-screen flex flex-col relative",
         isHome &&
-          "bg-[#3a3a36] bg-[radial-gradient(ellipse_100%_60%_at_50%_-10%,hsl(0_0%_100%_/_0.08),transparent_55%),repeating-linear-gradient(135deg,hsl(0_0%_0%_/_0.06)_0_1px,transparent_1px_8px)]"
+          "bg-[#3a3a36] bg-[radial-gradient(ellipse_100%_60%_at_50%_-10%,hsl(0_0%_100%_/_0.08),transparent_55%),repeating-linear-gradient(135deg,hsl(0_0%_0%_/_0.06)_0_1px,transparent_1px_8px)] bg-fixed"
       )}
     >
       {/* Signature watermark — subtle R-mark fixed in background */}
