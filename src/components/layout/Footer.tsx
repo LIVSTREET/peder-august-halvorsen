@@ -20,7 +20,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
-      <div className="container pt-4 pb-12 md:pt-2 md:pb-20">
+      <div className="container max-w-[1280px] px-4 md:px-8 pt-4 pb-12 md:pt-2 md:pb-20">
         <div
           data-header-theme="dark"
           className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5 px-6 md:px-12 py-12 md:py-16"
