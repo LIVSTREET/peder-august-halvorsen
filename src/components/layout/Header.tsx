@@ -78,7 +78,7 @@ export default function Header() {
     >
       <div
         className={`container flex items-center justify-between gap-4 h-14 md:h-16 transition-colors duration-300 ${
-          overDark ? "text-white" : "text-foreground"
+          overDark ? "text-white" : "text-[#151311]"
         }`}
       >
         <Link
@@ -106,7 +106,7 @@ export default function Header() {
                   ? "text-primary"
                   : overDark
                   ? "text-white/85 hover:text-white"
-                  : "text-foreground/75 hover:text-foreground"
+                  : "text-[#151311]/75 hover:text-[#151311]"
               }`}
             >
               {locale === "en" ? l.labelEn : l.labelNo}
@@ -124,7 +124,7 @@ export default function Header() {
                   ? "text-primary"
                   : overDark
                   ? "text-white/85 hover:text-white"
-                  : "text-foreground/75 hover:text-foreground"
+                  : "text-[#151311]/75 hover:text-[#151311]"
               }`}
               aria-haspopup="true"
               aria-expanded={moreOpen}
@@ -153,7 +153,7 @@ export default function Header() {
           <Link
             to={switchLocaleUrl()}
             className={`text-[13px] font-mono uppercase tracking-[0.1em] transition-colors ml-1 ${
-              overDark ? "text-white/65 hover:text-white" : "text-foreground/55 hover:text-foreground"
+              overDark ? "text-white/65 hover:text-white" : "text-[#151311]/55 hover:text-[#151311]"
             }`}
           >
             {locale === "en" ? "NO" : "EN"}
@@ -178,7 +178,7 @@ function MobileNav({ overDark }: { overDark: boolean }) {
       <Link
         to={switchLocaleUrl()}
         className={`text-xs font-mono transition-colors ${
-          overDark ? "text-white/65 hover:text-white" : "text-foreground/55 hover:text-foreground"
+          overDark ? "text-white/65 hover:text-white" : "text-[#151311]/55 hover:text-[#151311]"
         }`}
       >
         {locale === "en" ? "NO" : "EN"}
@@ -186,7 +186,7 @@ function MobileNav({ overDark }: { overDark: boolean }) {
       <button
         onClick={() => setOpen(!open)}
         className={`p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors ${
-          overDark ? "text-white" : "text-foreground"
+          overDark ? "text-white" : "text-[#151311]"
         }`}
         aria-label="Meny"
       >
