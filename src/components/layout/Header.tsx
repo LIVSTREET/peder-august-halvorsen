@@ -54,7 +54,7 @@ export default function Header() {
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}
     >
-      <div className="container flex items-center justify-between h-14">
+      <div className="container flex items-center justify-between gap-4 h-14">
         <Link
           to={withLocalePath("/")}
           className="flex items-center shrink-0"
@@ -64,16 +64,16 @@ export default function Header() {
             src={logoSignature}
             alt=""
             aria-hidden="true"
-            className="h-10 md:h-12 w-auto max-w-[140px] object-contain invert opacity-90 hover:opacity-100 transition-opacity"
+            className="h-9 md:h-10 lg:h-12 w-auto max-w-[110px] lg:max-w-[140px] object-contain invert opacity-90 hover:opacity-100 transition-opacity"
             decoding="async"
           />
         </Link>
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-3 lg:gap-6 shrink-0">
           {primaryLinks.map((l) => (
             <Link
               key={l.to}
               to={withLocalePath(l.to)}
-              className={`text-[11px] font-mono uppercase tracking-[0.14em] transition-colors ${
+              className={`text-[11px] font-mono uppercase tracking-[0.14em] whitespace-nowrap transition-colors ${
                 isActive(l.to) ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -87,7 +87,7 @@ export default function Header() {
           >
             <button
               type="button"
-              className={`text-[11px] font-mono uppercase tracking-[0.14em] transition-colors ${
+              className={`text-[11px] font-mono uppercase tracking-[0.14em] whitespace-nowrap transition-colors ${
                 moreLinks.some((l) => isActive(l.to))
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
@@ -118,7 +118,7 @@ export default function Header() {
           </div>
           <Link
             to={switchLocaleUrl()}
-            className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors ml-2"
+            className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors ml-1 lg:ml-2"
           >
             {locale === "en" ? "NO" : "EN"}
           </Link>
