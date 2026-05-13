@@ -12,6 +12,7 @@ const primaryLinks: NavLink[] = [
 ];
 
 const moreLinks: NavLink[] = [
+  { to: "/om", labelNo: "Om", labelEn: "About" },
   { to: "/musikk", labelNo: "Musikk", labelEn: "Music" },
 ];
 
