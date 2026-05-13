@@ -77,6 +77,7 @@ const App = () => (
               {LocalizedRoutes({ path: "/musikk", element: <Musikk /> })}
               {LocalizedRoutes({ path: "/prat", element: <Prat /> })}
               {LocalizedRoutes({ path: "/brief", element: <Brief /> })}
+              {LocalizedRoutes({ path: "/om", element: <Om /> })}
 
               {/* Content */}
               {LocalizedRoutes({
