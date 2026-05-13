@@ -23,6 +23,7 @@ export default function Header() {
   const { locale, withLocalePath, switchLocaleUrl } = useLocale();
   const [moreOpen, setMoreOpen] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
+  const [overDark, setOverDark] = React.useState(false);
 
   React.useEffect(() => {
     let lastY = window.scrollY;
@@ -42,6 +43,27 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Detect whether the header sits over a dark surface (any element with data-header-theme="dark")
+  React.useEffect(() => {
+    const compute = () => {
+      const probeY = 28; // ~middle of header
+      const targets = document.querySelectorAll<HTMLElement>('[data-header-theme="dark"]');
+      let dark = false;
+      targets.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= probeY && r.bottom >= probeY) dark = true;
+      });
+      setOverDark(dark);
+    };
+    compute();
+    window.addEventListener("scroll", compute, { passive: true });
+    window.addEventListener("resize", compute);
+    return () => {
+      window.removeEventListener("scroll", compute);
+      window.removeEventListener("resize", compute);
+    };
+  }, [pathname]);
+
   const isActive = (to: string) => {
     const localized = withLocalePath(to);
     return pathname === localized;
@@ -55,8 +77,9 @@ export default function Header() {
       style={{ paddingTop: 'env(safe-area-inset-top)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}
     >
       <div
-        className="container flex items-center justify-between gap-4 h-14 md:h-16"
-        style={{ mixBlendMode: "difference" }}
+        className={`container flex items-center justify-between gap-4 h-14 md:h-16 transition-colors duration-300 ${
+          overDark ? "text-white" : "text-foreground"
+        }`}
       >
         <Link
           to={withLocalePath("/")}
@@ -67,7 +90,9 @@ export default function Header() {
             src={logoSignature}
             alt=""
             aria-hidden="true"
-            className="h-10 md:h-12 lg:h-14 w-auto max-w-[140px] lg:max-w-[170px] object-contain invert opacity-95 hover:opacity-100 transition-opacity"
+            className={`h-10 md:h-12 lg:h-14 w-auto max-w-[140px] lg:max-w-[170px] object-contain opacity-95 hover:opacity-100 transition-all duration-300 ${
+              overDark ? "invert" : ""
+            }`}
             decoding="async"
           />
         </Link>
@@ -77,7 +102,11 @@ export default function Header() {
               key={l.to}
               to={withLocalePath(l.to)}
               className={`text-[13px] font-mono uppercase tracking-[0.1em] whitespace-nowrap transition-colors ${
-                isActive(l.to) ? "text-primary" : "text-white/85 hover:text-white"
+                isActive(l.to)
+                  ? "text-primary"
+                  : overDark
+                  ? "text-white/85 hover:text-white"
+                  : "text-foreground/75 hover:text-foreground"
               }`}
             >
               {locale === "en" ? l.labelEn : l.labelNo}
@@ -93,7 +122,9 @@ export default function Header() {
               className={`text-[13px] font-mono uppercase tracking-[0.1em] whitespace-nowrap transition-colors ${
                 moreLinks.some((l) => isActive(l.to))
                   ? "text-primary"
-                  : "text-white/85 hover:text-white"
+                  : overDark
+                  ? "text-white/85 hover:text-white"
+                  : "text-foreground/75 hover:text-foreground"
               }`}
               aria-haspopup="true"
               aria-expanded={moreOpen}
@@ -121,7 +152,9 @@ export default function Header() {
           </div>
           <Link
             to={switchLocaleUrl()}
-            className="text-[13px] font-mono uppercase tracking-[0.1em] text-white/65 hover:text-white transition-colors ml-1"
+            className={`text-[13px] font-mono uppercase tracking-[0.1em] transition-colors ml-1 ${
+              overDark ? "text-white/65 hover:text-white" : "text-foreground/55 hover:text-foreground"
+            }`}
           >
             {locale === "en" ? "NO" : "EN"}
           </Link>

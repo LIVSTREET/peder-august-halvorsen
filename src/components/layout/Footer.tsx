@@ -22,6 +22,7 @@ export default function Footer() {
     <footer className="mt-0" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
       <div className="container pt-4 pb-12 md:pt-2 md:pb-20">
         <div
+          data-header-theme="dark"
           className="relative overflow-hidden rounded-[28px] md:rounded-[36px] border border-white/5 px-6 md:px-12 py-12 md:py-16"
           style={{
             backgroundColor: "#151311",
