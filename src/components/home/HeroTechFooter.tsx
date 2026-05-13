@@ -14,7 +14,7 @@ export function HeroTechFooter() {
   );
 
   return (
-    <div className="border-t border-border/40 px-6 md:px-10 py-5 md:py-6 flex flex-col items-center text-center gap-2">
+    <div className="border-t border-border/40 px-6 md:px-10 py-3 md:py-4 flex flex-col items-center text-center gap-1.5">
       <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] md:text-sm font-mono uppercase tracking-[0.18em] text-foreground/80">
         {items.map((label, i) => (
           <li key={label} className="flex items-center gap-3">
