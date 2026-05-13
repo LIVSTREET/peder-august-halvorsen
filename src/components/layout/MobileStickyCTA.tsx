@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 
@@ -13,16 +14,28 @@ export default function MobileStickyCTA() {
   });
   if (isHidden) return null;
 
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 120);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div
-      className="md:hidden fixed bottom-3 inset-x-3 z-40 pointer-events-none"
+      className={
+        "md:hidden fixed bottom-3 inset-x-6 z-40 pointer-events-none flex justify-center transition-all duration-300 " +
+        (visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none")
+      }
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      aria-hidden={!visible}
     >
       <Link
         to={withLocalePath("/brief")}
-        className="pointer-events-auto flex items-center justify-center w-full whitespace-nowrap px-4 py-2.5 min-h-[40px] rounded-full font-mono text-[11px] tracking-[0.22em] uppercase border border-foreground/15 bg-background/85 backdrop-blur-md text-foreground shadow-[0_8px_24px_-8px_rgba(0,0,0,0.4)] active:bg-primary active:text-primary-foreground active:border-primary transition-colors"
+        tabIndex={visible ? 0 : -1}
+        className="pointer-events-auto inline-flex items-center justify-center whitespace-nowrap px-5 py-2 min-h-[40px] font-body text-xs font-medium tracking-wide uppercase border bg-primary text-primary-foreground border-primary shadow-[0_10px_30px_-10px_rgba(0,0,0,0.55)] active:brightness-110"
       >
-        <span className="text-primary mr-2">→</span>
         {locale === "en" ? "Send request" : "Send forespørsel"}
       </Link>
     </div>
