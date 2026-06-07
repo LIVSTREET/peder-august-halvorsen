@@ -38,6 +38,7 @@ import DashboardLeadDetail from "./pages/dashboard/DashboardLeadDetail";
 import DashboardContent from "./pages/dashboard/DashboardContent";
 import DashboardContentNew from "./pages/dashboard/DashboardContentNew";
 import DashboardContentEdit from "./pages/dashboard/DashboardContentEdit";
+import DashboardAccounting from "./pages/dashboard/DashboardAccounting";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +108,7 @@ const App = () => (
                 <Route path="content" element={<DashboardContent />} />
                 <Route path="content/new" element={<DashboardContentNew />} />
                 <Route path="content/:id" element={<DashboardContentEdit />} />
+                <Route path="accounting" element={<DashboardAccounting />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
