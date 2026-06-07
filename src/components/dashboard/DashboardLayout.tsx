@@ -12,6 +12,7 @@ const nav = [
   { to: "/dashboard/content", end: false, label: "Innhold" },
   { to: "/dashboard/archive", end: false, label: "Arkiv" },
   { to: "/dashboard/leads", end: false, label: "Henvendelser" },
+  { to: "/dashboard/accounting", end: false, label: "Regnskap" },
 ];
 
 export default function DashboardLayout() {
