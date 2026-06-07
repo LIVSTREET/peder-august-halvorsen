@@ -23,6 +23,7 @@ export default function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -37,6 +38,7 @@ export default function Reveal({
         entries.forEach((e) => {
           if (e.isIntersecting) {
             setVisible(true);
+            setAnimating(true);
             obs.disconnect();
           }
         });
@@ -51,12 +53,13 @@ export default function Reveal({
     <Tag
       ref={ref as never}
       className={className}
+      onTransitionEnd={() => setAnimating(false)}
       style={{
         ...style,
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : `translateY(${y}px)`,
         transition: `opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 700ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
-        willChange: "opacity, transform",
+        willChange: animating ? "opacity, transform" : undefined,
       }}
     >
       {children}
