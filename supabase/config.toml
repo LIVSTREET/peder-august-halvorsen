@@ -2,3 +2,6 @@ project_id = "bntsnbcushomiiodapyp"
 
 [functions.project-ai]
 verify_jwt = false
+
+[functions.finance-core]
+verify_jwt = false
