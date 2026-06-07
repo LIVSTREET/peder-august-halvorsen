@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import LegalIdentity from "@/components/layout/LegalIdentity";
 import SeoHead from "@/components/SeoHead";
 import CTAButton from "@/components/CTAButton";
 import { useLocale } from "@/contexts/LocaleContext";
@@ -70,6 +71,13 @@ export default function Prat() {
                 </p>
               </div>
             )}
+          </div>
+
+          <div className="border-t border-border pt-8">
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">
+              {tKey("Juridisk", "Legal", locale)}
+            </p>
+            <LegalIdentity locale={locale} />
           </div>
 
           <div className="border-t border-border pt-8">
