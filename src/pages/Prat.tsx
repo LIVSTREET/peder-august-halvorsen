@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import LegalIdentity from "@/components/layout/LegalIdentity";
 import SeoHead from "@/components/SeoHead";
 import CTAButton from "@/components/CTAButton";
 import { useLocale } from "@/contexts/LocaleContext";

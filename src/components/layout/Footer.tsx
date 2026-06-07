@@ -1,3 +1,4 @@
+import LegalIdentity from "@/components/layout/LegalIdentity";
 import { SiteCredit } from "@/components/SiteCredit";
 import { useLocale } from "@/contexts/LocaleContext";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_DISPLAY, SITE_NAME } from "@/lib/seo";
