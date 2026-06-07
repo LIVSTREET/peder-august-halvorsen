@@ -20,4 +20,4 @@ const fontsReady =
     ? (document as any).fonts.ready
     : Promise.resolve();
 
-Promise.race([fontsReady, new Promise((r) => setTimeout(r, 600))]).then(reveal);
+Promise.race([fontsReady, new Promise((r) => setTimeout(r, 200))]).then(reveal);
