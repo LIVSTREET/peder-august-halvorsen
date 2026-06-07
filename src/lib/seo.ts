@@ -11,6 +11,11 @@ export const CONTACT_PHONE_DISPLAY = "45 25 12 80";
 export const RESPONSE_TIME_NO = "Svar innen 24 timer på hverdager";
 export const RESPONSE_TIME_EN = "Reply within 24 hours on weekdays";
 
+export const LEGAL_NAME = "Peder August Halvorsen";
+export const ORG_NUMBER = "927309114";
+export const COMPANY_FORM = "ENK";
+export const IS_VAT_REGISTERED = false;
+
 export function getBaseUrl(): string {
   if (import.meta.env.VITE_SITE_URL) return import.meta.env.VITE_SITE_URL;
   if (typeof window !== "undefined") return window.location.origin;
@@ -41,4 +46,14 @@ export function stripMarkdown(md: string): string {
     .replace(/[#*_~`>\[\]()!]/g, "")
     .replace(/\n+/g, " ")
     .trim();
+}
+
+export function formatOrgNumber(raw: string): string {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length !== 9) return raw;
+  return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+}
+
+export function formatLegalOrgLine(_locale: "no" | "en"): string {
+  return `NO ${formatOrgNumber(ORG_NUMBER)}`;
 }
