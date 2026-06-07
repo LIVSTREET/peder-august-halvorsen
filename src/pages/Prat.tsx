@@ -74,6 +74,13 @@ export default function Prat() {
           </div>
 
           <div className="border-t border-border pt-8">
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">
+              {tKey("Juridisk", "Legal", locale)}
+            </p>
+            <LegalIdentity locale={locale} />
+          </div>
+
+          <div className="border-t border-border pt-8">
             <p className="text-foreground font-display text-lg mb-2">
               {tKey("Har du et konkret prosjekt?", "Have a concrete project?", locale)}
             </p>

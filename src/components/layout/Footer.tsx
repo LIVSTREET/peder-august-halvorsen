@@ -106,7 +106,10 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="mt-6 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-3">
+        <div className="mt-6 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+          <LegalIdentity locale={locale} />
+        </div>
+        <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-3">
           <p className="text-[10px] md:text-xs text-muted-foreground/40 flex items-center gap-2 flex-wrap">
             © {new Date().getFullYear()} · <SiteCredit locale={locale} /> · <a href="/dashboard" className="hover:text-muted-foreground/60 transition-colors">◆</a>
           </p>
