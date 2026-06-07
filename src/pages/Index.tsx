@@ -93,16 +93,16 @@ function Hero() {
 
         {/* Portrait flanked by tagline (left) and pitch + single CTA (right) */}
         <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-end gap-4 lg:gap-10 pt-20 md:pt-24 lg:pt-28">
-          <Reveal as="div" delay={120} className="justify-self-end max-w-[22ch] flex flex-col items-end gap-3 md:gap-4 pb-8 md:pb-10 text-right">
+          <div className="justify-self-end max-w-[22ch] flex flex-col items-end gap-3 md:gap-4 pb-8 md:pb-10 text-right">
             <p className="font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance">
               {tagline}
             </p>
             <CTAButton to={withLocalePath("/brief")}>
               {tKey("Send forespørsel", "Send request", locale)}
             </CTAButton>
-          </Reveal>
+          </div>
 
-          <Reveal as="div" delay={60} className="flex justify-center">
+          <div className="flex justify-center">
             <img
               src={portraitSrc}
               onError={() => {
@@ -112,11 +112,11 @@ function Hero() {
               className="w-full max-w-[300px] lg:max-w-[360px] h-auto object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
               loading="eager"
             />
-          </Reveal>
+          </div>
 
-          <Reveal as="p" delay={160} className="justify-self-start max-w-[22ch] text-left font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance pb-8 md:pb-10">
+          <p className="justify-self-start max-w-[22ch] text-left font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance pb-8 md:pb-10">
             {pitch}
-          </Reveal>
+          </p>
         </div>
       </div>
 
