@@ -22,6 +22,13 @@ import { useLocale } from "@/contexts/LocaleContext";
 import { tKey, tField } from "@/lib/i18n";
 import { HomePageShell } from "@/components/home/HomePageShell";
 import { HeroTechFooter } from "@/components/home/HeroTechFooter";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Check } from "lucide-react";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -53,10 +60,12 @@ export default function Index() {
       <SeoHead title={title} description={description} jsonLd={[organizationSchema, webSiteSchema]} />
       <HomePageShell>
         <Hero />
-        <TrustSection />
         <BeforeAfterSection />
+        <CourseWebsiteProductSection />
+        <TrustSection />
         <ArbeidSection />
         <ComparisonSection />
+        <FaqSection />
       </HomePageShell>
     </Layout>
   );
@@ -68,9 +77,14 @@ function Hero() {
   const [portraitSrc, setPortraitSrc] = useState(cutoutUrl);
 
   const tagline = tKey("Moderne digitalt håndverk", "Modern digital craft", locale);
+  const promise = tKey(
+    "Nettsider som gjør bedriften enklere å finne – og enklere å velge.",
+    "Websites that make your business easier to find — and easier to choose.",
+    locale
+  );
   const pitch = tKey(
-    "Nettsider, SEO og digitale systemer for små bedrifter — ferdig satt opp og enkelt å drifte.",
-    "Websites, SEO and digital systems for small businesses — fully built and easy to run.",
+    "Jeg bygger raske og profesjonelle nettsider fra bunnen av for små bedrifter. Du får tydelige tjenestesider, grunnleggende SEO og et enkelt system for å administrere innholdet.",
+    "I build fast, professional websites from the ground up for small businesses, with clear service pages, essential SEO and a simple content system.",
     locale
   );
 
@@ -93,13 +107,24 @@ function Hero() {
 
         {/* Portrait flanked by tagline (left) and pitch + single CTA (right) */}
         <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-end gap-4 lg:gap-10 pt-20 md:pt-24 lg:pt-28">
-          <div className="justify-self-end max-w-[22ch] flex flex-col items-end gap-3 md:gap-4 pb-8 md:pb-10 text-right">
-            <p className="font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance">
+          <div className="justify-self-end max-w-[24ch] flex flex-col items-end gap-3 md:gap-4 pb-8 md:pb-10 text-right">
+            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-primary">
               {tagline}
             </p>
-            <CTAButton to={withLocalePath("/brief")}>
-              {tKey("Send forespørsel", "Send request", locale)}
-            </CTAButton>
+            <p className="font-display font-semibold text-foreground/90 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance">
+              {promise}
+            </p>
+            <div className="flex flex-wrap justify-end gap-2">
+              <CTAButton to={withLocalePath("/brief")}>
+                {tKey("Be om fastpris", "Request a fixed price", locale)}
+              </CTAButton>
+              <a
+                href="#kurs-case"
+                className="inline-block whitespace-nowrap px-6 py-3 min-h-[44px] font-body text-sm font-medium tracking-wide uppercase transition-all duration-200 border border-foreground/30 text-foreground hover:border-primary hover:text-primary active:scale-[0.98]"
+              >
+                {tKey("Se kundecase", "View case study", locale)}
+              </a>
+            </div>
           </div>
 
           <div className="flex justify-center">
@@ -114,7 +139,7 @@ function Hero() {
             />
           </div>
 
-          <p className="justify-self-start max-w-[22ch] text-left font-display font-semibold text-foreground/85 text-lg md:text-xl lg:text-2xl leading-tight tracking-tight text-balance pb-8 md:pb-10">
+          <p className="justify-self-start max-w-[27ch] text-left text-foreground/75 text-sm md:text-base lg:text-lg leading-relaxed text-balance pb-8 md:pb-10">
             {pitch}
           </p>
         </div>
@@ -147,16 +172,25 @@ function Hero() {
           />
         </div>
 
-        <p className="relative z-10 mt-3 text-center font-display font-semibold text-foreground/85 text-base leading-tight tracking-tight text-balance px-2">
+        <p className="relative z-10 mt-3 text-center text-[10px] font-mono uppercase tracking-[0.2em] text-primary px-2">
           {tagline}
         </p>
-        <p className="relative z-10 mt-2 text-[14px] text-foreground/75 font-body leading-relaxed text-center px-2 text-balance">
+        <p className="relative z-10 mt-3 text-center font-display font-semibold text-foreground/90 text-xl leading-tight tracking-tight text-balance px-2">
+          {promise}
+        </p>
+        <p className="relative z-10 mt-3 text-[14px] text-foreground/75 font-body leading-relaxed text-center px-2 text-balance">
           {pitch}
         </p>
         <div className="relative z-10 mt-5 flex flex-col gap-2.5">
           <CTAButton to={withLocalePath("/brief")} className="w-full text-center">
-            {tKey("Send forespørsel", "Send request", locale)}
+            {tKey("Be om fastpris", "Request a fixed price", locale)}
           </CTAButton>
+          <a
+            href="#kurs-case"
+            className="w-full text-center inline-block whitespace-nowrap px-6 py-3 min-h-[44px] font-body text-sm font-medium tracking-wide uppercase transition-all duration-200 border border-foreground/30 text-foreground hover:border-primary hover:text-primary active:scale-[0.98]"
+          >
+            {tKey("Se kundecase", "View case study", locale)}
+          </a>
         </div>
       </div>
 
@@ -504,7 +538,24 @@ function ComparisonSection() {
 }
 
 function BeforeAfterSection() {
-  const { locale } = useLocale();
+  const { locale, withLocalePath } = useLocale();
+  const deliverables = locale === "en"
+    ? [
+        "New structure and design",
+        "Dedicated landing page for each course",
+        "Enquiry form",
+        "Content management system",
+        "Technical SEO and analytics",
+        "Mobile-optimised solution",
+      ]
+    : [
+        "Ny struktur og nytt design",
+        "Egne landingssider for hvert kurs",
+        "Forespørselsskjema",
+        "Administrasjonssystem",
+        "Teknisk SEO og analyse",
+        "Mobiltilpasset løsning",
+      ];
   const pairs = [
     {
       before: kursKrageroBefore1,
@@ -519,16 +570,26 @@ function BeforeAfterSection() {
   ];
 
   return (
-    <section className="container py-16 md:py-24 border-t border-border/70">
+    <section id="kurs-case" className="container py-16 md:py-24 border-t border-border/70 scroll-mt-24">
       <Reveal>
       <SectionHeader
-        title={tKey("Før og etter", "Before and after", locale)}
+        title={tKey("Kundecase: Kragerø Maskin og Opplæring", "Case study: Kragerø Maskin og Opplæring", locale)}
         subtitle={tKey(
-          "Et eksempel: Kurs Kragerø — fra gammel side til ny.",
-          "An example: Kurs Kragerø — from old site to new.",
+          "Ny nettside bygget fra bunnen av for en etablert kursvirksomhet.",
+          "A new website built from the ground up for an established training provider.",
           locale
         )}
       />
+      </Reveal>
+      <Reveal>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10 md:mb-14">
+          {deliverables.map((item) => (
+            <li key={item} className="flex items-center gap-3 border border-border/60 px-4 py-3 text-sm text-foreground/85">
+              <Check className="w-4 h-4 text-primary shrink-0" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </Reveal>
       <div className="space-y-12 md:space-y-14">
         {pairs.map((pair, idx) => (
@@ -545,6 +606,150 @@ function BeforeAfterSection() {
           </Reveal>
         ))}
       </div>
+      <Reveal className="mt-10">
+        <CTAButton to={withLocalePath("/prosjekter/kurs-kragero")} variant="outline">
+          {tKey("Se hele kundecaset", "View the full case study", locale)}
+        </CTAButton>
+      </Reveal>
+    </section>
+  );
+}
+
+function CourseWebsiteProductSection() {
+  const { locale, withLocalePath } = useLocale();
+  const included = locale === "en"
+    ? [
+        "Home page and course overview",
+        "Up to 10 individual course pages",
+        "About and contact pages",
+        "Enquiry form",
+        "Essential local SEO",
+        "Traffic and enquiry analytics",
+        "Mobile optimisation",
+        "Publishing and domain setup",
+      ]
+    : [
+        "Forside og kursoversikt",
+        "Opptil 10 individuelle kurssider",
+        "Om oss og kontakt",
+        "Forespørselsskjema",
+        "Grunnleggende lokal SEO",
+        "Analyse av trafikk og henvendelser",
+        "Mobiltilpasning",
+        "Publisering og domeneoppsett",
+      ];
+
+  return (
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
+        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-10 lg:gap-16 items-start">
+          <div>
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-4">
+              {tKey("En tydelig produktpakke", "A clear product package", locale)}
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground leading-[1.05] text-balance">
+              {tKey(
+                "Komplett nettside for kurs- og opplæringsbedrifter",
+                "Complete website for training providers",
+                locale
+              )}
+            </h2>
+            <p className="mt-5 max-w-2xl text-base md:text-lg text-foreground/70 leading-relaxed">
+              {tKey(
+                "En ny nettside bygget fra bunnen av, med egne kurssider, forespørselsløsning og et enkelt administrasjonssystem.",
+                "A new website built from the ground up, with dedicated course pages, an enquiry flow and a simple content system.",
+                locale
+              )}
+            </p>
+            <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-8">
+              {included.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-foreground/85">
+                  <Check className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border border-primary/35 bg-primary/[0.04] p-6 md:p-8 lg:sticky lg:top-24">
+            <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+              {tKey("Fastpris fra", "Fixed price from", locale)}
+            </p>
+            <p className="mt-2 font-display text-4xl md:text-5xl font-bold text-foreground">
+              {tKey("24 900 kr", "NOK 24,900", locale)}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {tKey("Eks. mva.", "Excl. VAT", locale)}
+            </p>
+            <p className="mt-5 text-sm text-foreground/70 leading-relaxed">
+              {tKey(
+                "Endelig pris avtales før oppstart.",
+                "The final price is agreed before work begins.",
+                locale
+              )}
+            </p>
+            <CTAButton to={withLocalePath("/brief")} className="mt-7 w-full text-center">
+              {tKey("Be om et prisoverslag", "Request an estimate", locale)}
+            </CTAButton>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function FaqSection() {
+  const { locale, withLocalePath } = useLocale();
+  const items = locale === "en"
+    ? [
+        ["How long does it take?", "A standard business website is delivered in approximately 3–5 weeks after the required content has been received."],
+        ["Do we have to write all the content ourselves?", "No. I help with structure and editing. Extensive copywriting is agreed separately."],
+        ["Can we update the courses ourselves?", "Yes. The solution can include a simple content management system."],
+        ["Do we own the website?", "Yes. The client owns the domain, content, data and finished solution in accordance with the agreement."],
+        ["What happens after launch?", "You can choose an ongoing agreement for operations, support and minor changes."],
+      ]
+    : [
+        ["Hvor lang tid tar det?", "En normal bedriftsnettside leveres på omtrent 3–5 uker etter at nødvendig innhold er mottatt."],
+        ["Må vi skrive alt innholdet selv?", "Nei. Jeg hjelper med struktur og bearbeiding av tekst. Omfattende tekstproduksjon avtales separat."],
+        ["Kan vi oppdatere kursene selv?", "Ja. Løsningen kan leveres med et enkelt administrasjonssystem."],
+        ["Eier vi nettsiden?", "Ja. Kunden eier domene, innhold, data og den ferdige løsningen i henhold til avtalen."],
+        ["Hva skjer etter lansering?", "Dere kan velge en løpende avtale for drift, support og mindre endringer."],
+      ];
+
+  return (
+    <section className="container py-16 md:py-24 border-t border-border/70">
+      <Reveal>
+        <SectionHeader
+          title={tKey("Vanlige spørsmål", "Frequently asked questions", locale)}
+          subtitle={tKey(
+            "Tydelige rammer før vi starter.",
+            "Clear expectations before we begin.",
+            locale
+          )}
+        />
+      </Reveal>
+      <Reveal>
+        <Accordion type="single" collapsible className="max-w-3xl">
+          {items.map(([question, answer], index) => (
+            <AccordionItem key={question} value={`item-${index}`} className="border-border/70">
+              <AccordionTrigger className="text-left font-display text-base md:text-lg text-foreground hover:text-primary hover:no-underline">
+                {question}
+              </AccordionTrigger>
+              <AccordionContent className="max-w-2xl text-foreground/70 leading-relaxed">
+                {answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </Reveal>
+      <Reveal className="mt-10 border-t border-border/60 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p className="font-display text-xl md:text-2xl text-foreground">
+          {tKey("Har du en bedrift som trenger en bedre nettside?", "Does your business need a better website?", locale)}
+        </p>
+        <CTAButton to={withLocalePath("/brief")}>
+          {tKey("Be om fastpris", "Request a fixed price", locale)}
+        </CTAButton>
+      </Reveal>
     </section>
   );
 }
