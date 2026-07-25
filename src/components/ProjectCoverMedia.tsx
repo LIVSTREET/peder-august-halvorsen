@@ -70,7 +70,11 @@ export default function ProjectCoverMedia({
           alt={alt}
           width={width ?? undefined}
           height={height ?? undefined}
-          className="w-full aspect-video object-cover"
+          className={
+            variant === "detail"
+              ? "block w-full h-auto max-h-[75vh] object-contain bg-background"
+              : "w-full aspect-video object-cover"
+          }
           loading={loading}
         />
       ) : (
