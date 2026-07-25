@@ -7,6 +7,7 @@ import { useProject } from "@/hooks/useProjects";
 import { useProjectAssets } from "@/hooks/useAssets";
 import { getAssetUrl } from "@/lib/supabase-helpers";
 import { truncate, PERSON_NAME } from "@/lib/seo";
+import { getProjectExternalUrl } from "@/lib/external-url";
 import { usePublishedContentByProject } from "@/hooks/useContentItems";
 import { CONTENT_TYPE_ROUTES } from "@/lib/content-types";
 import { useParams, Link } from "react-router-dom";
@@ -60,6 +61,7 @@ export default function ProsjektDetalj() {
   const solutionText = tField(project as any, "solution_text", locale);
   const resultText = tField(project as any, "result_text", locale);
   const hasCaseStudy = !!(problemText || solutionText || resultText);
+  const externalUrl = getProjectExternalUrl(project.url, project.slug);
 
   const ogAsset = assets?.find((a) => ["og", "screenshot", "image"].includes(a.kind));
   const ogImageUrl = ogAsset ? getAssetUrl(ogAsset.storage_bucket, ogAsset.storage_path) : null;
@@ -103,12 +105,12 @@ export default function ProsjektDetalj() {
               <p className="text-foreground">{tField(project, "role", locale)}</p>
             </div>
           )}
-          {project.url && (
+          {externalUrl && (
             <div>
               <span className="font-mono text-xs text-muted-foreground uppercase">URL</span>
               <p>
-                <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
-                  {project.url}
+                <a href={externalUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
+                  {externalUrl.replace(/^https?:\/\//i, "")}
                 </a>
               </p>
             </div>
@@ -160,7 +162,7 @@ export default function ProsjektDetalj() {
             assets={assets}
             title={title}
             presentation={(project as any).presentation}
-            frameUrl={project.url || project.slug}
+            frameUrl={externalUrl || project.slug}
           />
         )}
 
