@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard
+Disallow: /dashboard/
 Disallow: /brief
+Disallow: /brief/
 
 Sitemap: https://studiopah.no/sitemap.xml

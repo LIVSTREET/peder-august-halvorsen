@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,9 @@ export default function DashboardLogin() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
+        <Helmet>
+          <meta name="robots" content="noindex,nofollow" />
+        </Helmet>
         <p className="text-muted-foreground text-sm">Laster…</p>
       </div>
     );
@@ -41,6 +45,10 @@ export default function DashboardLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <Helmet>
+        <meta name="robots" content="noindex,nofollow" />
+        <title>Logg inn | Studio P.A. Halvorsen</title>
+      </Helmet>
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
           <h1 className="font-display text-2xl font-bold text-foreground">

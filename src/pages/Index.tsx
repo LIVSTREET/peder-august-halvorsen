@@ -16,7 +16,7 @@ import kursKrageroBefore1 from "@/assets/kurs-kragero-before-1.png";
 import kursKrageroAfter1 from "@/assets/kurs-kragero-after-1.png";
 import kursKrageroBefore2 from "@/assets/kurs-kragero-before-2.png";
 import kursKrageroAfter2 from "@/assets/kurs-kragero-after-2.png";
-import { getBaseUrl, PERSON_NAME, SITE_NAME } from "@/lib/seo";
+import { PERSON_NAME, SITE_NAME } from "@/lib/seo";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/contexts/LocaleContext";
 import { tKey, tField } from "@/lib/i18n";
@@ -35,7 +35,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: SITE_NAME,
   founder: PERSON_NAME,
-  url: typeof window !== "undefined" ? getBaseUrl() : "",
+  url: "https://studiopah.no/",
   email: "mail@studiopah.no",
 };
 
@@ -43,7 +43,7 @@ const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: SITE_NAME,
-  url: typeof window !== "undefined" ? getBaseUrl() : "",
+  url: "https://studiopah.no/",
 };
 
 export default function Index() {

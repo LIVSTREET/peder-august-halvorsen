@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SeoHead from "@/components/SeoHead";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -11,6 +12,11 @@ const NotFound = () => {
 
   return (
     <Layout>
+      <SeoHead
+        title="Side ikke funnet | Studio P.A. Halvorsen"
+        description="Siden du leter etter finnes ikke."
+        noindex
+      />
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="text-center">
           <h1 className="mb-4 text-4xl font-bold">404</h1>
