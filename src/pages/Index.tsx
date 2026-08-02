@@ -91,11 +91,11 @@ function Hero() {
   return (
     <>
       {/* Desktop hero — 3-column grid with h1 layered behind portrait */}
-      <div className="hidden md:block relative px-6 md:px-10 lg:px-14 pt-3 md:pt-4 pb-3">
+      <div className="hidden md:block relative overflow-hidden px-6 md:px-10 lg:px-14 pt-3 md:pt-4 pb-3">
         {/* Background wordmark — Studio P. A. Halvorsen, layered behind portrait */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 -top-24 md:-top-32 lg:-top-40 z-[1] px-0 max-w-none pointer-events-none select-none flex justify-center"
+          className="absolute inset-x-0 -top-24 md:-top-32 lg:-top-40 z-[1] px-0 max-w-none pointer-events-none select-none flex justify-center overflow-hidden"
         >
           <img
             src={heroWordmark}
@@ -146,11 +146,11 @@ function Hero() {
       </div>
 
       {/* Mobile hero — stacked */}
-      <div className="md:hidden relative px-4 pt-3 pb-6">
+      <div className="md:hidden relative overflow-hidden px-4 pt-3 pb-6">
         {/* Wordmark layered behind portrait */}
         <h1
           aria-label="Studio P. A. Halvorsen"
-          className="absolute inset-x-0 top-0 z-[1] pointer-events-none select-none flex justify-center"
+          className="absolute inset-x-0 top-0 z-[1] pointer-events-none select-none flex justify-center overflow-hidden"
         >
           <img
             src={heroWordmark}
